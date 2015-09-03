@@ -7,6 +7,7 @@ class SwiftPhotoGalleryTests: XCTestCase {
 
     var testGallery:SwiftPhotoGallery!
     var testHelper:SwiftPhotoGalleryTestHelper!
+    var testCell:SwiftPhotoGalleryCell!
 
     override func setUp() {
         super.setUp()
@@ -52,7 +53,7 @@ class SwiftPhotoGalleryTests: XCTestCase {
     func testSetCurrentPage() {
 
         let currentPage = testGallery.currentPage
-        let currentOffset = testGallery.collectionView?.contentOffset.x ?? 0
+        let currentOffset = testGallery.imageCollectionView?.contentOffset.x ?? 0
         let currentTimesAsked = testHelper.timesAskedForImageInGallery[3] ?? 0
 
         expect(currentPage).to(equal(0))
@@ -62,7 +63,7 @@ class SwiftPhotoGalleryTests: XCTestCase {
 
         expect(self.testGallery.currentPage).to(equal(3))
         expect(self.testHelper.timesAskedForImageInGallery[3]).to(beGreaterThan(currentTimesAsked))
-        expect(self.testGallery.collectionView?.contentOffset.x ?? 0).to(beGreaterThan(currentOffset))
+        expect(self.testGallery.imageCollectionView?.contentOffset.x ?? 0).to(beGreaterThan(currentOffset))
     }
 
     func testSetDataSourceReloadsImages() {
@@ -91,22 +92,22 @@ class SwiftPhotoGalleryTests: XCTestCase {
 
     func testTapCallsDelegateMethod() {
 
-        testGallery.handleSingleTap()
+        //testCell.handleSingleTap()
 
         expect(self.testHelper.didTellDelegateTapToClose).to(equal(true))
     }
 
     func testDoubleTapZoomsInAndOut() {
 
-        let currentZoomScale = testGallery.collectionView?.zoomScale
+        let currentZoomScale = testGallery.imageCollectionView?.zoomScale
 
-        testGallery.handleDoubleTap()
+        //testCell.handleDoubleTap()
 
-        expect(self.testGallery.collectionView?.zoomScale).to(beGreaterThan(currentZoomScale))
+        expect(self.testGallery.imageCollectionView?.zoomScale).to(beGreaterThan(currentZoomScale))
 
-        testGallery.handleDoubleTap()
+        //testCell.handleDoubleTap()
 
-        expect(self.testGallery.collectionView?.zoomScale).to(equal(currentZoomScale))
+        expect(self.testGallery.imageCollectionView?.zoomScale).to(equal(currentZoomScale))
 
     }
 

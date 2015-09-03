@@ -36,5 +36,27 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
+        <!--Swift Photo Gallery-->
+        <scene sceneID="fQ0-vP-Rxq">
+            <objects>
+                <viewController id="QI6-9U-Ed5" customClass="SwiftPhotoGallery" customModule="SwiftPhotoGallery" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="80x-QD-whq"/>
+                        <viewControllerLayoutGuide type="bottom" id="na5-mw-sJX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pIW-3v-BZe">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="Nsg-Rm-3BV" kind="unwind" identifier="backToHeader" unwindAction="unwindToMainMenu:" id="ovV-qT-YBe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c8P-IQ-2lM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Nsg-Rm-3BV" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1105" y="607"/>
+        </scene>
     </scenes>
 </document>

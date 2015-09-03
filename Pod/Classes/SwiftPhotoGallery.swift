@@ -19,17 +19,21 @@ import UIKit
 }
 
 
-public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UIScrollViewDelegate {
+public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
     // MARK: Public Interface
 
     @IBOutlet public var dataSource:SwiftPhotoGalleryDataSource?
     @IBOutlet public var delegate:SwiftPhotoGalleryDelegate?
 
-    public private(set) var collectionView: UICollectionView?
-    public private(set) var numberOfImages: Int = 0
+    public private(set) var imageCollectionView: UICollectionView!
+
+    public var numberOfImages: Int = 0
     public var currentPage: Int = 0
 
+    private var pageBeforeRotation: Int = 0
+
+    var flowLayout:UICollectionViewFlowLayout = UICollectionViewFlowLayout();
 
     public init(delegate: SwiftPhotoGalleryDelegate, dataSource: SwiftPhotoGalleryDataSource) {
         super.init(nibName: nil, bundle: nil)
@@ -42,91 +46,233 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         super.init(coder: aDecoder)
     }
 
-    //loadview
-    //self.view = UIView()
+//    override public func loadView() {
+//        super.loadView()
+//
+//        //view = UIView(frame: view.bounds)
+//    }
+
+    override public func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        pageBeforeRotation = currentPage
+        println("pageBeforeRotation: \(pageBeforeRotation)")
+
+        flowLayout.itemSize = view.bounds.size
+        //flowLayout.invalidateLayout()
+    }
+
+    override public func viewDidLayoutSubviews() {
+        let desiredIndexPath = NSIndexPath(forItem: pageBeforeRotation, inSection: 0)
+
+        imageCollectionView.scrollToItemAtIndexPath(desiredIndexPath, atScrollPosition: .CenteredHorizontally, animated: false)
+        imageCollectionView.reloadItemsAtIndexPaths([desiredIndexPath])
+
+        let currentCell:SwiftPhotoGalleryCell? = imageCollectionView.cellForItemAtIndexPath(desiredIndexPath) as? SwiftPhotoGalleryCell
+        currentCell?.configureForNewImage()
+
+    }
 
     override public func viewDidLoad() {
         super.viewDidLoad()
 
-        var flowLayout:UICollectionViewFlowLayout = UICollectionViewFlowLayout();
-        collectionView = UICollectionView(frame: CGRectMake(10, 10, 300, 400), collectionViewLayout: flowLayout)
-        collectionView?.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "collectionCell")
-        //collectionView?.delegate = self.delegate
-        collectionView?.dataSource = self
-        collectionView?.backgroundColor = UIColor.cyanColor()
+        //view.backgroundColor = UIColor.grayColor()
 
+        // Set up flow layout
+        flowLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.minimumLineSpacing = 0
 
-        imageView = UIImageView(image: dataSource?.imageInGallery(self, forIndex: currentPage))
+        imageCollectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
+        imageCollectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
 
-        scrollView = UIScrollView(frame: view.bounds)
-        scrollView.backgroundColor = UIColor.redColor()
-        scrollView.contentSize = imageView.bounds.size
-        scrollView.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
-        //scrollView.contentOffset = CGPoint(x: imageView.bounds.size.width/2, y: imageView.bounds.size.height/2)
+        numberOfImages = collectionView(imageCollectionView, numberOfItemsInSection: 0)
 
-        scrollView.addSubview(imageView)
-        collectionView!.addSubview(scrollView)
-        self.view.addSubview(collectionView!)
-        //view.addSubview(scrollView)
+        // Set up collection view
+        imageCollectionView.registerClass(SwiftPhotoGalleryCell.self, forCellWithReuseIdentifier: "SwiftPhotoGalleryCell")
+        imageCollectionView.dataSource = self
+        imageCollectionView.delegate = self
+        //imageCollectionView.backgroundColor = UIColor.cyanColor()
+        imageCollectionView.pagingEnabled = true
 
-        scrollView.delegate = self
-    }
+        var imageCollectionViewConstraints: [NSLayoutConstraint] = []
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: imageCollectionView, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: imageCollectionView, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: imageCollectionView, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .Trailing, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: imageCollectionView, attribute: .Bottom, relatedBy: .Equal, toItem: view, attribute: .Bottom, multiplier: 1, constant: 0))
 
-    public func handleSingleTap(sender: AnyObject? = nil) {
-        delegate?.galleryDidTapToClose(self)
-    }
-
-    public func handleDoubleTap(sender: AnyObject? = nil) {
-
+        view.addSubview(imageCollectionView)
+        view.addConstraints(imageCollectionViewConstraints)
     }
 
 
     // MARK: Private Methods / Properties
 
-    // When you need an image, you'll ask your delegate like
-    // let imageForPage = self.dataSource.imageInGallery(self, currentPage)
+    func getImage(currentPage: Int) -> UIImage {
+        var imageForPage = dataSource?.imageInGallery(self, forIndex: currentPage)
+        return imageForPage!
+    }
 
-    var scrollView: UIScrollView!
-    var imageView: UIImageView!
-
-    
 
     // MARK: UICollectionViewDataSource Methods
 
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(imageCollectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataSource?.numberOfImagesInGallery(self) ?? 0
     }
 
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        //return UICollectionViewCell(frame: CGRectZero)
-        var cell: UICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("collectionCell", forIndexPath: indexPath) as! UICollectionViewCell
-        cell.backgroundColor = UIColor.greenColor()
+    public func collectionView(imageCollectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        var cell: SwiftPhotoGalleryCell = imageCollectionView.dequeueReusableCellWithReuseIdentifier("SwiftPhotoGalleryCell", forIndexPath: indexPath) as! SwiftPhotoGalleryCell
+        //cell.setTranslatesAutoresizingMaskIntoConstraints(false)
+
+        cell.image = getImage(indexPath.row)
+
         return cell
     }
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(50, 50)
+
+    // MARK: UICollectionViewDelegate Methods
+    
+    public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        let visibleIndexes = imageCollectionView.indexPathsForVisibleItems()
+
+        currentPage = visibleIndexes.first?.item ?? 0
+        println("currentPage: \(currentPage)")
     }
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(5, 5, 5, 5)
-        //top,left,bottom,right
+}
+
+/*******************************************************************************************************************************/
+
+public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
+
+    var image:UIImage? {
+        didSet {
+            configureForNewImage()
+        }
     }
 
+    private let scrollView: UIScrollView
+    private let imageView: UIImageView
+    //static let colors = [UIColor.yellowColor(), UIColor.blueColor(), UIColor.redColor(), UIColor.brownColor(), UIColor.orangeColor()]
+    static var cellCount: Int = 0
+
+    override init(frame: CGRect) {
+
+        imageView = UIImageView()
+        imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        scrollView = UIScrollView(frame: frame)
+        scrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
+
+        super.init(frame: frame)
+
+        //scrollView.backgroundColor = SwiftPhotoGalleryCell.colors[SwiftPhotoGalleryCell.cellCount % SwiftPhotoGalleryCell.colors.count]
+        SwiftPhotoGalleryCell.cellCount++
+
+        var scrollViewConstraints: [NSLayoutConstraint] = []
+        var imageViewConstraints: [NSLayoutConstraint] = []
+
+        scrollViewConstraints.append(NSLayoutConstraint(item: scrollView, attribute: .Leading, relatedBy: .Equal, toItem: contentView, attribute: .Leading, multiplier: 1, constant: 0))
+        scrollViewConstraints.append(NSLayoutConstraint(item: scrollView, attribute: .Top, relatedBy: .Equal, toItem: contentView, attribute: .Top, multiplier: 1, constant: 0))
+        scrollViewConstraints.append(NSLayoutConstraint(item: scrollView, attribute: .Trailing, relatedBy: .Equal, toItem: contentView, attribute: .Trailing, multiplier: 1, constant: 0))
+        scrollViewConstraints.append(NSLayoutConstraint(item: scrollView, attribute: .Bottom, relatedBy: .Equal, toItem: contentView, attribute: .Bottom, multiplier: 1, constant: 0))
+
+        contentView.addSubview(scrollView)
+        contentView.addConstraints(scrollViewConstraints)
+
+        imageViewConstraints.append(NSLayoutConstraint(item: imageView, attribute: .Leading, relatedBy: .Equal, toItem: scrollView, attribute: .Leading, multiplier: 1, constant: 0))
+        imageViewConstraints.append(NSLayoutConstraint(item: imageView, attribute: .Top, relatedBy: .Equal, toItem: scrollView, attribute: .Top, multiplier: 1, constant: 0))
+        imageViewConstraints.append(NSLayoutConstraint(item: imageView, attribute: .Trailing, relatedBy: .Equal, toItem: scrollView, attribute: .Trailing, multiplier: 1, constant: 0))
+        imageViewConstraints.append(NSLayoutConstraint(item: imageView, attribute: .Bottom, relatedBy: .Equal, toItem: scrollView, attribute: .Bottom, multiplier: 1, constant: 0))
+
+        scrollView.addSubview(imageView)
+        scrollView.addConstraints(imageViewConstraints)
+
+        scrollView.delegate = self
+
+        setupGestureRecognizer()
+    }
+
+    required public init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func configureForNewImage() {
+        imageView.image = image
+        imageView.sizeToFit()
+        setZoomScale()
+        scrollViewDidZoom(scrollView)
+    }
+
+    // MARK: Zoom Handlers
+
+    public func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+        return imageView
+    }
+
+//    override func viewWillLayoutSubviews() {
+//        setZoomScale()
+//    }
+
+    private func setZoomScale() {
+        let imageViewSize = imageView.bounds.size
+        let scrollViewSize = scrollView.bounds.size
+        let widthScale = scrollViewSize.width / imageViewSize.width
+        let heightScale = scrollViewSize.height / imageViewSize.height
+
+        scrollView.minimumZoomScale = min(widthScale, heightScale)
+        scrollView.zoomScale = scrollView.minimumZoomScale
+    }
+
+    private func scrollViewDidZoom(scrollView: UIScrollView) {
+        let imageViewSize = imageView.frame.size
+        let scrollViewSize = scrollView.bounds.size
+
+        let verticalPadding = imageViewSize.height < scrollViewSize.height ? (scrollViewSize.height - imageViewSize.height) / 2 : 0
+        let horizontalPadding = imageViewSize.width < scrollViewSize.width ? (scrollViewSize.width - imageViewSize.width) / 2 : 0
+
+        scrollView.contentInset = UIEdgeInsets(top: verticalPadding, left: horizontalPadding, bottom: verticalPadding, right: horizontalPadding)
+    }
+
+    // MARK: Gesture Handlers
+
+    private func setupGestureRecognizer() {
+
+        let tripleTap = UITapGestureRecognizer(target: self, action: "handleTripleTap:")
+        tripleTap.numberOfTapsRequired = 3
+        scrollView.addGestureRecognizer(tripleTap)
+
+        let doubleTap = UITapGestureRecognizer(target: self, action: "handleDoubleTap:")
+        doubleTap.numberOfTapsRequired = 2
+        scrollView.addGestureRecognizer(doubleTap)
+
+        let singleTap = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
+        singleTap.numberOfTapsRequired = 1
+        singleTap.requireGestureRecognizerToFail(doubleTap)
+        scrollView.addGestureRecognizer(singleTap)
+
+    }
+
+    public func handleSingleTap(recognizer: UITapGestureRecognizer) {
+        //delegate?.galleryDidTapToClose(self)
+        println("SINGLE tap")
+    }
+
+    public func handleDoubleTap(recognizer: UITapGestureRecognizer) {
+
+        println("DOUBLE tap")
+        
+        if (scrollView.zoomScale > scrollView.minimumZoomScale) {
+        scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
+        } else {
+        scrollView.setZoomScale(scrollView.maximumZoomScale, animated: true)
+        }
+    }
+
+    public func handleTripleTap(recognizer: UITapGestureRecognizer) {
+        println("TRIPLE tap")
+    }
 }
-/*
-class swiftPhotoGalleryCollectionView: UICollectionView {
 
-}
-
-class swiftPhotoGalleryCell: UICollectionViewCell {
-
-}
-
-class swiftPhotoGalleryLayout: UICollectionViewLayout {
-
-}
-*/
 
 
 

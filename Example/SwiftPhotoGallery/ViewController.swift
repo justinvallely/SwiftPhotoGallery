@@ -9,9 +9,23 @@
 import UIKit
 import SwiftPhotoGallery
 
+class HeaderViewController: UIViewController {
+
+    @IBAction func unwindToMainMenu(sender: UIStoryboardSegue)
+    {
+        let sourceViewController: AnyObject = sender.sourceViewController
+        // Pull any data from the view controller which initiated the unwind segue.
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+}
+
 class ViewController: UIViewController, SwiftPhotoGalleryDataSource, SwiftPhotoGalleryDelegate {
 
-    let imageNames = ["image.png", "pano.jpg", "slide1@3x.png", "slide2@3x.png", "slide3@3x.png", "slide4@3x.png"]
+    let imageNames = ["image1.jpeg", "image2.jpeg", "image3.jpeg", "image4.jpeg", "image5.jpeg", "image6.jpeg", "image7.jpeg", "image8.jpeg", "image9.jpeg", "image10.jpeg", "pano.jpg", "image.png"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +58,7 @@ class ViewController: UIViewController, SwiftPhotoGalleryDataSource, SwiftPhotoG
 
     func galleryDidTapToClose(gallery:SwiftPhotoGallery) {
         dismissViewControllerAnimated(true, completion: nil)
+        
     }
 
 }
