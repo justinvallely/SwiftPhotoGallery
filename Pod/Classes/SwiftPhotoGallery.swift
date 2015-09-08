@@ -31,20 +31,11 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     public var numberOfImages: Int = 0
 
-    public var currentPage: Int {
-        get {
-            return Int((imageCollectionView.contentOffset.x / imageCollectionView.contentSize.width) * CGFloat(numberOfImages))
-        }
-    }
+    public var currentPage: Int = 0
 
     private var pageBeforeRotation: Int = 0
     private var currentIndexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
     private var currentCell: SwiftPhotoGalleryCell = SwiftPhotoGalleryCell()
-    private var viewBoundsSize: CGSize = CGSize() {
-        didSet {
-            println("viewBoundsSize: \(viewBoundsSize)")
-        }
-    }
 
     var pageControl:UIPageControl!
 
@@ -69,9 +60,9 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
 
 
-//    override public func viewWillLayoutSubviews() {
-//        super.viewWillLayoutSubviews()
-//
+    override public func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
 //        pageBeforeRotation = currentPage
 //
 //        let nextPageIndexPath = NSIndexPath(forItem: pageBeforeRotation + 1, inSection: 0)
@@ -89,8 +80,27 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 //        if let currentCell = self.imageCollectionView.cellForItemAtIndexPath(nextPageIndexPath) as? SwiftPhotoGalleryCell {
 //            currentCell.configureForNewImage()
 //        }
-//
-//    }
+
+    }
+
+
+    override public func viewDidLayoutSubviews() {
+//        let desiredIndexPath = NSIndexPath(forItem: currentPage, inSection: 0)
+//        imageCollectionView.reloadItemsAtIndexPaths([desiredIndexPath])
+
+        imageCollectionView.reloadData()
+
+//        if let currentCell = imageCollectionView.cellForItemAtIndexPath(desiredIndexPath) as? SwiftPhotoGalleryCell {
+//            currentCell.configureForNewImage()
+//        }
+
+//        if pageBeforeRotation > 0 {
+//            imageCollectionView.scrollToItemAtIndexPath(desiredIndexPath, atScrollPosition: .CenteredHorizontally, animated: true)
+//            imageCollectionView.reloadItemsAtIndexPaths([desiredIndexPath])
+//        }
+
+    }
+
 
 //    override public func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
 //        pageBeforeRotation = currentPage
@@ -134,21 +144,6 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 //        //imageCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: pageBeforeRotation, inSection: 0), atScrollPosition: .CenteredHorizontally, animated: false)
 //    }
 
-//    override public func viewDidLayoutSubviews() {
-//        let desiredIndexPath = NSIndexPath(forItem: currentPage, inSection: 0)
-//        imageCollectionView.reloadItemsAtIndexPaths([desiredIndexPath])
-
-//        if let currentCell = imageCollectionView.cellForItemAtIndexPath(desiredIndexPath) as? SwiftPhotoGalleryCell {
-//            currentCell.configureForNewImage()
-//        }
-
-//        if pageBeforeRotation > 0 {
-//            imageCollectionView.scrollToItemAtIndexPath(desiredIndexPath, atScrollPosition: .CenteredHorizontally, animated: true)
-//            imageCollectionView.reloadItemsAtIndexPaths([desiredIndexPath])
-//        }
-
-//    }
-
 
     public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
 
@@ -167,8 +162,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
             self.imageCollectionView.contentOffset = contentOffSet
 
             }, completion: { (context) -> Void in
-                //let desiredIndexPath = NSIndexPath(forItem: self.currentPage, inSection: 0)
-                //self.imageCollectionView.reloadItemsAtIndexPaths([desiredIndexPath])
+                self.imageCollectionView.reloadData()
         })
         
         flowLayout.invalidateLayout()
@@ -188,8 +182,6 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
         //view.backgroundColor = UIColor.grayColor()
 
-        //viewBoundsSize = view.bounds.size
-
         setupCollectionView()
         setupPageControl()
     }
@@ -206,7 +198,6 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         flowLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 0
-        //flowLayout.itemSize = viewBoundsSize
 
         imageCollectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
         imageCollectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -267,6 +258,10 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         return imageForPage!
     }
 
+    func getCurrentPage() -> Int {
+        return Int((imageCollectionView.contentOffset.x / imageCollectionView.contentSize.width) * CGFloat(numberOfImages))
+    }
+
 
     // MARK: UICollectionViewDataSource Methods
     public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -293,6 +288,8 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         //let visibleIndexes = imageCollectionView.indexPathsForVisibleItems()
         
         //currentPage = visibleIndexes.first?.item ?? 0
+
+        currentPage = getCurrentPage()
 
         // If the scroll animation ended, update the page control to reflect the current page we are on
         pageControl.currentPage = currentPage
@@ -324,6 +321,7 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
         imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
         scrollView = UIScrollView(frame: frame)
         scrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        scrollView.contentSize = CGSizeMake(50, 50)
 
         super.init(frame: frame)
 
