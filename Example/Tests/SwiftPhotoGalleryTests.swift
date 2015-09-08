@@ -59,7 +59,7 @@ class SwiftPhotoGalleryTests: XCTestCase {
         expect(currentPage).to(equal(0))
         expect(currentTimesAsked).to(equal(0))
 
-        testGallery.currentPage = 3
+        //testGallery.currentPage = 3
 
         expect(self.testGallery.currentPage).to(equal(3))
         expect(self.testHelper.timesAskedForImageInGallery[3]).to(beGreaterThan(currentTimesAsked))
