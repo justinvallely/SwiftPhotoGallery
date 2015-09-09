@@ -22,25 +22,22 @@ import UIKit
 
 public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
-    // MARK: Public Interface
-
     @IBOutlet public var dataSource:SwiftPhotoGalleryDataSource?
     @IBOutlet public var delegate:SwiftPhotoGalleryDelegate?
 
     public private(set) var imageCollectionView: UICollectionView!
-
     public var numberOfImages: Int = 0
-
     public var currentPage: Int = 0
 
     private var pageBeforeRotation: Int = 0
     private var currentIndexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
     private var currentCell: SwiftPhotoGalleryCell = SwiftPhotoGalleryCell()
+    private var pageControl:UIPageControl!
+    private var flowLayout:UICollectionViewFlowLayout = UICollectionViewFlowLayout()
 
-    var pageControl:UIPageControl!
-
-    var flowLayout:UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-
+    
+    // MARK: Public Interface
+    
     public init(delegate: SwiftPhotoGalleryDelegate, dataSource: SwiftPhotoGalleryDataSource) {
         super.init(nibName: nil, bundle: nil)
 
@@ -52,135 +49,33 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         super.init(coder: aDecoder)
     }
 
-//    override public func loadView() {
-//        super.loadView()
-//
-//        //view = UIView(frame: view.bounds)
-//    }
-
-
-
     override public func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-
-//        pageBeforeRotation = currentPage
-//
-//        let nextPageIndexPath = NSIndexPath(forItem: pageBeforeRotation + 1, inSection: 0)
-//        let thisPageIndexPath = NSIndexPath(forItem: pageBeforeRotation, inSection: 0)
-//        let previousPageIndexPath = NSIndexPath(forItem: pageBeforeRotation - 1, inSection: 0)
-//        println("nextPageIndexPath: \(nextPageIndexPath)")
-//        println("thisPageIndexPath: \(thisPageIndexPath)")
-//        println("previousPageIndexPath: \(previousPageIndexPath)")
-//
-//        println("pageBeforeRotation: \(pageBeforeRotation)")
-//
-//        //flowLayout.itemSize = view.bounds.size
-//
-//        //flowLayout.invalidateLayout()
-//        if let currentCell = self.imageCollectionView.cellForItemAtIndexPath(nextPageIndexPath) as? SwiftPhotoGalleryCell {
-//            currentCell.configureForNewImage()
-//        }
-
+        
+        pageBeforeRotation = currentPage
+        println("pageBeforeRotation: \(pageBeforeRotation)")
+        
+        flowLayout.itemSize = view.bounds.size
     }
-
-
+    
     override public func viewDidLayoutSubviews() {
-//        let desiredIndexPath = NSIndexPath(forItem: currentPage, inSection: 0)
-//        imageCollectionView.reloadItemsAtIndexPaths([desiredIndexPath])
-
-        imageCollectionView.reloadData()
-
-//        if let currentCell = imageCollectionView.cellForItemAtIndexPath(desiredIndexPath) as? SwiftPhotoGalleryCell {
-//            currentCell.configureForNewImage()
-//        }
-
-//        if pageBeforeRotation > 0 {
-//            imageCollectionView.scrollToItemAtIndexPath(desiredIndexPath, atScrollPosition: .CenteredHorizontally, animated: true)
-//            imageCollectionView.reloadItemsAtIndexPaths([desiredIndexPath])
-//        }
-
-    }
-
-
-//    override public func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-//        pageBeforeRotation = currentPage
-//
-//        flowLayout.itemSize = CGSize(width: imageCollectionView.frame.height, height: imageCollectionView.frame.width)
-//        flowLayout.invalidateLayout()
-//
-//        let currentCell = imageCollectionView.cellForItemAtIndexPath(NSIndexPath(forItem: currentPage, inSection: 0))
-//        let centerOfCell = currentCell?.center ?? CGPointZero
-//        let centerInSuperViewCoord = imageCollectionView?.superview?.convertPoint(centerOfCell, fromView: imageCollectionView!)
-//        imageCollectionView.center = centerInSuperViewCoord ?? imageCollectionView.center
-//
-////        view.addSubview(currentCell!)
-////
-////        var imageCollectionViewConstraints: [NSLayoutConstraint] = []
-////        imageCollectionViewConstraints.append(NSLayoutConstraint(item: currentCell!, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0))
-////        imageCollectionViewConstraints.append(NSLayoutConstraint(item: currentCell!, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: 0))
-////        imageCollectionViewConstraints.append(NSLayoutConstraint(item: currentCell!, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .Trailing, multiplier: 1, constant: 0))
-////        imageCollectionViewConstraints.append(NSLayoutConstraint(item: currentCell!, attribute: .Bottom, relatedBy: .Equal, toItem: view, attribute: .Bottom, multiplier: 1, constant: 0))
-////
-////        view.addConstraints(imageCollectionViewConstraints)
-//
-//    }
-
-//    override public func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
-//        //imageCollectionView.reloadData()
-//        imageCollectionView.performBatchUpdates(nil, completion: nil)
-//        flowLayout.itemSize = imageCollectionView.frame.size
-//        //let desiredIndexPath = NSIndexPath(forItem: pageBeforeRotation, inSection: 0)
-//        //imageCollectionView.reloadItemsAtIndexPaths([desiredIndexPath])
-//
-////        currentCell!.removeFromSuperview()
-//
-////        let desiredIndexPath = NSIndexPath(forItem: pageBeforeRotation, inSection: 0)
-////        if let currentCell = imageCollectionView.cellForItemAtIndexPath(desiredIndexPath) as? SwiftPhotoGalleryCell {
-////            currentCell.configureForNewImage()
-////        }
-//
-//
-////        flowLayout.finalizeCollectionViewUpdates()
-//        //imageCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: pageBeforeRotation, inSection: 0), atScrollPosition: .CenteredHorizontally, animated: false)
-//    }
-
-
-    public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-
-        // Calculate current page to update the content offset to the correct position when the orientation changes
-        // I take a copy of the currentPage variable, as it will be incorrectly calculated once we are in the animateAlongsideTransition block
-        // Because the contentSize will already be changed to reflect the new orientation
-        let theCurrentPage = Int(currentPage)
-
-        coordinator.animateAlongsideTransition({ (context) -> Void in
-
-            let contentOffSet:CGPoint
-            contentOffSet = CGPoint(x: Int(self.imageCollectionView.bounds.size.width) * theCurrentPage, y: 0)
-
-            self.imageCollectionView.contentOffset = contentOffSet
-
-            }, completion: { (context) -> Void in
-                self.imageCollectionView.reloadData()
-        })
+        let desiredIndexPath = NSIndexPath(forItem: pageBeforeRotation, inSection: 0)
         
-        flowLayout.invalidateLayout()
+        if pageBeforeRotation > 0 {
+            imageCollectionView.scrollToItemAtIndexPath(desiredIndexPath, atScrollPosition: .CenteredHorizontally, animated: false)
+            imageCollectionView.reloadItemsAtIndexPaths([desiredIndexPath])
+        }
+        
+        if let currentCell = imageCollectionView.cellForItemAtIndexPath(desiredIndexPath) as? SwiftPhotoGalleryCell {
+            currentCell.configureForNewImage()
+        }
         
     }
-
-
-    public func collectionView(imageCollectionView: UICollectionView, layout flowLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return imageCollectionView.bounds.size
-    }
-
     
     // MARK: Lifecycle methods
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-
-        //view.backgroundColor = UIColor.grayColor()
 
         setupCollectionView()
         setupPageControl()
@@ -258,7 +153,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         return imageForPage!
     }
 
-    func getCurrentPage() -> Int {
+    private func getCurrentPage() -> Int {
         return Int((imageCollectionView.contentOffset.x / imageCollectionView.contentSize.width) * CGFloat(numberOfImages))
     }
 
@@ -285,9 +180,6 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     // MARK: UICollectionViewDelegate Methods
     
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        //let visibleIndexes = imageCollectionView.indexPathsForVisibleItems()
-        
-        //currentPage = visibleIndexes.first?.item ?? 0
 
         currentPage = getCurrentPage()
 
@@ -312,8 +204,6 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
 
     private let scrollView: UIScrollView
     private let imageView: UIImageView
-    //static let colors = [UIColor.yellowColor(), UIColor.blueColor(), UIColor.redColor(), UIColor.brownColor(), UIColor.orangeColor()]
-    static var cellCount: Int = 0
 
     override init(frame: CGRect) {
 
@@ -321,12 +211,8 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
         imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
         scrollView = UIScrollView(frame: frame)
         scrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        scrollView.contentSize = CGSizeMake(50, 50)
-
+        
         super.init(frame: frame)
-
-        //scrollView.backgroundColor = SwiftPhotoGalleryCell.colors[SwiftPhotoGalleryCell.cellCount % SwiftPhotoGalleryCell.colors.count]
-        SwiftPhotoGalleryCell.cellCount++
 
         var scrollViewConstraints: [NSLayoutConstraint] = []
         var imageViewConstraints: [NSLayoutConstraint] = []
@@ -368,10 +254,6 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
     public func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return imageView
     }
-
-//    override func viewWillLayoutSubviews() {
-//        setZoomScale()
-//    }
 
     private func setZoomScale() {
         let imageViewSize = imageView.bounds.size
