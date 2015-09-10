@@ -44,6 +44,7 @@
 		8DE7F59B25EA5002F4D5711AAEBFB70A /* SwiftPhotoGallery-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E3D1CB6B8344A4F033954BCA198A3E6 /* SwiftPhotoGallery-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		91FA67166037824E1B8401EBE7D87432 /* SwiftPhotoGallery-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4621975CB22575144CDC35C5858022 /* SwiftPhotoGallery-dummy.m */; };
 		941CED0959A4D05183D43DA8F93BFDBA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C4CE936074E2F394F1ED7929356FCC9 /* Foundation.framework */; };
+		94C858001BA2345F00C44BF0 /* SwiftPhotoGalleryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C857FE1BA2341C00C44BF0 /* SwiftPhotoGalleryCell.swift */; };
 		972B3C16F00AAA0358CA00F62C8598B4 /* Stringers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235EE571BD9C953ED974AF885B0A4921 /* Stringers.swift */; };
 		9AA4C2CC36BE81EFBE361687E6F91CF0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C4CE936074E2F394F1ED7929356FCC9 /* Foundation.framework */; };
 		9F49DE3AAD369385B7E3DC1C4B63E021 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F2F2073BB173591BCE81291F1CE758 /* XCTest.framework */; };
@@ -150,6 +151,7 @@
 		88C254FD3B7C2D3CC1DD4F2C584C111C /* DSL+Wait.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DSL+Wait.swift"; path = "Nimble/DSL+Wait.swift"; sourceTree = "<group>"; };
 		8E83A4C484EE1F3E9427B8BCBF57E5C5 /* Pods-SwiftPhotoGallery_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-SwiftPhotoGallery_Example.modulemap"; sourceTree = "<group>"; };
 		92C7AB1DD45415A8EE15C7EE293018F3 /* EndWith.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EndWith.swift; path = Nimble/Matchers/EndWith.swift; sourceTree = "<group>"; };
+		94C857FE1BA2341C00C44BF0 /* SwiftPhotoGalleryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftPhotoGalleryCell.swift; sourceTree = "<group>"; };
 		98A741AD2589C6461260805F97057F79 /* BeIdenticalTo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeIdenticalTo.swift; path = Nimble/Matchers/BeIdenticalTo.swift; sourceTree = "<group>"; };
 		99BC1E7401DD2487E05BE26AC927AB90 /* DSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DSL.swift; path = Nimble/DSL.swift; sourceTree = "<group>"; };
 		9A9E3D7C79C9B578320A7F41302B8822 /* Pods-SwiftPhotoGallery_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SwiftPhotoGallery_Tests-umbrella.h"; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 			isa = PBXGroup;
 			children = (
 				3AE330976F84606D8B7F7D7660B95905 /* SwiftPhotoGallery.swift */,
+				94C857FE1BA2341C00C44BF0 /* SwiftPhotoGalleryCell.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -635,6 +638,7 @@
 			files = (
 				91FA67166037824E1B8401EBE7D87432 /* SwiftPhotoGallery-dummy.m in Sources */,
 				775E3963406BFD7DFE299C190B055A60 /* SwiftPhotoGallery.swift in Sources */,
+				94C858001BA2345F00C44BF0 /* SwiftPhotoGalleryCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

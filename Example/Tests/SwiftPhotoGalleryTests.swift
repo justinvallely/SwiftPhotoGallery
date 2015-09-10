@@ -86,7 +86,7 @@ class SwiftPhotoGalleryTests: XCTestCase {
 
         let singleTap = UITapGestureRecognizer()
 
-        testGallery.handleSingleTap(singleTap)
+        testGallery.singleTapAction(singleTap)
 
         expect(self.testHelper.didTellDelegateTapToClose).to(equal(true))
     }

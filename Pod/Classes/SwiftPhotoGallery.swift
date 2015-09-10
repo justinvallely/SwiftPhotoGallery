@@ -205,118 +205,14 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     private func setupGestureRecognizer() {
 
-        let singleTap = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
+        let singleTap = UITapGestureRecognizer(target: self, action: "singleTapAction:")
         singleTap.numberOfTapsRequired = 1
         singleTap.delegate = self
         imageCollectionView.addGestureRecognizer(singleTap)
     }
 
-    public func handleSingleTap(recognizer: UITapGestureRecognizer) {
+    public func singleTapAction(recognizer: UITapGestureRecognizer) {
         delegate?.galleryDidTapToClose(self)
     }
-}
-
-/*******************************************************************************************************************************/
-
-    // MARK: ------ SwiftPhotoGalleryCell ------
-
-public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
-
-    var image:UIImage? {
-        didSet {
-            configureForNewImage()
-        }
-    }
-
-    public var scrollView: UIScrollView
-    private let imageView: UIImageView
-
-    override init(frame: CGRect) {
-
-        imageView = UIImageView()
-        imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        scrollView = UIScrollView(frame: frame)
-        scrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        
-        super.init(frame: frame)
-        var scrollViewConstraints: [NSLayoutConstraint] = []
-        var imageViewConstraints: [NSLayoutConstraint] = []
-
-        scrollViewConstraints.append(NSLayoutConstraint(item: scrollView, attribute: .Leading, relatedBy: .Equal, toItem: contentView, attribute: .Leading, multiplier: 1, constant: 0))
-        scrollViewConstraints.append(NSLayoutConstraint(item: scrollView, attribute: .Top, relatedBy: .Equal, toItem: contentView, attribute: .Top, multiplier: 1, constant: 0))
-        scrollViewConstraints.append(NSLayoutConstraint(item: scrollView, attribute: .Trailing, relatedBy: .Equal, toItem: contentView, attribute: .Trailing, multiplier: 1, constant: 0))
-        scrollViewConstraints.append(NSLayoutConstraint(item: scrollView, attribute: .Bottom, relatedBy: .Equal, toItem: contentView, attribute: .Bottom, multiplier: 1, constant: 0))
-
-        contentView.addSubview(scrollView)
-        contentView.addConstraints(scrollViewConstraints)
-
-        imageViewConstraints.append(NSLayoutConstraint(item: imageView, attribute: .Leading, relatedBy: .Equal, toItem: scrollView, attribute: .Leading, multiplier: 1, constant: 0))
-        imageViewConstraints.append(NSLayoutConstraint(item: imageView, attribute: .Top, relatedBy: .Equal, toItem: scrollView, attribute: .Top, multiplier: 1, constant: 0))
-        imageViewConstraints.append(NSLayoutConstraint(item: imageView, attribute: .Trailing, relatedBy: .Equal, toItem: scrollView, attribute: .Trailing, multiplier: 1, constant: 0))
-        imageViewConstraints.append(NSLayoutConstraint(item: imageView, attribute: .Bottom, relatedBy: .Equal, toItem: scrollView, attribute: .Bottom, multiplier: 1, constant: 0))
-
-        scrollView.addSubview(imageView)
-        scrollView.addConstraints(imageViewConstraints)
-
-        scrollView.delegate = self
-
-        setupGestureRecognizer()
-    }
-
-    required public init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func configureForNewImage() {
-        imageView.image = image
-        imageView.sizeToFit()
-        setZoomScale()
-        scrollViewDidZoom(scrollView)
-    }
-
-    // MARK: Zoom Handlers
-
-    public func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
-        return imageView
-    }
-
-    private func setZoomScale() {
-        let imageViewSize = imageView.bounds.size
-        let scrollViewSize = scrollView.bounds.size
-        let widthScale = scrollViewSize.width / imageViewSize.width
-        let heightScale = scrollViewSize.height / imageViewSize.height
-
-        scrollView.minimumZoomScale = min(widthScale, heightScale)
-        scrollView.setZoomScale(scrollView.minimumZoomScale, animated: false)
-    }
-
-    private func scrollViewDidZoom(scrollView: UIScrollView) {
-        let imageViewSize = imageView.frame.size
-        let scrollViewSize = scrollView.bounds.size
-
-        let verticalPadding = imageViewSize.height < scrollViewSize.height ? (scrollViewSize.height - imageViewSize.height) / 2 : 0
-        let horizontalPadding = imageViewSize.width < scrollViewSize.width ? (scrollViewSize.width - imageViewSize.width) / 2 : 0
-
-        scrollView.contentInset = UIEdgeInsets(top: verticalPadding, left: horizontalPadding, bottom: verticalPadding, right: horizontalPadding)
-    }
-
-    // MARK: Gesture Handlers
-
-    private func setupGestureRecognizer() {
-
-        let doubleTap = UITapGestureRecognizer(target: self, action: "handleDoubleTap:")
-        doubleTap.numberOfTapsRequired = 2
-        self.addGestureRecognizer(doubleTap)
-    }
-
-    public func handleDoubleTap(recognizer: UITapGestureRecognizer) {
-        
-        if (scrollView.zoomScale > scrollView.minimumZoomScale) {
-            scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
-        } else {
-            scrollView.setZoomScale(scrollView.maximumZoomScale, animated: true)
-        }
-    }
-
 }
 
