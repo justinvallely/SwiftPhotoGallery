@@ -1,0 +1,17 @@
+PODS:
+  - Nimble (1.0.0)
+  - SwiftPhotoGallery (0.1.0)
+
+DEPENDENCIES:
+  - Nimble (~> 1.0.0)
+  - SwiftPhotoGallery (from `../`)
+
+EXTERNAL SOURCES:
+  SwiftPhotoGallery:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Nimble: 8bee528e5fcc403653076545db562d2b5db7bb87
+  SwiftPhotoGallery: 137c77afdbefe7fbf6eb1178a4b71919d629bda9
+
+COCOAPODS: 0.38.2
