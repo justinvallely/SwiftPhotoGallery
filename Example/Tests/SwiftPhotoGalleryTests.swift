@@ -7,7 +7,6 @@ class SwiftPhotoGalleryTests: XCTestCase {
 
     var testGallery:SwiftPhotoGallery!
     var testHelper:SwiftPhotoGalleryTestHelper!
-//    var testCell:SwiftPhotoGalleryCell!
 
     override func setUp() {
         super.setUp()
@@ -16,7 +15,6 @@ class SwiftPhotoGalleryTests: XCTestCase {
 
         testHelper = SwiftPhotoGalleryTestHelper()
         testGallery = SwiftPhotoGallery(delegate: testHelper, dataSource: testHelper)
-//        testCell = SwiftPhotoGalleryCell()
     }
 
     override func tearDown() {
@@ -56,29 +54,6 @@ class SwiftPhotoGalleryTests: XCTestCase {
         expect(self.testHelper.timesAskedForImageInGallery[1]).to(beGreaterThan(0))
     }
 
-//    func testSetCurrentPage() {
-//        testGallery.loadView()
-//        testGallery.viewDidLoad()
-////        testGallery.imageCollectionView.reloadData()
-//
-//        let currentPage = testGallery.currentPage
-//        let currentOffset = testGallery.imageCollectionView.contentOffset.x ?? 0
-//        let currentTimesAsked = testHelper.timesAskedForImageInGallery[3] ?? 0
-//        let indexPath = NSIndexPath(forItem: 3, inSection: 0)
-//
-//        expect(currentPage).to(equal(0))
-//        expect(currentTimesAsked).to(equal(0))
-//        expect(currentOffset).to(equal(0))
-//
-//        testGallery.currentPage = 3
-//        expect(self.testGallery.currentPage).to(equal(3))
-//
-//        testGallery.imageCollectionView.reloadItemsAtIndexPaths([indexPath])
-//
-//        expect(self.testHelper.timesAskedForImageInGallery[3]).to(beGreaterThan(currentTimesAsked))
-//        expect(self.testGallery.imageCollectionView.contentOffset.x).to(beGreaterThan(currentOffset))
-//    }
-
     func testSetDataSourceReloadsImages() {
         let newDataSource = SwiftPhotoGalleryTestHelper()
 
@@ -115,31 +90,6 @@ class SwiftPhotoGalleryTests: XCTestCase {
 
         expect(self.testHelper.didTellDelegateTapToClose).to(equal(true))
     }
-
-//    func testDoubleTapZoomsInAndOut() {
-//        testGallery.viewDidLoad()
-//
-//        let indexPath = NSIndexPath(forItem: testGallery.currentPage, inSection: 0)
-//        testGallery.imageCollectionView.reloadItemsAtIndexPaths([indexPath])
-//
-//        let currentCell:SwiftPhotoGalleryCell = testGallery.imageCollectionView.cellForItemAtIndexPath(indexPath) as! SwiftPhotoGalleryCell
-//
-//        let currentZoomScale = currentCell.scrollView.zoomScale
-//
-//        let doubleTap = UITapGestureRecognizer()
-//
-//        // Simulate zoom in
-//        testCell.handleDoubleTap(doubleTap)
-//
-//        expect(currentCell.scrollView.zoomScale).to(beGreaterThan(currentZoomScale))
-//
-//        // Simulate zoom out
-//        testCell.handleDoubleTap(doubleTap)
-//
-//        expect(currentCell.scrollView.zoomScale).to(equal(currentZoomScale))
-//
-//    }
-//
 }
 
 class SwiftPhotoGalleryTestHelper: SwiftPhotoGalleryDelegate, SwiftPhotoGalleryDataSource {
