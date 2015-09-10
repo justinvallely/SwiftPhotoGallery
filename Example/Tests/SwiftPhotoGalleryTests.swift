@@ -44,26 +44,36 @@ class SwiftPhotoGalleryTests: XCTestCase {
     }
 
     func testFirstImagesLoadedAfterInitialization() {
+        let indexPath = NSIndexPath(forItem: 0, inSection: 0)
+
         testGallery.viewDidLoad()
+        testGallery.imageCollectionView.reloadItemsAtIndexPaths([indexPath])
 
         expect(self.testHelper.timesAskedForImageInGallery[0]).to(beGreaterThan(0))
         expect(self.testHelper.timesAskedForImageInGallery[1]).to(beGreaterThan(0))
     }
 
     func testSetCurrentPage() {
+        testGallery.loadView()
+        testGallery.viewDidLoad()
+//        testGallery.imageCollectionView.reloadData()
 
         let currentPage = testGallery.currentPage
-        let currentOffset = testGallery.imageCollectionView?.contentOffset.x ?? 0
+        let currentOffset = testGallery.imageCollectionView.contentOffset.x ?? 0
         let currentTimesAsked = testHelper.timesAskedForImageInGallery[3] ?? 0
+        let indexPath = NSIndexPath(forItem: 3, inSection: 0)
 
         expect(currentPage).to(equal(0))
         expect(currentTimesAsked).to(equal(0))
+        expect(currentOffset).to(equal(0))
 
-        //testGallery.currentPage = 3
-
+        testGallery.currentPage = 3
         expect(self.testGallery.currentPage).to(equal(3))
+
+        testGallery.imageCollectionView.reloadItemsAtIndexPaths([indexPath])
+
         expect(self.testHelper.timesAskedForImageInGallery[3]).to(beGreaterThan(currentTimesAsked))
-        expect(self.testGallery.imageCollectionView?.contentOffset.x ?? 0).to(beGreaterThan(currentOffset))
+        expect(self.testGallery.imageCollectionView.contentOffset.x).to(beGreaterThan(currentOffset))
     }
 
     func testSetDataSourceReloadsImages() {
@@ -132,7 +142,7 @@ class SwiftPhotoGalleryTestHelper: SwiftPhotoGalleryDelegate, SwiftPhotoGalleryD
             timesAskedForImageInGallery[forIndex] = 1
         }
 
-        let imageNames = ["image.png", "pano.jpg", "slide1@3x.png", "slide2@3x.png", "slide3@3x.png", "slide4@3x.png"]
+        let imageNames = ["image1.jpeg", "image2.jpeg", "image3.jpeg", "image4.jpeg", "image5.jpeg", "image6.jpeg"]
 
         return UIImage(named: imageNames[forIndex])
     }

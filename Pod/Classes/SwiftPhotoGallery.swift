@@ -27,12 +27,25 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     public private(set) var imageCollectionView: UICollectionView!
     public var numberOfImages: Int = 0
-    public var currentPage: Int = 0
+
+    public var currentPage: Int {
+        set(page) {
+            imageCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: page, inSection: 0), atScrollPosition: .CenteredHorizontally, animated: false)
+            println("page: \(page)")
+        }
+
+        get {
+            var foo = Int((imageCollectionView.contentOffset.x / imageCollectionView.contentSize.width) * CGFloat(numberOfImages))
+            println("foo: \(foo)")
+            return Int((imageCollectionView.contentOffset.x / imageCollectionView.contentSize.width) * CGFloat(numberOfImages))
+        }
+
+    }
 
     private var pageBeforeRotation: Int = 0
     private var currentIndexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
     private var currentCell: SwiftPhotoGalleryCell = SwiftPhotoGalleryCell()
-    private var pageControl:UIPageControl!
+    public var pageControl:UIPageControl!
     private var flowLayout:UICollectionViewFlowLayout = UICollectionViewFlowLayout()
 
     
@@ -94,17 +107,13 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 0
 
+        // Set up collection view
         imageCollectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
         imageCollectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
-
-        numberOfImages = collectionView(imageCollectionView, numberOfItemsInSection: 0)
-
-        // Set up collection view
         imageCollectionView.registerClass(SwiftPhotoGalleryCell.self, forCellWithReuseIdentifier: "SwiftPhotoGalleryCell")
         imageCollectionView.dataSource = self
         imageCollectionView.delegate = self
         imageCollectionView.pagingEnabled = true
-        //imageCollectionView.backgroundColor = UIColor.cyanColor()
 
         // Set up collection view constraints
         var imageCollectionViewConstraints: [NSLayoutConstraint] = []
@@ -115,6 +124,10 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
         view.addSubview(imageCollectionView)
         view.addConstraints(imageCollectionViewConstraints)
+
+        numberOfImages = collectionView(imageCollectionView, numberOfItemsInSection: 0)
+
+        imageCollectionView.contentSize = CGSize(width: 1000.0, height: 1.0)
     }
 
     private func setupPageControl() {
@@ -122,8 +135,14 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         pageControl = UIPageControl()
         pageControl.setTranslatesAutoresizingMaskIntoConstraints(false)
 
+        pageControl.numberOfPages = numberOfImages
         pageControl.currentPage = 0
-        pageControl.currentPageIndicatorTintColor = UIColor.blueColor()
+
+        let inspiratoBlue: UIColor = UIColor(red: 0.0, green: 0.66, blue: 0.875, alpha: 1.0)
+        pageControl.currentPageIndicatorTintColor = inspiratoBlue
+
+        //let inspiratoBlueDim: UIColor = UIColor(red: 0.0, green: 0.66, blue: 0.875, alpha: 0.25)
+        //pageControl.pageIndicatorTintColor = inspiratoBlueDim
 
         pageControl.hidden = false
         view.addSubview(pageControl)
@@ -148,13 +167,9 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         
     }
 
-    func getImage(currentPage: Int) -> UIImage {
+    private func getImage(currentPage: Int) -> UIImage {
         var imageForPage = dataSource?.imageInGallery(self, forIndex: currentPage)
         return imageForPage!
-    }
-
-    private func getCurrentPage() -> Int {
-        return Int((imageCollectionView.contentOffset.x / imageCollectionView.contentSize.width) * CGFloat(numberOfImages))
     }
 
 
@@ -169,7 +184,6 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     public func collectionView(imageCollectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var cell: SwiftPhotoGalleryCell = imageCollectionView.dequeueReusableCellWithReuseIdentifier("SwiftPhotoGalleryCell", forIndexPath: indexPath) as! SwiftPhotoGalleryCell
-        //cell.setTranslatesAutoresizingMaskIntoConstraints(false)
 
         cell.image = getImage(indexPath.row)
 
@@ -181,11 +195,9 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
 
-        currentPage = getCurrentPage()
-
         // If the scroll animation ended, update the page control to reflect the current page we are on
         pageControl.currentPage = currentPage
-        println("currentPage: \(currentPage)")
+        println("currentPage: \(currentPage + 1)")
 
     }
 }
