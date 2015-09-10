@@ -20,32 +20,21 @@ import UIKit
 
     // MARK: ------ SwiftPhotoGallery ------
 
-public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIGestureRecognizerDelegate {
 
-    @IBOutlet public var dataSource:SwiftPhotoGalleryDataSource?
-    @IBOutlet public var delegate:SwiftPhotoGalleryDelegate?
+    @IBOutlet public var dataSource: SwiftPhotoGalleryDataSource?
+    @IBOutlet public var delegate: SwiftPhotoGalleryDelegate?
 
     public private(set) var imageCollectionView: UICollectionView!
     public var numberOfImages: Int = 0
 
     public var currentPage: Int {
-        set(page) {
-            imageCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: page, inSection: 0), atScrollPosition: .CenteredHorizontally, animated: false)
-            println("page: \(page)")
-        }
-
-        get {
-            var foo = Int((imageCollectionView.contentOffset.x / imageCollectionView.contentSize.width) * CGFloat(numberOfImages))
-            println("foo: \(foo)")
-            return Int((imageCollectionView.contentOffset.x / imageCollectionView.contentSize.width) * CGFloat(numberOfImages))
-        }
-
+        return Int((imageCollectionView.contentOffset.x / imageCollectionView.contentSize.width) * CGFloat(numberOfImages))
     }
 
     private var pageBeforeRotation: Int = 0
     private var currentIndexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
-    private var currentCell: SwiftPhotoGalleryCell = SwiftPhotoGalleryCell()
-    public var pageControl:UIPageControl!
+    private var pageControl:UIPageControl!
     private var flowLayout:UICollectionViewFlowLayout = UICollectionViewFlowLayout()
 
     
@@ -66,7 +55,6 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         super.viewWillLayoutSubviews()
         
         pageBeforeRotation = currentPage
-        println("pageBeforeRotation: \(pageBeforeRotation)")
         
         flowLayout.itemSize = view.bounds.size
     }
@@ -76,15 +64,17 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         
         if pageBeforeRotation > 0 {
             imageCollectionView.scrollToItemAtIndexPath(desiredIndexPath, atScrollPosition: .CenteredHorizontally, animated: false)
-            imageCollectionView.reloadItemsAtIndexPaths([desiredIndexPath])
         }
         
+        imageCollectionView.reloadItemsAtIndexPaths([desiredIndexPath])
+
         if let currentCell = imageCollectionView.cellForItemAtIndexPath(desiredIndexPath) as? SwiftPhotoGalleryCell {
             currentCell.configureForNewImage()
         }
         
     }
-    
+
+
     // MARK: Lifecycle methods
 
     override public func viewDidLoad() {
@@ -92,6 +82,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
         setupCollectionView()
         setupPageControl()
+        setupGestureRecognizer()
     }
 
     public override func didReceiveMemoryWarning() {
@@ -197,8 +188,31 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
         // If the scroll animation ended, update the page control to reflect the current page we are on
         pageControl.currentPage = currentPage
-        println("currentPage: \(currentPage + 1)")
+    }
 
+
+    // MARK: UIGestureRecognizerDelegate Methods
+
+    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOfGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return otherGestureRecognizer is UITapGestureRecognizer &&
+            gestureRecognizer is UITapGestureRecognizer &&
+            otherGestureRecognizer.view is SwiftPhotoGalleryCell &&
+            gestureRecognizer.view == imageCollectionView
+    }
+
+
+    // MARK: Gesture Handlers
+
+    private func setupGestureRecognizer() {
+
+        let singleTap = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
+        singleTap.numberOfTapsRequired = 1
+        singleTap.delegate = self
+        imageCollectionView.addGestureRecognizer(singleTap)
+    }
+
+    public func handleSingleTap(recognizer: UITapGestureRecognizer) {
+        delegate?.galleryDidTapToClose(self)
     }
 }
 
@@ -214,7 +228,7 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
         }
     }
 
-    private let scrollView: UIScrollView
+    public var scrollView: UIScrollView
     private let imageView: UIImageView
 
     override init(frame: CGRect) {
@@ -225,7 +239,6 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
         scrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
         
         super.init(frame: frame)
-
         var scrollViewConstraints: [NSLayoutConstraint] = []
         var imageViewConstraints: [NSLayoutConstraint] = []
 
@@ -274,7 +287,7 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
         let heightScale = scrollViewSize.height / imageViewSize.height
 
         scrollView.minimumZoomScale = min(widthScale, heightScale)
-        scrollView.zoomScale = scrollView.minimumZoomScale
+        scrollView.setZoomScale(scrollView.minimumZoomScale, animated: false)
     }
 
     private func scrollViewDidZoom(scrollView: UIScrollView) {
@@ -291,29 +304,12 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
 
     private func setupGestureRecognizer() {
 
-        let tripleTap = UITapGestureRecognizer(target: self, action: "handleTripleTap:")
-        tripleTap.numberOfTapsRequired = 3
-        scrollView.addGestureRecognizer(tripleTap)
-
         let doubleTap = UITapGestureRecognizer(target: self, action: "handleDoubleTap:")
         doubleTap.numberOfTapsRequired = 2
-        scrollView.addGestureRecognizer(doubleTap)
-
-        let singleTap = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
-        singleTap.numberOfTapsRequired = 1
-        singleTap.requireGestureRecognizerToFail(doubleTap)
-        scrollView.addGestureRecognizer(singleTap)
-
-    }
-
-    public func handleSingleTap(recognizer: UITapGestureRecognizer) {
-        //delegate?.galleryDidTapToClose(self)
-        println("SINGLE tap")
+        self.addGestureRecognizer(doubleTap)
     }
 
     public func handleDoubleTap(recognizer: UITapGestureRecognizer) {
-
-        println("DOUBLE tap")
         
         if (scrollView.zoomScale > scrollView.minimumZoomScale) {
             scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
@@ -322,12 +318,5 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
         }
     }
 
-    public func handleTripleTap(recognizer: UITapGestureRecognizer) {
-        println("TRIPLE tap")
-    }
 }
-
-
-
-
 
