@@ -25,11 +25,16 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     @IBOutlet public var dataSource: SwiftPhotoGalleryDataSource?
     @IBOutlet public var delegate: SwiftPhotoGalleryDelegate?
 
-    public private(set) var imageCollectionView: UICollectionView!
+    public var imageCollectionView: UICollectionView!
     public var numberOfImages: Int = 0
 
     public var currentPage: Int {
-        return Int((imageCollectionView.contentOffset.x / imageCollectionView.contentSize.width) * CGFloat(numberOfImages))
+        set(page) {
+            imageCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: page, inSection: 0), atScrollPosition: .CenteredHorizontally, animated: false)
+        }
+        get {
+            return Int((imageCollectionView.contentOffset.x / imageCollectionView.contentSize.width) * CGFloat(numberOfImages))
+        }
     }
 
     private var pageBeforeRotation: Int = 0
@@ -51,21 +56,38 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         super.init(coder: aDecoder)
     }
 
-    override public func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        pageBeforeRotation = currentPage
-        
-        flowLayout.itemSize = view.bounds.size
+    public func reload(imageIndexes:Int...) {
+
+        if imageIndexes.isEmpty {
+
+            imageCollectionView.reloadData()
+
+        } else {
+
+            var indexPaths: [NSIndexPath] = imageIndexes.map({NSIndexPath(forItem: $0, inSection: 0)})
+
+            imageCollectionView.reloadItemsAtIndexPaths(indexPaths)
+        }
     }
     
+
+    // MARK: Lifecycle methods
+
+    override public func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        pageBeforeRotation = currentPage
+
+        flowLayout.itemSize = view.bounds.size
+    }
+
     override public func viewDidLayoutSubviews() {
         let desiredIndexPath = NSIndexPath(forItem: pageBeforeRotation, inSection: 0)
-        
+
         if pageBeforeRotation > 0 {
             imageCollectionView.scrollToItemAtIndexPath(desiredIndexPath, atScrollPosition: .CenteredHorizontally, animated: false)
         }
-        
+
         imageCollectionView.reloadItemsAtIndexPaths([desiredIndexPath])
 
         if let currentCell = imageCollectionView.cellForItemAtIndexPath(desiredIndexPath) as? SwiftPhotoGalleryCell {
@@ -73,9 +95,6 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         }
         
     }
-
-
-    // MARK: Lifecycle methods
 
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -87,6 +106,73 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+
+
+    // MARK: Rotation Handling
+
+    override public func supportedInterfaceOrientations() -> Int {
+        return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
+    }
+
+    override public func shouldAutorotate() -> Bool {
+        return true
+    }
+
+    override public func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
+        return UIInterfaceOrientation.Portrait
+    }
+
+
+    // MARK: UICollectionViewDataSource Methods
+    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    public func collectionView(imageCollectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dataSource?.numberOfImagesInGallery(self) ?? 0
+    }
+
+    public func collectionView(imageCollectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        var cell: SwiftPhotoGalleryCell = imageCollectionView.dequeueReusableCellWithReuseIdentifier("SwiftPhotoGalleryCell", forIndexPath: indexPath) as! SwiftPhotoGalleryCell
+
+        cell.image = getImage(indexPath.row)
+
+        return cell
+    }
+
+
+    // MARK: UICollectionViewDelegate Methods
+    
+    public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+
+        // If the scroll animation ended, update the page control to reflect the current page we are on
+        pageControl.currentPage = currentPage
+    }
+
+
+    // MARK: UIGestureRecognizerDelegate Methods
+
+    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOfGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return otherGestureRecognizer is UITapGestureRecognizer &&
+            gestureRecognizer is UITapGestureRecognizer &&
+            otherGestureRecognizer.view is SwiftPhotoGalleryCell &&
+            gestureRecognizer.view == imageCollectionView
+    }
+
+
+    // MARK: Gesture Handlers
+
+    private func setupGestureRecognizer() {
+
+        let singleTap = UITapGestureRecognizer(target: self, action: "singleTapAction:")
+        singleTap.numberOfTapsRequired = 1
+        singleTap.delegate = self
+        imageCollectionView.addGestureRecognizer(singleTap)
+    }
+
+    public func singleTapAction(recognizer: UITapGestureRecognizer) {
+        delegate?.galleryDidTapToClose(self)
     }
 
 
@@ -155,64 +241,14 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
             constant: -5)
 
         view.addConstraints([centerXConstraint, bottomConstraint])
-        
+
     }
 
     private func getImage(currentPage: Int) -> UIImage {
         var imageForPage = dataSource?.imageInGallery(self, forIndex: currentPage)
         return imageForPage!
     }
-
-
-    // MARK: UICollectionViewDataSource Methods
-    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 1
-    }
-
-    public func collectionView(imageCollectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource?.numberOfImagesInGallery(self) ?? 0
-    }
-
-    public func collectionView(imageCollectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell: SwiftPhotoGalleryCell = imageCollectionView.dequeueReusableCellWithReuseIdentifier("SwiftPhotoGalleryCell", forIndexPath: indexPath) as! SwiftPhotoGalleryCell
-
-        cell.image = getImage(indexPath.row)
-
-        return cell
-    }
-
-
-    // MARK: UICollectionViewDelegate Methods
     
-    public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
 
-        // If the scroll animation ended, update the page control to reflect the current page we are on
-        pageControl.currentPage = currentPage
-    }
-
-
-    // MARK: UIGestureRecognizerDelegate Methods
-
-    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOfGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return otherGestureRecognizer is UITapGestureRecognizer &&
-            gestureRecognizer is UITapGestureRecognizer &&
-            otherGestureRecognizer.view is SwiftPhotoGalleryCell &&
-            gestureRecognizer.view == imageCollectionView
-    }
-
-
-    // MARK: Gesture Handlers
-
-    private func setupGestureRecognizer() {
-
-        let singleTap = UITapGestureRecognizer(target: self, action: "singleTapAction:")
-        singleTap.numberOfTapsRequired = 1
-        singleTap.delegate = self
-        imageCollectionView.addGestureRecognizer(singleTap)
-    }
-
-    public func singleTapAction(recognizer: UITapGestureRecognizer) {
-        delegate?.galleryDidTapToClose(self)
-    }
 }
 
