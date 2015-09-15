@@ -58,18 +58,16 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     public func reload(imageIndexes:Int...) {
 
-        if imageIndexes.count > 0 {
-            var indexPaths: [NSIndexPath] = []
-            for imageIndex in imageIndexes {
-                indexPaths.append(NSIndexPath(forItem: imageIndex, inSection: 0))
-            }
+        if imageIndexes.isEmpty {
+
+            imageCollectionView.reloadData()
+
+        } else {
+
+            var indexPaths: [NSIndexPath] = imageIndexes.map({NSIndexPath(forItem: $0, inSection: 0)})
 
             imageCollectionView.reloadItemsAtIndexPaths(indexPaths)
-        } else {
-            imageCollectionView.reloadData()
         }
-
-        
     }
     
 
