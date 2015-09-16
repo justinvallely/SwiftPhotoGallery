@@ -143,11 +143,20 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
 
     // MARK: UICollectionViewDelegate Methods
+
+    public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        pageControl.alpha = 1.0
+    }
     
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
 
         // If the scroll animation ended, update the page control to reflect the current page we are on
         pageControl.currentPage = currentPage
+
+        // Auto-hide the pageControl
+        UIScrollView.animateWithDuration(1.0, delay: 2.0, options: nil, animations: { () -> Void in
+            self.pageControl.alpha = 0.0
+            }, completion: nil)
     }
 
 
