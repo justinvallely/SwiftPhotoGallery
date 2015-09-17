@@ -28,9 +28,16 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     public var imageCollectionView: UICollectionView!
     public var numberOfImages: Int = 0
 
+    public var backgroundColor: UIColor = UIColor.blackColor()
+
     public var currentPage: Int {
         set(page) {
-            imageCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: page, inSection: 0), atScrollPosition: .CenteredHorizontally, animated: false)
+            if page <= numberOfImages - 1 {
+                imageCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: page, inSection: 0), atScrollPosition: .CenteredHorizontally, animated: false)
+            } else {
+                imageCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: numberOfImages - 1, inSection: 0), atScrollPosition: .CenteredHorizontally, animated: false)
+            }
+            scrollViewDidEndDecelerating(imageCollectionView)
         }
         get {
             return Int((imageCollectionView.contentOffset.x / imageCollectionView.contentSize.width) * CGFloat(numberOfImages))
@@ -119,10 +126,6 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         return true
     }
 
-    override public func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
-        return UIInterfaceOrientation.Portrait
-    }
-
 
     // MARK: UICollectionViewDataSource Methods
     public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -145,18 +148,18 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     // MARK: UICollectionViewDelegate Methods
 
     public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+
         pageControl.alpha = 1.0
     }
-    
+
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
 
         // If the scroll animation ended, update the page control to reflect the current page we are on
-        pageControl.currentPage = currentPage
+        pageControl?.currentPage = currentPage
 
-        // Auto-hide the pageControl
-        UIScrollView.animateWithDuration(1.0, delay: 2.0, options: nil, animations: { () -> Void in
-            self.pageControl.alpha = 0.0
-            }, completion: nil)
+        UIView.animateWithDuration(1.0, delay: 2.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+            self.pageControl?.alpha = 0.0
+        }, completion: nil)
     }
 
 
@@ -187,6 +190,9 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     // MARK: Private Methods / Properties
 
+    private var bottomConstraint: NSLayoutConstraint?
+    private var centerXConstraint: NSLayoutConstraint?
+
     private func setupCollectionView() {
         // Set up flow layout
         flowLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
@@ -200,6 +206,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         imageCollectionView.dataSource = self
         imageCollectionView.delegate = self
         imageCollectionView.pagingEnabled = true
+        imageCollectionView.backgroundColor = backgroundColor
 
         // Set up collection view constraints
         var imageCollectionViewConstraints: [NSLayoutConstraint] = []
@@ -230,10 +237,12 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         //let inspiratoBlueDim: UIColor = UIColor(red: 0.0, green: 0.66, blue: 0.875, alpha: 0.25)
         //pageControl.pageIndicatorTintColor = inspiratoBlueDim
 
+        pageControl.alpha = 1
         pageControl.hidden = false
+
         view.addSubview(pageControl)
 
-        let centerXConstraint = NSLayoutConstraint(item: pageControl,
+        centerXConstraint = NSLayoutConstraint(item: pageControl,
             attribute: NSLayoutAttribute.CenterX,
             relatedBy: NSLayoutRelation.Equal,
             toItem: view,
@@ -241,15 +250,15 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
             multiplier: 1.0,
             constant: 0)
 
-        let bottomConstraint = NSLayoutConstraint(item: pageControl,
+        bottomConstraint = NSLayoutConstraint(item: view,
             attribute: NSLayoutAttribute.Bottom,
             relatedBy: NSLayoutRelation.Equal,
-            toItem: view,
+            toItem: pageControl,
             attribute: NSLayoutAttribute.Bottom,
             multiplier: 1.0,
-            constant: -5)
+            constant: 15)
 
-        view.addConstraints([centerXConstraint, bottomConstraint])
+        view.addConstraints([centerXConstraint!, bottomConstraint!])
 
     }
 
