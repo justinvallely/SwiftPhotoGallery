@@ -32,10 +32,10 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     public var currentPage: Int {
         set(page) {
-            if page <= numberOfImages - 1 {
+            if page < numberOfImages {
                 imageCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: page, inSection: 0), atScrollPosition: .CenteredHorizontally, animated: false)
             } else {
-                imageCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: numberOfImages - 1, inSection: 0), atScrollPosition: .CenteredHorizontally, animated: false)
+                imageCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: numberOfImages, inSection: 0), atScrollPosition: .CenteredHorizontally, animated: false)
             }
             scrollViewDidEndDecelerating(imageCollectionView)
         }
