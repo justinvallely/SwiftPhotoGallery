@@ -134,12 +134,13 @@ class SwiftPhotoGalleryTests: XCTestCase {
     }
     
     func testSetBackgroundColor() {
-        
-        let originalColor = testGallery.backgroundColor
+
+        expect(self.testGallery.backgroundColor).to(equal(UIColor.blackColor()))
         
         testGallery.backgroundColor = UIColor.orangeColor()
         
-        expect(self.testGallery.backgroundColor).toNot(equal(originalColor))
+        expect(self.testGallery.backgroundColor).to(equal(UIColor.orangeColor()))
+        expect(self.testGallery.view.backgroundColor).to(equal(self.testGallery.backgroundColor))
     }
 
 }

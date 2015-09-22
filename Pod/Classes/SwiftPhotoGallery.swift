@@ -27,15 +27,17 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     public lazy var imageCollectionView: UICollectionView = self.setupCollectionView()
     
-    public var numberOfImages: Int = 0
+    public var numberOfImages: Int {
+        return collectionView(imageCollectionView, numberOfItemsInSection: 0)
+    }
 
     public var backgroundColor: UIColor {
         get {
-            return imageCollectionView.backgroundColor!
+            return view.backgroundColor!
         }
         
         set(newBackgroundColor) {
-            imageCollectionView.backgroundColor = newBackgroundColor
+            view.backgroundColor = newBackgroundColor
         }
     }
 
@@ -117,8 +119,9 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = UIColor.blackColor()
 
-        setupCollectionView()
         setupPageControl()
         setupGestureRecognizer()
     }
@@ -215,23 +218,18 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         result.dataSource = self
         result.delegate = self
         result.pagingEnabled = true
-        result.backgroundColor = backgroundColor
 
         // Set up collection view constraints
         var imageCollectionViewConstraints: [NSLayoutConstraint] = []
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: imageCollectionView, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0))
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: imageCollectionView, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: 0))
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: imageCollectionView, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .Trailing, multiplier: 1, constant: 0))
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: imageCollectionView, attribute: .Bottom, relatedBy: .Equal, toItem: view, attribute: .Bottom, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: result, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: result, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: result, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .Trailing, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: result, attribute: .Bottom, relatedBy: .Equal, toItem: view, attribute: .Bottom, multiplier: 1, constant: 0))
 
-        view.addSubview(imageCollectionView)
+        view.addSubview(result)
         view.addConstraints(imageCollectionViewConstraints)
 
-        numberOfImages = collectionView(imageCollectionView, numberOfItemsInSection: 0)
-        // You should change this up for similar reasons. See my other comment.
-        // numberOfImages = collectionView(result, numberOfItemsInSection: 0)
-
-        imageCollectionView.contentSize = CGSize(width: 1000.0, height: 1.0)
+        result.contentSize = CGSize(width: 1000.0, height: 1.0)
         
         return result
     }

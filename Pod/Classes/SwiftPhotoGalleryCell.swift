@@ -65,8 +65,14 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
     internal func configureForNewImage() {
         imageView.image = image
         imageView.sizeToFit()
+        imageView.alpha = 0.0
+
         setZoomScale()
         scrollViewDidZoom(scrollView)
+        
+        UIView.animateWithDuration(0.5) {
+            self.imageView.alpha = 1.0
+        }
     }
 
     // MARK: UIScrollViewDelegate Methods
