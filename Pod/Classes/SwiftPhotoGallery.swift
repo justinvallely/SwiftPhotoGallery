@@ -25,12 +25,30 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     @IBOutlet public var dataSource: SwiftPhotoGalleryDataSource?
     @IBOutlet public var delegate: SwiftPhotoGalleryDelegate?
 
-    public var imageCollectionView: UICollectionView!
-    public var numberOfImages: Int = 0
+    public lazy var imageCollectionView: UICollectionView = self.setupCollectionView()
+    
+    public var numberOfImages: Int {
+        return collectionView(imageCollectionView, numberOfItemsInSection: 0)
+    }
+
+    public var backgroundColor: UIColor {
+        get {
+            return view.backgroundColor!
+        }
+        
+        set(newBackgroundColor) {
+            view.backgroundColor = newBackgroundColor
+        }
+    }
 
     public var currentPage: Int {
         set(page) {
-            imageCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: page, inSection: 0), atScrollPosition: .CenteredHorizontally, animated: false)
+            if page < numberOfImages {
+                scrollToImage(page, animated: false)
+            } else {
+                scrollToImage(numberOfImages - 1, animated: false)
+            }
+            scrollViewDidEndDecelerating(imageCollectionView)
         }
         get {
             return Int((imageCollectionView.contentOffset.x / imageCollectionView.contentSize.width) * CGFloat(numberOfImages))
@@ -41,6 +59,9 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     private var currentIndexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
     private var pageControl:UIPageControl!
     private var flowLayout:UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    
+    private var pageControlBottomConstraint: NSLayoutConstraint?
+    private var pageControlCenterXConstraint: NSLayoutConstraint?
 
     
     // MARK: Public Interface
@@ -85,7 +106,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         let desiredIndexPath = NSIndexPath(forItem: pageBeforeRotation, inSection: 0)
 
         if pageBeforeRotation > 0 {
-            imageCollectionView.scrollToItemAtIndexPath(desiredIndexPath, atScrollPosition: .CenteredHorizontally, animated: false)
+            scrollToImage(pageBeforeRotation, animated: false)
         }
 
         imageCollectionView.reloadItemsAtIndexPaths([desiredIndexPath])
@@ -98,8 +119,9 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = UIColor.blackColor()
 
-        setupCollectionView()
         setupPageControl()
         setupGestureRecognizer()
     }
@@ -117,10 +139,6 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     override public func shouldAutorotate() -> Bool {
         return true
-    }
-
-    override public func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
-        return UIInterfaceOrientation.Portrait
     }
 
 
@@ -143,11 +161,20 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
 
     // MARK: UICollectionViewDelegate Methods
-    
+
+    public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+
+        pageControl.alpha = 1.0
+    }
+
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
 
         // If the scroll animation ended, update the page control to reflect the current page we are on
-        pageControl.currentPage = currentPage
+        pageControl?.currentPage = currentPage
+
+        UIView.animateWithDuration(1.0, delay: 2.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+            self.pageControl?.alpha = 0.0
+        }, completion: nil)
     }
 
 
@@ -176,35 +203,35 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     }
 
 
-    // MARK: Private Methods / Properties
+    // MARK: Private Methods
 
-    private func setupCollectionView() {
+    private func setupCollectionView() -> UICollectionView {
         // Set up flow layout
         flowLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 0
 
         // Set up collection view
-        imageCollectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
-        imageCollectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        imageCollectionView.registerClass(SwiftPhotoGalleryCell.self, forCellWithReuseIdentifier: "SwiftPhotoGalleryCell")
-        imageCollectionView.dataSource = self
-        imageCollectionView.delegate = self
-        imageCollectionView.pagingEnabled = true
+        let result = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
+        result.setTranslatesAutoresizingMaskIntoConstraints(false)
+        result.registerClass(SwiftPhotoGalleryCell.self, forCellWithReuseIdentifier: "SwiftPhotoGalleryCell")
+        result.dataSource = self
+        result.delegate = self
+        result.pagingEnabled = true
 
         // Set up collection view constraints
         var imageCollectionViewConstraints: [NSLayoutConstraint] = []
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: imageCollectionView, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0))
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: imageCollectionView, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: 0))
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: imageCollectionView, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .Trailing, multiplier: 1, constant: 0))
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: imageCollectionView, attribute: .Bottom, relatedBy: .Equal, toItem: view, attribute: .Bottom, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: result, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: result, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: result, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .Trailing, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: result, attribute: .Bottom, relatedBy: .Equal, toItem: view, attribute: .Bottom, multiplier: 1, constant: 0))
 
-        view.addSubview(imageCollectionView)
+        view.addSubview(result)
         view.addConstraints(imageCollectionViewConstraints)
 
-        numberOfImages = collectionView(imageCollectionView, numberOfItemsInSection: 0)
-
-        imageCollectionView.contentSize = CGSize(width: 1000.0, height: 1.0)
+        result.contentSize = CGSize(width: 1000.0, height: 1.0)
+        
+        return result
     }
 
     private func setupPageControl() {
@@ -221,10 +248,12 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         //let inspiratoBlueDim: UIColor = UIColor(red: 0.0, green: 0.66, blue: 0.875, alpha: 0.25)
         //pageControl.pageIndicatorTintColor = inspiratoBlueDim
 
+        pageControl.alpha = 1
         pageControl.hidden = false
+
         view.addSubview(pageControl)
 
-        let centerXConstraint = NSLayoutConstraint(item: pageControl,
+        pageControlCenterXConstraint = NSLayoutConstraint(item: pageControl,
             attribute: NSLayoutAttribute.CenterX,
             relatedBy: NSLayoutRelation.Equal,
             toItem: view,
@@ -232,16 +261,20 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
             multiplier: 1.0,
             constant: 0)
 
-        let bottomConstraint = NSLayoutConstraint(item: pageControl,
+        pageControlBottomConstraint = NSLayoutConstraint(item: view,
             attribute: NSLayoutAttribute.Bottom,
             relatedBy: NSLayoutRelation.Equal,
-            toItem: view,
+            toItem: pageControl,
             attribute: NSLayoutAttribute.Bottom,
             multiplier: 1.0,
-            constant: -5)
+            constant: 15)
 
-        view.addConstraints([centerXConstraint, bottomConstraint])
+        view.addConstraints([pageControlCenterXConstraint!, pageControlBottomConstraint!])
 
+    }
+    
+    private func scrollToImage(withIndex:Int, animated:Bool = false) {
+        imageCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: withIndex, inSection: 0), atScrollPosition: .CenteredHorizontally, animated: animated)
     }
 
     private func getImage(currentPage: Int) -> UIImage {

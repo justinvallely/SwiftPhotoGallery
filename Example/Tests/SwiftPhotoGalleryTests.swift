@@ -132,6 +132,16 @@ class SwiftPhotoGalleryTests: XCTestCase {
         expect(helperCollectionView.reloadDataCalled).to(beFalse())
         expect(helperCollectionView.indexesOfReloadedItems).to(contain(1, 2, 3))
     }
+    
+    func testSetBackgroundColor() {
+
+        expect(self.testGallery.backgroundColor).to(equal(UIColor.blackColor()))
+        
+        testGallery.backgroundColor = UIColor.orangeColor()
+        
+        expect(self.testGallery.backgroundColor).to(equal(UIColor.orangeColor()))
+        expect(self.testGallery.view.backgroundColor).to(equal(self.testGallery.backgroundColor))
+    }
 
 }
 
