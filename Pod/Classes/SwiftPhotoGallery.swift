@@ -46,7 +46,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
             if page < numberOfImages {
                 scrollToImage(page, animated: false)
             } else {
-                scrollToImage(numberOfImages, animated: false)
+                scrollToImage(numberOfImages - 1, animated: false)
             }
             scrollViewDidEndDecelerating(imageCollectionView)
         }
