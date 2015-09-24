@@ -83,8 +83,7 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
     }
 
     public func scrollViewDidZoom(scrollView: UIScrollView) {
-        
-        // Center the image on screen
+
         let imageViewSize = imageView.frame.size
         let scrollViewSize = scrollView.bounds.size
 
@@ -92,11 +91,13 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
         let horizontalPadding = imageViewSize.width < scrollViewSize.width ? (scrollViewSize.width - imageViewSize.width) / 2 : 0
 
         if verticalPadding >= 0 {
+            // Center the image on screen
             scrollView.contentInset = UIEdgeInsets(top: verticalPadding, left: horizontalPadding, bottom: verticalPadding, right: horizontalPadding)
         } else {
+            // Limit the image panning to the screen bounds
             scrollView.contentSize = imageViewSize
         }
-        
+
     }
 
     // MARK: Private Methods
