@@ -74,6 +74,7 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
             self.imageView.alpha = 1.0
         }
     }
+    
 
     // MARK: UIScrollViewDelegate Methods
 
@@ -81,14 +82,22 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
         return imageView
     }
 
-    private func scrollViewDidZoom(scrollView: UIScrollView) {
+    public func scrollViewDidZoom(scrollView: UIScrollView) {
+
         let imageViewSize = imageView.frame.size
         let scrollViewSize = scrollView.bounds.size
 
         let verticalPadding = imageViewSize.height < scrollViewSize.height ? (scrollViewSize.height - imageViewSize.height) / 2 : 0
         let horizontalPadding = imageViewSize.width < scrollViewSize.width ? (scrollViewSize.width - imageViewSize.width) / 2 : 0
 
-        scrollView.contentInset = UIEdgeInsets(top: verticalPadding, left: horizontalPadding, bottom: verticalPadding, right: horizontalPadding)
+        if verticalPadding >= 0 {
+            // Center the image on screen
+            scrollView.contentInset = UIEdgeInsets(top: verticalPadding, left: horizontalPadding, bottom: verticalPadding, right: horizontalPadding)
+        } else {
+            // Limit the image panning to the screen bounds
+            scrollView.contentSize = imageViewSize
+        }
+
     }
 
     // MARK: Private Methods
