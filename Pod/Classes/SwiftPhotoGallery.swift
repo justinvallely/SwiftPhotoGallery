@@ -218,6 +218,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         result.dataSource = self
         result.delegate = self
         result.pagingEnabled = true
+        result.backgroundColor = UIColor.clearColor()
 
         // Set up collection view constraints
         var imageCollectionViewConstraints: [NSLayoutConstraint] = []
@@ -245,8 +246,8 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         let inspiratoBlue: UIColor = UIColor(red: 0.0, green: 0.66, blue: 0.875, alpha: 1.0)
         pageControl.currentPageIndicatorTintColor = inspiratoBlue
 
-        //let inspiratoBlueDim: UIColor = UIColor(red: 0.0, green: 0.66, blue: 0.875, alpha: 0.25)
-        //pageControl.pageIndicatorTintColor = inspiratoBlueDim
+        let dimGray: UIColor = UIColor(red: 0.75, green: 0.75, blue: 0.75, alpha: 0.35)
+        pageControl.pageIndicatorTintColor = dimGray
 
         pageControl.alpha = 1
         pageControl.hidden = false
