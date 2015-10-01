@@ -126,6 +126,10 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         setupGestureRecognizer()
     }
 
+    override public func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+
     public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
