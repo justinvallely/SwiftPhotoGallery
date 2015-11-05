@@ -27,10 +27,10 @@ class SwiftPhotoGalleryTests: XCTestCase {
         testGallery.viewDidLoad()
 
         expect(self.testGallery.delegate).toNot(beNil())
-        expect(self.testGallery.delegate).to(beIdenticalTo(testHelper))
+        expect(self.testGallery.delegate) === testHelper
 
         expect(self.testGallery.dataSource).toNot(beNil())
-        expect(self.testGallery.dataSource).to(beIdenticalTo(testHelper))
+        expect(self.testGallery.dataSource) === testHelper
 
         expect(self.testGallery.currentPage).to(equal(0))
     }
@@ -189,7 +189,7 @@ class HelperCollectionView: UICollectionView {
         super.reloadData()
     }
 
-    override func reloadItemsAtIndexPaths(indexPaths: [AnyObject]) {
+    override func reloadItemsAtIndexPaths(indexPaths: [NSIndexPath]) {
         for indexPath in indexPaths {
             indexesOfReloadedItems.append(indexPath.row)
         }

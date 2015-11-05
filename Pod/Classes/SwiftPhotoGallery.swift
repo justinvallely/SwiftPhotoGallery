@@ -73,7 +73,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         self.delegate = delegate
     }
 
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
@@ -85,7 +85,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
         } else {
 
-            var indexPaths: [NSIndexPath] = imageIndexes.map({NSIndexPath(forItem: $0, inSection: 0)})
+            let indexPaths: [NSIndexPath] = imageIndexes.map({NSIndexPath(forItem: $0, inSection: 0)})
 
             imageCollectionView.reloadItemsAtIndexPaths(indexPaths)
         }
@@ -137,8 +137,8 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     // MARK: Rotation Handling
 
-    override public func supportedInterfaceOrientations() -> Int {
-        return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
+    override public func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.AllButUpsideDown
     }
 
     override public func shouldAutorotate() -> Bool {
@@ -156,7 +156,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     }
 
     public func collectionView(imageCollectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell: SwiftPhotoGalleryCell = imageCollectionView.dequeueReusableCellWithReuseIdentifier("SwiftPhotoGalleryCell", forIndexPath: indexPath) as! SwiftPhotoGalleryCell
+        let cell: SwiftPhotoGalleryCell = imageCollectionView.dequeueReusableCellWithReuseIdentifier("SwiftPhotoGalleryCell", forIndexPath: indexPath) as! SwiftPhotoGalleryCell
 
         cell.image = getImage(indexPath.row)
 
@@ -217,7 +217,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
         // Set up collection view
         let result = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
-        result.setTranslatesAutoresizingMaskIntoConstraints(false)
+        result.translatesAutoresizingMaskIntoConstraints = false
         result.registerClass(SwiftPhotoGalleryCell.self, forCellWithReuseIdentifier: "SwiftPhotoGalleryCell")
         result.dataSource = self
         result.delegate = self
@@ -242,7 +242,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     private func setupPageControl() {
 
         pageControl = UIPageControl()
-        pageControl.setTranslatesAutoresizingMaskIntoConstraints(false)
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
 
         pageControl.numberOfPages = numberOfImages
         pageControl.currentPage = 0
@@ -283,7 +283,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     }
 
     private func getImage(currentPage: Int) -> UIImage {
-        var imageForPage = dataSource?.imageInGallery(self, forIndex: currentPage)
+        let imageForPage = dataSource?.imageInGallery(self, forIndex: currentPage)
         return imageForPage!
     }
     

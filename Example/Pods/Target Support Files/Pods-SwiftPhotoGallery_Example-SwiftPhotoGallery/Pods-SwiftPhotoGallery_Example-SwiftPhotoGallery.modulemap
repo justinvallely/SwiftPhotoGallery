@@ -1,6 +1,0 @@
-framework module SwiftPhotoGallery {
-  umbrella header "Pods-SwiftPhotoGallery_Example-SwiftPhotoGallery-umbrella.h"
-
-  export *
-  module * { export * }
-}
