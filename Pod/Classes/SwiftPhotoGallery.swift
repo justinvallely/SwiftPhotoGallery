@@ -196,7 +196,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     private func setupGestureRecognizer() {
 
-        let singleTap = UITapGestureRecognizer(target: self, action: "singleTapAction:")
+        let singleTap = UITapGestureRecognizer(target: self, action: #selector(SwiftPhotoGallery.singleTapAction(_:)))
         singleTap.numberOfTapsRequired = 1
         singleTap.delegate = self
         imageCollectionView.addGestureRecognizer(singleTap)
