@@ -1,5 +1,13 @@
 ## Master
 
+## 2.0.3 (2016-04-29)
+
+##### Enhancements
+
+* Adds this sweet change log. This of course, is a non-breaking change. You're welcome.
+
+
+
 ## 2.0.2 (2016-04-29)
 
 ##### Enhancements
