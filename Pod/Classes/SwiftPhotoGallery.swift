@@ -57,8 +57,8 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     private var pageBeforeRotation: Int = 0
     private var currentIndexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
-    private var pageControl:UIPageControl!
-    private var flowLayout:UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    private var pageControl: UIPageControl!
+    private var flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     
     private var pageControlBottomConstraint: NSLayoutConstraint?
     private var pageControlCenterXConstraint: NSLayoutConstraint?
@@ -216,27 +216,27 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         flowLayout.minimumLineSpacing = 0
 
         // Set up collection view
-        let result = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
-        result.translatesAutoresizingMaskIntoConstraints = false
-        result.registerClass(SwiftPhotoGalleryCell.self, forCellWithReuseIdentifier: "SwiftPhotoGalleryCell")
-        result.dataSource = self
-        result.delegate = self
-        result.pagingEnabled = true
-        result.backgroundColor = UIColor.clearColor()
+        let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.registerClass(SwiftPhotoGalleryCell.self, forCellWithReuseIdentifier: "SwiftPhotoGalleryCell")
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.pagingEnabled = true
+        collectionView.backgroundColor = UIColor.clearColor()
 
         // Set up collection view constraints
         var imageCollectionViewConstraints: [NSLayoutConstraint] = []
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: result, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0))
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: result, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: 0))
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: result, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .Trailing, multiplier: 1, constant: 0))
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: result, attribute: .Bottom, relatedBy: .Equal, toItem: view, attribute: .Bottom, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .Trailing, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .Bottom, relatedBy: .Equal, toItem: view, attribute: .Bottom, multiplier: 1, constant: 0))
 
-        view.addSubview(result)
+        view.addSubview(collectionView)
         view.addConstraints(imageCollectionViewConstraints)
 
-        result.contentSize = CGSize(width: 1000.0, height: 1.0)
+        collectionView.contentSize = CGSize(width: 1000.0, height: 1.0)
         
-        return result
+        return collectionView
     }
 
     private func setupPageControl() {
