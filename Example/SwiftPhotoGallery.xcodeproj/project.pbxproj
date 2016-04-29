@@ -19,6 +19,7 @@
 		94D1C35E1B94D102006B6715 /* image1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 94D1C3541B94D102006B6715 /* image1.jpeg */; };
 		94D1C35F1B94D102006B6715 /* image2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 94D1C3551B94D102006B6715 /* image2.jpeg */; };
 		94D1C3611B94D102006B6715 /* image3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 94D1C3571B94D102006B6715 /* image3.jpeg */; };
+		EB920A741CD41C0E004ECC50 /* CHANGELOG.md in Sources */ = {isa = PBXBuildFile; fileRef = EB920A731CD41C0E004ECC50 /* CHANGELOG.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		999B468758AC26557C2AE447 /* Pods-SwiftPhotoGallery_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftPhotoGallery_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftPhotoGallery_Example/Pods-SwiftPhotoGallery_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		B0B4E9175EC41F941B0BDD67 /* Pods-SwiftPhotoGallery_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftPhotoGallery_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftPhotoGallery_Tests/Pods-SwiftPhotoGallery_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		C9D856F8990277A4794688C0 /* Pods_SwiftPhotoGallery_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftPhotoGallery_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB920A731CD41C0E004ECC50 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../CHANGELOG.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				81B3235EC26C5D0E4FC15C58 /* SwiftPhotoGallery.podspec */,
+				EB920A731CD41C0E004ECC50 /* CHANGELOG.md */,
 				3ED2C14E07F667EFA55C1524 /* README.md */,
 				33F4051E1B4516FED4F927C6 /* LICENSE */,
 			);
@@ -386,6 +389,7 @@
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				940730E31BA8BFE500C11640 /* PortraitOnlyViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				EB920A741CD41C0E004ECC50 /* CHANGELOG.md in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
