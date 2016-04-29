@@ -8,10 +8,10 @@
 
 Pod::Spec.new do |s|
   s.name             = "SwiftPhotoGallery"
-  s.version          = "2.0.0"
+  s.version          = "2.0.1"
   s.summary          = "Photo gallery for iOS written in Swift"
   s.description      = <<-DESC
-                        "Photo gallery for iOS written in Swift. Photos can be panned and zoomed, Includes a page indicator and support for any orientation."
+                        "Photo gallery for iOS written in Swift. Photos can be panned and zoomed, Includes a customizable page indicator and support for any orientation."
                        DESC
 
   s.homepage         = "https://github.com/Inspirato/SwiftPhotoGallery"

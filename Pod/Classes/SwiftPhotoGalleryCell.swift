@@ -104,7 +104,7 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
 
     private func setupGestureRecognizer() {
 
-        let doubleTap = UITapGestureRecognizer(target: self, action: "doubleTapAction:")
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(SwiftPhotoGalleryCell.doubleTapAction(_:)))
         doubleTap.numberOfTapsRequired = 2
         self.addGestureRecognizer(doubleTap)
     }
