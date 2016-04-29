@@ -38,7 +38,7 @@ class SwiftPhotoGalleryTests: XCTestCase {
     func testNumberOfImagesDataSourceCalled() {
         testGallery.viewDidLoad()
 
-        expect(self.testGallery.numberOfImages).to(equal(6))
+        expect(self.testGallery.numberOfImages).to(equal(3))
         expect(self.testHelper.timesAskedForNumberOfImagesInGallery).to(beGreaterThan(0))
     }
 
@@ -154,7 +154,7 @@ class SwiftPhotoGalleryTestHelper: SwiftPhotoGalleryDelegate, SwiftPhotoGalleryD
     @objc func numberOfImagesInGallery(gallery:SwiftPhotoGallery) -> Int {
         timesAskedForNumberOfImagesInGallery += 1
 
-        return 6
+        return 3
     }
 
     @objc func imageInGallery(gallery:SwiftPhotoGallery, forIndex:Int) -> UIImage? {
@@ -164,7 +164,7 @@ class SwiftPhotoGalleryTestHelper: SwiftPhotoGalleryDelegate, SwiftPhotoGalleryD
             timesAskedForImageInGallery[forIndex] = 1
         }
 
-        let imageNames = ["image1.jpeg", "image2.jpeg", "image3.jpeg", "image4.jpeg", "image5.jpeg", "image6.jpeg"]
+        let imageNames = ["image1.jpeg", "image2.jpeg", "image3.jpeg"]
 
         return UIImage(named: imageNames[forIndex])
     }
