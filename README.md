@@ -8,6 +8,10 @@
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
+-Pinch to zoom.
+-Double tap to zoom all the way in and again to zoom all the way out.
+-Single tap to close.
+
 ## Requirements
 iOS 8.3 and above
 
