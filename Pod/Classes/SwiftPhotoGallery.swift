@@ -41,6 +41,26 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         }
     }
 
+    public var currentPageIndicatorTintColor: UIColor {
+        get {
+            return pageControl.currentPageIndicatorTintColor!
+        }
+
+        set(newCurrentPageIndicatorTintColor) {
+            pageControl.currentPageIndicatorTintColor = newCurrentPageIndicatorTintColor
+        }
+    }
+
+    public var pageIndicatorTintColor: UIColor {
+        get {
+            return pageControl.pageIndicatorTintColor!
+        }
+
+        set(newPageIndicatorTintColor) {
+            pageControl.pageIndicatorTintColor = newPageIndicatorTintColor
+        }
+    }
+
     public var currentPage: Int {
         set(page) {
             if page < numberOfImages {
@@ -48,7 +68,6 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
             } else {
                 scrollToImage(numberOfImages - 1, animated: false)
             }
-            scrollViewDidEndDecelerating(imageCollectionView)
         }
         get {
             return Int((imageCollectionView.contentOffset.x / imageCollectionView.contentSize.width) * CGFloat(numberOfImages))
@@ -57,7 +76,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     private var pageBeforeRotation: Int = 0
     private var currentIndexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
-    private var pageControl: UIPageControl!
+    private var pageControl: UIPageControl = UIPageControl()
     private var flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     
     private var pageControlBottomConstraint: NSLayoutConstraint?
@@ -122,6 +141,9 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         
         view.backgroundColor = UIColor.blackColor()
 
+        pageControl.currentPageIndicatorTintColor = UIColor(red: 0.0, green: 0.66, blue: 0.875, alpha: 1.0)  //Inspirato Blue
+        pageControl.pageIndicatorTintColor = UIColor(red: 0.75, green: 0.75, blue: 0.75, alpha: 0.35) //Dim Grey
+
         setupPageControl()
         setupGestureRecognizer()
     }
@@ -174,10 +196,10 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
 
         // If the scroll animation ended, update the page control to reflect the current page we are on
-        pageControl?.currentPage = currentPage
+        pageControl.currentPage = currentPage
 
         UIView.animateWithDuration(1.0, delay: 2.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-            self.pageControl?.alpha = 0.0
+            self.pageControl.alpha = 0.0
         }, completion: nil)
     }
 
@@ -196,7 +218,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     private func setupGestureRecognizer() {
 
-        let singleTap = UITapGestureRecognizer(target: self, action: "singleTapAction:")
+        let singleTap = UITapGestureRecognizer(target: self, action: #selector(SwiftPhotoGallery.singleTapAction(_:)))
         singleTap.numberOfTapsRequired = 1
         singleTap.delegate = self
         imageCollectionView.addGestureRecognizer(singleTap)
@@ -241,17 +263,13 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     private func setupPageControl() {
 
-        pageControl = UIPageControl()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
 
         pageControl.numberOfPages = numberOfImages
         pageControl.currentPage = 0
 
-        let inspiratoBlue: UIColor = UIColor(red: 0.0, green: 0.66, blue: 0.875, alpha: 1.0)
-        pageControl.currentPageIndicatorTintColor = inspiratoBlue
-
-        let dimGray: UIColor = UIColor(red: 0.75, green: 0.75, blue: 0.75, alpha: 0.35)
-        pageControl.pageIndicatorTintColor = dimGray
+        pageControl.currentPageIndicatorTintColor = currentPageIndicatorTintColor
+        pageControl.pageIndicatorTintColor = pageIndicatorTintColor
 
         pageControl.alpha = 1
         pageControl.hidden = false

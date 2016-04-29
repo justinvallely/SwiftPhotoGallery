@@ -34,6 +34,10 @@ class ViewController: PortraitOnlyViewController, SwiftPhotoGalleryDataSource, S
     @IBAction func didPressShowMeButton(sender: AnyObject) {
         let gallery = SwiftPhotoGallery(delegate: self, dataSource: self)
 
+        gallery.backgroundColor = UIColor.blackColor()
+        gallery.pageIndicatorTintColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
+        gallery.currentPageIndicatorTintColor = UIColor.whiteColor()
+
         presentViewController(gallery, animated: true, completion: nil)
     }
 
@@ -52,8 +56,7 @@ class ViewController: PortraitOnlyViewController, SwiftPhotoGalleryDataSource, S
 
     func galleryDidTapToClose(gallery: SwiftPhotoGallery) {
         dismissViewControllerAnimated(true, completion: nil)
-        
     }
-
+    
 }
 
