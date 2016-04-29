@@ -13,7 +13,7 @@ class HeaderViewController: UIViewController {
 
     @IBAction func unwindToMainMenu(sender: UIStoryboardSegue)
     {
-        let sourceViewController: AnyObject = sender.sourceViewController
+        let _: AnyObject = sender.sourceViewController
         // Pull any data from the view controller which initiated the unwind segue.
     }
 
@@ -29,15 +29,9 @@ class ViewController: PortraitOnlyViewController, SwiftPhotoGalleryDataSource, S
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    @IBAction func didPressShowMeButton(sender:AnyObject) {
+    @IBAction func didPressShowMeButton(sender: AnyObject) {
         let gallery = SwiftPhotoGallery(delegate: self, dataSource: self)
 
         presentViewController(gallery, animated: true, completion: nil)
@@ -45,18 +39,18 @@ class ViewController: PortraitOnlyViewController, SwiftPhotoGalleryDataSource, S
 
     // MARK: SwiftPhotoGalleryDataSource Methods
 
-    func numberOfImagesInGallery(gallery:SwiftPhotoGallery) -> Int {
+    func numberOfImagesInGallery(gallery: SwiftPhotoGallery) -> Int {
         return imageNames.count
     }
 
-    func imageInGallery(gallery:SwiftPhotoGallery, forIndex:Int) -> UIImage? {
+    func imageInGallery(gallery: SwiftPhotoGallery, forIndex: Int) -> UIImage? {
 
         return UIImage(named: imageNames[forIndex])
     }
 
     // MARK: SwiftPhotoGalleryDelegate Methods
 
-    func galleryDidTapToClose(gallery:SwiftPhotoGallery) {
+    func galleryDidTapToClose(gallery: SwiftPhotoGallery) {
         dismissViewControllerAnimated(true, completion: nil)
         
     }
