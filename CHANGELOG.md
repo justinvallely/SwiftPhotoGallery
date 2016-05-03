@@ -1,5 +1,13 @@
 ## Master
 
+## 2.0.4 (2016-05-02)
+
+##### Bug Fixes
+
+* Fix for page indicator not updating. This was broken in 2.0.2.
+
+
+
 ## 2.0.3 (2016-04-29)
 
 ##### Enhancements
