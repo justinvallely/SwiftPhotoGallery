@@ -1,8 +1,8 @@
 {
   "name": "SwiftPhotoGallery",
-  "version": "2.0.0",
+  "version": "2.0.3",
   "summary": "Photo gallery for iOS written in Swift",
-  "description": "\"Photo gallery for iOS written in Swift. Photos can be panned and zoomed, Includes a page indicator and support for any orientation.\"",
+  "description": "\"Photo gallery for iOS written in Swift. Photos can be panned and zoomed. Includes a customizable page indicator, support for any orientation, and supports images of varying sizes. Includes unit tests.\"",
   "homepage": "https://github.com/Inspirato/SwiftPhotoGallery",
   "license": "GNU",
   "authors": {
@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/Inspirato/SwiftPhotoGallery.git",
-    "tag": "2.0.0"
+    "tag": "2.0.3"
   },
   "platforms": {
     "ios": "8.0"

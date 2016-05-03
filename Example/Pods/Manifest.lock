@@ -1,6 +1,6 @@
 PODS:
   - Nimble (4.0.1)
-  - SwiftPhotoGallery (2.0.0)
+  - SwiftPhotoGallery (2.0.3)
 
 DEPENDENCIES:
   - Nimble (~> 4.0.0)
@@ -12,6 +12,6 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Nimble: 0f3c8b8b084cda391209c3c5efbb48bedeeb920a
-  SwiftPhotoGallery: 9e904ad9d5bd38bc2c547a5f483143d05286ddcf
+  SwiftPhotoGallery: c5aba50417029ab1b58d5a109f3eb9924b6896e7
 
 COCOAPODS: 0.39.0

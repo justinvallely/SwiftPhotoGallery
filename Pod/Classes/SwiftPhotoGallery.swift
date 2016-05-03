@@ -68,6 +68,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
             } else {
                 scrollToImage(numberOfImages - 1, animated: false)
             }
+            scrollViewDidEndDecelerating(imageCollectionView)
         }
         get {
             return Int((imageCollectionView.contentOffset.x / imageCollectionView.contentSize.width) * CGFloat(numberOfImages))
