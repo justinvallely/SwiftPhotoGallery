@@ -82,11 +82,12 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     
     private var pageControlBottomConstraint: NSLayoutConstraint?
     private var pageControlCenterXConstraint: NSLayoutConstraint?
+    private let showPageControl: Bool
 
     
     // MARK: Public Interface
-    
-    public init(delegate: SwiftPhotoGalleryDelegate, dataSource: SwiftPhotoGalleryDataSource) {
+    public init(delegate: SwiftPhotoGalleryDelegate, dataSource: SwiftPhotoGalleryDataSource, showPageControl: Bool = true) {
+        self.showPageControl = showPageControl
         super.init(nibName: nil, bundle: nil)
 
         self.dataSource = dataSource
@@ -94,6 +95,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     }
 
     required public init?(coder aDecoder: NSCoder) {
+        self.showPageControl = true
         super.init(coder: aDecoder)
     }
 
@@ -273,7 +275,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         pageControl.pageIndicatorTintColor = pageIndicatorTintColor
 
         pageControl.alpha = 1
-        pageControl.hidden = false
+        pageControl.hidden = !self.showPageControl
 
         view.addSubview(pageControl)
 
