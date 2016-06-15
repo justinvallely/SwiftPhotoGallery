@@ -22,8 +22,8 @@ import UIKit
 
 public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIGestureRecognizerDelegate {
 
-    @IBOutlet public var dataSource: SwiftPhotoGalleryDataSource?
-    @IBOutlet public var delegate: SwiftPhotoGalleryDelegate?
+    public weak var dataSource: SwiftPhotoGalleryDataSource?
+    public weak var delegate: SwiftPhotoGalleryDelegate?
 
     public lazy var imageCollectionView: UICollectionView = self.setupCollectionView()
     
@@ -68,10 +68,10 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
             } else {
                 scrollToImage(numberOfImages - 1, animated: false)
             }
-            scrollViewDidEndDecelerating(imageCollectionView)
+            updatePageControl()
         }
         get {
-            return Int((imageCollectionView.contentOffset.x / imageCollectionView.contentSize.width) * CGFloat(numberOfImages))
+            return Int(imageCollectionView.contentOffset.x / imageCollectionView.frame.size.width)
         }
     }
 
@@ -82,12 +82,12 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     
     private var pageControlBottomConstraint: NSLayoutConstraint?
     private var pageControlCenterXConstraint: NSLayoutConstraint?
-    private let showPageControl: Bool
+    private let hidePageControl: Bool
 
     
     // MARK: Public Interface
-    public init(delegate: SwiftPhotoGalleryDelegate, dataSource: SwiftPhotoGalleryDataSource, showPageControl: Bool = true) {
-        self.showPageControl = showPageControl
+    public init(delegate: SwiftPhotoGalleryDelegate, dataSource: SwiftPhotoGalleryDataSource, hidePageControl: Bool = false) {
+        self.hidePageControl = hidePageControl
         super.init(nibName: nil, bundle: nil)
 
         self.dataSource = dataSource
@@ -95,7 +95,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     }
 
     required public init?(coder aDecoder: NSCoder) {
-        self.showPageControl = true
+        self.hidePageControl = false
         super.init(coder: aDecoder)
     }
 
@@ -171,6 +171,13 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     }
 
 
+    // MARK: - Internal Methods
+
+    func updatePageControl() {
+        pageControl.currentPage = currentPage
+    }
+
+
     // MARK: UICollectionViewDataSource Methods
     public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
@@ -199,7 +206,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
 
         // If the scroll animation ended, update the page control to reflect the current page we are on
-        pageControl.currentPage = currentPage
+        updatePageControl()
 
         UIView.animateWithDuration(1.0, delay: 2.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
             self.pageControl.alpha = 0.0
@@ -275,7 +282,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         pageControl.pageIndicatorTintColor = pageIndicatorTintColor
 
         pageControl.alpha = 1
-        pageControl.hidden = !self.showPageControl
+        pageControl.hidden = hidePageControl
 
         view.addSubview(pageControl)
 
@@ -307,7 +314,6 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         let imageForPage = dataSource?.imageInGallery(self, forIndex: currentPage)
         return imageForPage!
     }
-    
 
 }
 
