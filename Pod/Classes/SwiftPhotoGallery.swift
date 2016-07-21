@@ -76,7 +76,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         }
     }
 
-    public let hidePageControl: Bool
+    public var hidePageControl: Bool = false
 
     private var pageBeforeRotation: Int = 0
     private var currentIndexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
@@ -87,8 +87,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     
     // MARK: Public Interface
-    public init(delegate: SwiftPhotoGalleryDelegate, dataSource: SwiftPhotoGalleryDataSource, hidePageControl: Bool = false) {
-        self.hidePageControl = hidePageControl
+    public init(delegate: SwiftPhotoGalleryDelegate, dataSource: SwiftPhotoGalleryDataSource) {
         super.init(nibName: nil, bundle: nil)
 
         self.dataSource = dataSource
