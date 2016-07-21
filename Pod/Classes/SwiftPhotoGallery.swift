@@ -76,7 +76,11 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         }
     }
 
-    public var hidePageControl: Bool = false
+    public var hidePageControl: Bool = false {
+        didSet {
+            pageControl.hidden = hidePageControl
+        }
+    }
 
     private var pageBeforeRotation: Int = 0
     private var currentIndexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
@@ -95,7 +99,6 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     }
 
     required public init?(coder aDecoder: NSCoder) {
-        self.hidePageControl = false
         super.init(coder: aDecoder)
     }
 
