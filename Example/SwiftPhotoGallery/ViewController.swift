@@ -11,8 +11,7 @@ import SwiftPhotoGallery
 
 class HeaderViewController: UIViewController {
 
-    @IBAction func unwindToMainMenu(sender: UIStoryboardSegue)
-    {
+    @IBAction func unwindToMainMenu(sender: UIStoryboardSegue) {
         let _: AnyObject = sender.sourceViewController
         // Pull any data from the view controller which initiated the unwind segue.
     }
@@ -38,7 +37,11 @@ class ViewController: PortraitOnlyViewController, SwiftPhotoGalleryDataSource, S
         gallery.pageIndicatorTintColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
         gallery.currentPageIndicatorTintColor = UIColor.whiteColor()
 
-        presentViewController(gallery, animated: true, completion: nil)
+        //presentViewController(gallery, animated: true, completion: nil)
+
+        presentViewController(gallery, animated: false, completion: { () -> Void in
+            gallery.currentPage = 2
+        })
     }
 
     // MARK: SwiftPhotoGalleryDataSource Methods

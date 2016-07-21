@@ -91,7 +91,7 @@ class SwiftPhotoGalleryTests: XCTestCase {
 
     func testSetCurrentPage() {
 
-        let helperCollectionView: HelperCollectionView = HelperCollectionView(frame: CGRectZero, collectionViewLayout: UICollectionViewFlowLayout())
+        let helperCollectionView: HelperCollectionView = HelperCollectionView(frame: CGRectMake(10, 10, 100, 100), collectionViewLayout: UICollectionViewFlowLayout())
 
         testGallery.imageCollectionView = helperCollectionView
         helperCollectionView.delegate = testGallery
