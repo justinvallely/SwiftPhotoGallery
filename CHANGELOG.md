@@ -1,5 +1,18 @@
 ## Master
 
+## 2.0.5 (2016-07-20)
+
+##### Enhancements
+
+* Adds the ability to hide the page control at any time.
+* More robust calculation for currentPage.
+
+##### Bug Fixes
+
+* Fix for pages jumping by 2 on the first swipe when presenting a gallery.
+
+
+
 ## 2.0.4 (2016-05-02)
 
 ##### Bug Fixes
@@ -21,17 +34,13 @@
 ##### Enhancements
 
 * Updates syntax to Swift 2.2.
-
 * Adds ability to customize the page control colors.
-
 * Reduced overall framework size.
 
 ##### Bug Fixes
 
 * Updates to Nimble for broken tests.
-
 * General code cleanup.
-
 * Updates example code to use the latest version of SwiftPhotoGallery. Because, why wouldn't we?
 
 
