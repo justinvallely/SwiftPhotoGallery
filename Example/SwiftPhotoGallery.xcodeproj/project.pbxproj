@@ -19,7 +19,7 @@
 		94D1C35F1B94D102006B6715 /* image2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 94D1C3551B94D102006B6715 /* image2.jpeg */; };
 		94D1C3611B94D102006B6715 /* image3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 94D1C3571B94D102006B6715 /* image3.jpeg */; };
 		D7B6588EF611EB28F6B267B7 /* Pods_SwiftPhotoGallery_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8B9096CBB1D0A7AE247E9B2 /* Pods_SwiftPhotoGallery_Tests.framework */; };
-		EB920A741CD41C0E004ECC50 /* CHANGELOG.md in Sources */ = {isa = PBXBuildFile; fileRef = EB920A731CD41C0E004ECC50 /* CHANGELOG.md */; };
+		EB920A741CD41C0E004ECC50 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = EB920A731CD41C0E004ECC50 /* CHANGELOG.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -234,7 +234,7 @@
 			attributes = {
 				LastSwiftMigration = 0730;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
@@ -276,6 +276,7 @@
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 				94D1C35E1B94D102006B6715 /* image1.jpeg in Resources */,
 				94D1C3611B94D102006B6715 /* image3.jpeg in Resources */,
+				EB920A741CD41C0E004ECC50 /* CHANGELOG.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,7 +390,6 @@
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				940730E31BA8BFE500C11640 /* PortraitOnlyViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
-				EB920A741CD41C0E004ECC50 /* CHANGELOG.md in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,8 +444,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -489,8 +491,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -509,6 +513,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -517,13 +522,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8C9B60D94EEDBFDC1FA83EF1 /* Pods-SwiftPhotoGallery_Example.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SwiftPhotoGallery/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -532,13 +538,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 63F53AE155C602A43F1087BD /* Pods-SwiftPhotoGallery_Example.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SwiftPhotoGallery/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -547,6 +554,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ED897227DF3D3D9C16756449 /* Pods-SwiftPhotoGallery_Tests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -568,6 +576,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C4D0C5886E467AB445AE834E /* Pods-SwiftPhotoGallery_Tests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
