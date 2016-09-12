@@ -1,5 +1,13 @@
 ## Master
 
+## 2.0.6 (2016-09-12)
+
+##### Enhancements
+
+* Adds support for Swift 2.3 and Xcode 8
+
+
+
 ## 2.0.5 (2016-07-20)
 
 ##### Enhancements
