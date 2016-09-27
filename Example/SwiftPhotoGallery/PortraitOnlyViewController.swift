@@ -10,18 +10,18 @@ import Foundation
 import UIKit
 
 
-class PortraitOnlyViewController:UIViewController {
+class PortraitOnlyViewController: UIViewController {
     // MARK: Rotation Handling
 
-    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.portrait
     }
 
-    override var shouldAutorotate : Bool {
+    override var shouldAutorotate: Bool {
         return true
     }
 
-    override var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         return UIInterfaceOrientation.portrait
     }
 }

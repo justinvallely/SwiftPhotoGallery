@@ -9,33 +9,17 @@
 import UIKit
 import SwiftPhotoGallery
 
-class HeaderViewController: UIViewController {
-
-    @IBAction func unwindToMainMenu(_ sender: UIStoryboardSegue) {
-        let _: AnyObject = sender.source
-        // Pull any data from the view controller which initiated the unwind segue.
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-}
-
-class ViewController: PortraitOnlyViewController, SwiftPhotoGalleryDataSource, SwiftPhotoGalleryDelegate {
+class ViewController: PortraitOnlyViewController {
 
     let imageNames = ["image1.jpeg", "image2.jpeg", "image3.jpeg"]
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
 
     @IBAction func didPressShowMeButton(_ sender: AnyObject) {
         let gallery = SwiftPhotoGallery(delegate: self, dataSource: self)
 
         gallery.backgroundColor = UIColor.black
         gallery.pageIndicatorTintColor = UIColor.gray.withAlphaComponent(0.5)
-        gallery.currentPageIndicatorTintColor = UIColor.white
+        gallery.currentPageIndicatorTintColor = UIColor(red: 0.0, green: 0.66, blue: 0.875, alpha: 1.0)
+        gallery.hidePageControl = false
 
         present(gallery, animated: true, completion: nil)
 
@@ -46,23 +30,25 @@ class ViewController: PortraitOnlyViewController, SwiftPhotoGalleryDataSource, S
         })
         */
     }
+}
 
-    // MARK: SwiftPhotoGalleryDataSource Methods
+// MARK: SwiftPhotoGalleryDataSource Methods
+extension ViewController: SwiftPhotoGalleryDataSource {
 
     func numberOfImagesInGallery(gallery: SwiftPhotoGallery) -> Int {
         return imageNames.count
     }
 
     func imageInGallery(gallery: SwiftPhotoGallery, forIndex: Int) -> UIImage? {
-
         return UIImage(named: imageNames[forIndex])
     }
+}
 
-    // MARK: SwiftPhotoGalleryDelegate Methods
+// MARK: SwiftPhotoGalleryDelegate Methods
+extension ViewController: SwiftPhotoGalleryDelegate {
 
     func galleryDidTapToClose(gallery: SwiftPhotoGallery) {
         dismiss(animated: true, completion: nil)
     }
-    
 }
 

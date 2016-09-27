@@ -6,7 +6,7 @@
 //
 //
 
-public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
+public class SwiftPhotoGalleryCell: UICollectionViewCell {
 
     var image:UIImage? {
         didSet {
@@ -15,7 +15,7 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
     }
 
     private var scrollView: UIScrollView
-    private let imageView: UIImageView
+    fileprivate let imageView: UIImageView
 
     override init(frame: CGRect) {
 
@@ -28,18 +28,72 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
         var scrollViewConstraints: [NSLayoutConstraint] = []
         var imageViewConstraints: [NSLayoutConstraint] = []
 
-        scrollViewConstraints.append(NSLayoutConstraint(item: scrollView, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 0))
-        scrollViewConstraints.append(NSLayoutConstraint(item: scrollView, attribute: .top, relatedBy: .equal, toItem: contentView, attribute: .top, multiplier: 1, constant: 0))
-        scrollViewConstraints.append(NSLayoutConstraint(item: scrollView, attribute: .trailing, relatedBy: .equal, toItem: contentView, attribute: .trailing, multiplier: 1, constant: 0))
-        scrollViewConstraints.append(NSLayoutConstraint(item: scrollView, attribute: .bottom, relatedBy: .equal, toItem: contentView, attribute: .bottom, multiplier: 1, constant: 0))
+        scrollViewConstraints.append(NSLayoutConstraint(item: scrollView,
+                                                        attribute: .leading,
+                                                        relatedBy: .equal,
+                                                        toItem: contentView, 
+                                                        attribute: .leading,
+                                                        multiplier: 1,
+                                                        constant: 0))
+
+        scrollViewConstraints.append(NSLayoutConstraint(item: scrollView,
+                                                        attribute: .top,
+                                                        relatedBy: .equal,
+                                                        toItem: contentView,
+                                                        attribute: .top,
+                                                        multiplier: 1,
+                                                        constant: 0))
+
+        scrollViewConstraints.append(NSLayoutConstraint(item: scrollView,
+                                                        attribute: .trailing,
+                                                        relatedBy: .equal,
+                                                        toItem: contentView,
+                                                        attribute: .trailing,
+                                                        multiplier: 1,
+                                                        constant: 0))
+
+        scrollViewConstraints.append(NSLayoutConstraint(item: scrollView,
+                                                        attribute: .bottom,
+                                                        relatedBy: .equal,
+                                                        toItem: contentView,
+                                                        attribute: .bottom,
+                                                        multiplier: 1,
+                                                        constant: 0))
 
         contentView.addSubview(scrollView)
         contentView.addConstraints(scrollViewConstraints)
 
-        imageViewConstraints.append(NSLayoutConstraint(item: imageView, attribute: .leading, relatedBy: .equal, toItem: scrollView, attribute: .leading, multiplier: 1, constant: 0))
-        imageViewConstraints.append(NSLayoutConstraint(item: imageView, attribute: .top, relatedBy: .equal, toItem: scrollView, attribute: .top, multiplier: 1, constant: 0))
-        imageViewConstraints.append(NSLayoutConstraint(item: imageView, attribute: .trailing, relatedBy: .equal, toItem: scrollView, attribute: .trailing, multiplier: 1, constant: 0))
-        imageViewConstraints.append(NSLayoutConstraint(item: imageView, attribute: .bottom, relatedBy: .equal, toItem: scrollView, attribute: .bottom, multiplier: 1, constant: 0))
+        imageViewConstraints.append(NSLayoutConstraint(item: imageView,
+                                                       attribute: .leading,
+                                                       relatedBy: .equal,
+                                                       toItem: scrollView,
+                                                       attribute: .leading,
+                                                       multiplier: 1,
+                                                       constant: 0))
+
+        imageViewConstraints.append(NSLayoutConstraint(item: imageView,
+                                                       attribute: .top,
+                                                       relatedBy: .equal,
+                                                       toItem: scrollView,
+                                                       attribute: .top,
+                                                       multiplier: 1,
+                                                       constant: 0))
+
+        imageViewConstraints.append(NSLayoutConstraint(item: imageView,
+                                                       attribute: .trailing,
+                                                       relatedBy: .equal,
+                                                       toItem: scrollView,
+                                                       attribute: .trailing,
+                                                       multiplier: 1, 
+                                                       constant: 0))
+
+        imageViewConstraints.append(NSLayoutConstraint(item: imageView,
+                                                       attribute: .bottom,
+                                                       relatedBy: .equal,
+                                                       toItem: scrollView,
+                                                       attribute: .bottom,
+                                                       multiplier: 1,
+                                                       constant: 0))
 
         scrollView.addSubview(imageView)
         scrollView.addConstraints(imageViewConstraints)
@@ -62,7 +116,7 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
         }
     }
 
-    internal func configureForNewImage() {
+    func configureForNewImage() {
         imageView.image = image
         imageView.sizeToFit()
         imageView.alpha = 0.0
@@ -75,8 +129,28 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
         }
     }
     
+    // MARK: Private Methods
 
+    private func setupGestureRecognizer() {
+
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTapAction(recognizer:)))
+        doubleTap.numberOfTapsRequired = 2
+        self.addGestureRecognizer(doubleTap)
+    }
+
+    private func setZoomScale() {
+        let imageViewSize = imageView.bounds.size
+        let scrollViewSize = scrollView.bounds.size
+        let widthScale = scrollViewSize.width / imageViewSize.width
+        let heightScale = scrollViewSize.height / imageViewSize.height
+
+        scrollView.minimumZoomScale = min(widthScale, heightScale)
+        scrollView.setZoomScale(scrollView.minimumZoomScale, animated: false)
+    }
+    
+}
     // MARK: UIScrollViewDelegate Methods
+extension SwiftPhotoGalleryCell: UIScrollViewDelegate {
 
     public func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return imageView
@@ -97,26 +171,6 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell, UIScrollViewDelegate {
             // Limit the image panning to the screen bounds
             scrollView.contentSize = imageViewSize
         }
-
     }
 
-    // MARK: Private Methods
-
-    private func setupGestureRecognizer() {
-
-        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTapAction(recognizer:)))
-        doubleTap.numberOfTapsRequired = 2
-        self.addGestureRecognizer(doubleTap)
-    }
-
-    private func setZoomScale() {
-        let imageViewSize = imageView.bounds.size
-        let scrollViewSize = scrollView.bounds.size
-        let widthScale = scrollViewSize.width / imageViewSize.width
-        let heightScale = scrollViewSize.height / imageViewSize.height
-
-        scrollView.minimumZoomScale = min(widthScale, heightScale)
-        scrollView.setZoomScale(scrollView.minimumZoomScale, animated: false)
-    }
-    
 }

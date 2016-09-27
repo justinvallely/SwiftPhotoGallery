@@ -20,7 +20,7 @@ import UIKit
 
     // MARK: ------ SwiftPhotoGallery ------
 
-public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIGestureRecognizerDelegate {
+public class SwiftPhotoGallery: UIViewController {
 
     public weak var dataSource: SwiftPhotoGalleryDataSource?
     public weak var delegate: SwiftPhotoGalleryDelegate?
@@ -69,7 +69,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
                 scrollToImage(withIndex: numberOfImages - 1, animated: false)
             }
             updatePageControl()
-        }
+            }
         get {
             pageBeforeRotation = Int(imageCollectionView.contentOffset.x / imageCollectionView.frame.size.width)
             return Int(imageCollectionView.contentOffset.x / imageCollectionView.frame.size.width)
@@ -85,7 +85,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     private var pageBeforeRotation: Int = 0
     private var currentIndexPath: IndexPath = IndexPath(item: 0, section: 0)
     private var flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-    private var pageControl: UIPageControl = UIPageControl()
+    fileprivate var pageControl: UIPageControl = UIPageControl()
     private var pageControlBottomConstraint: NSLayoutConstraint?
     private var pageControlCenterXConstraint: NSLayoutConstraint?
 
@@ -142,8 +142,8 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         
         view.backgroundColor = UIColor.black
 
-        pageControl.currentPageIndicatorTintColor = UIColor(red: 0.0, green: 0.66, blue: 0.875, alpha: 1.0)  //Inspirato Blue
-        pageControl.pageIndicatorTintColor = UIColor(red: 0.75, green: 0.75, blue: 0.75, alpha: 0.35) //Dim Grey
+        pageControl.currentPageIndicatorTintColor = UIColor.white
+        pageControl.pageIndicatorTintColor = UIColor(white: 0.75, alpha: 0.35) //Dim Grey
 
         setupPageControl()
         setupGestureRecognizer()
@@ -153,10 +153,6 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         get {
             return true
         }  
-    }
-
-    public override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
 
 
@@ -179,52 +175,6 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     func updatePageControl() {
         pageControl.currentPage = currentPage
-    }
-
-
-    // MARK: UICollectionViewDataSource Methods
-    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 1
-    }
-
-    public func collectionView(_ imageCollectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource?.numberOfImagesInGallery(gallery: self) ?? 0
-    }
-
-    public func collectionView(_ imageCollectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: "SwiftPhotoGalleryCell", for: indexPath) as! SwiftPhotoGalleryCell
-
-        cell.image = getImage(currentPage: indexPath.row)
-
-        return cell
-    }
-
-
-    // MARK: UICollectionViewDelegate Methods
-
-    public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-
-        pageControl.alpha = 1.0
-    }
-
-    public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-
-        // If the scroll animation ended, update the page control to reflect the current page we are on
-        updatePageControl()
-
-        UIView.animate(withDuration: 1.0, delay: 2.0, options: UIViewAnimationOptions.curveEaseInOut, animations: { () -> Void in
-            self.pageControl.alpha = 0.0
-        }, completion: nil)
-    }
-
-
-    // MARK: UIGestureRecognizerDelegate Methods
-
-    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOfGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return otherGestureRecognizer is UITapGestureRecognizer &&
-            gestureRecognizer is UITapGestureRecognizer &&
-            otherGestureRecognizer.view is SwiftPhotoGalleryCell &&
-            gestureRecognizer.view == imageCollectionView
     }
 
 
@@ -262,16 +212,43 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
         // Set up collection view constraints
         var imageCollectionViewConstraints: [NSLayoutConstraint] = []
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0))
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView,
+                                                                 attribute: .leading,
+                                                                 relatedBy: .equal,
+                                                                 toItem: view,
+                                                                 attribute: .leading,
+                                                                 multiplier: 1,
+                                                                 constant: 0))
+
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView,
+                                                                 attribute: .top,
+                                                                 relatedBy: .equal,
+                                                                 toItem: view,
+                                                                 attribute: .top,
+                                                                 multiplier: 1,
+                                                                 constant: 0))
+
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView,
+                                                                 attribute: .trailing,
+                                                                 relatedBy: .equal,
+                                                                 toItem: view,
+                                                                 attribute: .trailing,
+                                                                 multiplier: 1,
+                                                                 constant: 0))
+
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView,
+                                                                 attribute: .bottom,
+                                                                 relatedBy: .equal,
+                                                                 toItem: view,
+                                                                 attribute: .bottom,
+                                                                 multiplier: 1,
+                                                                 constant: 0))
 
         view.addSubview(collectionView)
         view.addConstraints(imageCollectionViewConstraints)
 
         collectionView.contentSize = CGSize(width: 1000.0, height: 1.0)
-        
+
         return collectionView
     }
 
@@ -305,18 +282,66 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
                                                          attribute: NSLayoutAttribute.bottom,
                                                          multiplier: 1.0,
                                                          constant: 15)
-        
+
         view.addConstraints([pageControlCenterXConstraint!, pageControlBottomConstraint!])
     }
-    
+
     private func scrollToImage(withIndex: Int, animated: Bool = false) {
         imageCollectionView.scrollToItem(at: IndexPath(item: withIndex, section: 0), at: .centeredHorizontally, animated: animated)
     }
 
-    private func getImage(currentPage: Int) -> UIImage {
+    fileprivate func getImage(currentPage: Int) -> UIImage {
         let imageForPage = dataSource?.imageInGallery(gallery: self, forIndex: currentPage)
         return imageForPage!
     }
 
+}
+
+// MARK: UICollectionViewDataSource Methods
+extension SwiftPhotoGallery: UICollectionViewDataSource {
+
+    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    public func collectionView(_ imageCollectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dataSource?.numberOfImagesInGallery(gallery: self) ?? 0
+    }
+
+    public func collectionView(_ imageCollectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: "SwiftPhotoGalleryCell", for: indexPath) as! SwiftPhotoGalleryCell
+        cell.image = getImage(currentPage: indexPath.row)
+        return cell
+    }
+}
+
+// MARK: UICollectionViewDelegate Methods
+extension SwiftPhotoGallery: UICollectionViewDelegate {
+
+    public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+
+        self.pageControl.alpha = 1.0
+    }
+
+    public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+
+        // If the scroll animation ended, update the page control to reflect the current page we are on
+        updatePageControl()
+
+        UIView.animate(withDuration: 1.0, delay: 2.0, options: UIViewAnimationOptions.curveEaseInOut, animations: { () -> Void in
+            self.pageControl.alpha = 0.0
+        }, completion: nil)
+    }
+}
+
+// MARK: UIGestureRecognizerDelegate Methods
+extension SwiftPhotoGallery: UIGestureRecognizerDelegate {
+
+    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOfGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return otherGestureRecognizer is UITapGestureRecognizer &&
+            gestureRecognizer is UITapGestureRecognizer &&
+            otherGestureRecognizer.view is SwiftPhotoGalleryCell &&
+            gestureRecognizer.view == imageCollectionView
+    }
 }
 
