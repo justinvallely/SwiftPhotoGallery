@@ -3,6 +3,10 @@
 [![Version](https://img.shields.io/cocoapods/v/SwiftPhotoGallery.svg?style=flat)](http://cocoapods.org/pods/SwiftPhotoGallery)
 [![License](https://img.shields.io/cocoapods/l/SwiftPhotoGallery.svg?style=flat)](http://cocoapods.org/pods/SwiftPhotoGallery)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftPhotoGallery.svg?style=flat)](http://cocoapods.org/pods/SwiftPhotoGallery)
+[![CocoaPods](https://img.shields.io/cocoapods/dt/AFNetworking.svg?maxAge=2592000)](https://cocoapods.org/pods/SwiftPhotoGallery)
+[![GitHub issues](https://img.shields.io/github/issues/badges/shields.svg?maxAge=2592000)](https://github.com/Inspirato/SwiftPhotoGallery/issues?q=is%3Aopen+is%3Aissue)
+[![GitHub closed issues](https://img.shields.io/github/issues-closed/badges/shields.svg?maxAge=2592000)](https://github.com/Inspirato/SwiftPhotoGallery/issues?q=is%3Aissue+is%3Aclosed)
+
 
 ## Usage
 
