@@ -45,8 +45,8 @@ class SwiftPhotoGalleryTests: XCTestCase {
     func testFirstImagesLoadedAfterInitialization() {
         testGallery.viewDidLoad()
 
-        let indexPath = NSIndexPath(forItem: 0, inSection: 0)
-        testGallery.imageCollectionView.reloadItemsAtIndexPaths([indexPath])
+        let indexPath = IndexPath(item: 0, section: 0)
+        testGallery.imageCollectionView.reloadItems(at: [indexPath])
 
         expect(self.testHelper.timesAskedForImageInGallery[0]).to(beGreaterThan(0))
         expect(self.testHelper.timesAskedForImageInGallery[1]).to(beGreaterThan(0))
@@ -60,8 +60,8 @@ class SwiftPhotoGalleryTests: XCTestCase {
         testGallery.dataSource = newDataSource
 
         testGallery.viewDidLoad()
-        let indexPath = NSIndexPath(forItem: 0, inSection: 0)
-        testGallery.imageCollectionView.reloadItemsAtIndexPaths([indexPath])
+        let indexPath = IndexPath(item: 0, section: 0)
+        testGallery.imageCollectionView.reloadItems(at: [indexPath])
 
         expect(newDataSource.timesAskedForNumberOfImagesInGallery).to(beGreaterThan(0))
 
@@ -84,14 +84,14 @@ class SwiftPhotoGalleryTests: XCTestCase {
 
         let singleTap = UITapGestureRecognizer()
 
-        testGallery.singleTapAction(singleTap)
+        testGallery.singleTapAction(recognizer: singleTap)
 
         expect(self.testHelper.didTellDelegateTapToClose).to(equal(true))
     }
 
     func testSetCurrentPage() {
 
-        let helperCollectionView: HelperCollectionView = HelperCollectionView(frame: CGRectMake(10, 10, 100, 100), collectionViewLayout: UICollectionViewFlowLayout())
+        let helperCollectionView: HelperCollectionView = HelperCollectionView(frame: CGRect(x: 10, y: 10, width: 100, height: 100), collectionViewLayout: UICollectionViewFlowLayout())
 
         testGallery.imageCollectionView = helperCollectionView
         helperCollectionView.delegate = testGallery
@@ -104,7 +104,7 @@ class SwiftPhotoGalleryTests: XCTestCase {
     }
 
     func testReloadWithoutParameters() {
-        let helperCollectionView: HelperCollectionView = HelperCollectionView(frame: CGRectZero, collectionViewLayout: UICollectionViewFlowLayout())
+        let helperCollectionView: HelperCollectionView = HelperCollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
 
         testGallery.imageCollectionView = helperCollectionView
         helperCollectionView.delegate = testGallery
@@ -118,7 +118,7 @@ class SwiftPhotoGalleryTests: XCTestCase {
     }
 
     func testReloadWithParameters() {
-        let helperCollectionView: HelperCollectionView = HelperCollectionView(frame: CGRectZero, collectionViewLayout: UICollectionViewFlowLayout())
+        let helperCollectionView: HelperCollectionView = HelperCollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
 
         testGallery.imageCollectionView = helperCollectionView
         helperCollectionView.delegate = testGallery
@@ -127,7 +127,7 @@ class SwiftPhotoGalleryTests: XCTestCase {
         helperCollectionView.reloadDataCalled = false
         helperCollectionView.indexesOfReloadedItems = []
 
-        testGallery.reload(1, 2, 3)
+        testGallery.reload(imageIndexes: 1, 2, 3)
 
         expect(helperCollectionView.reloadDataCalled).to(beFalse())
         expect(helperCollectionView.indexesOfReloadedItems).to(contain(1, 2, 3))
@@ -135,11 +135,11 @@ class SwiftPhotoGalleryTests: XCTestCase {
     
     func testSetBackgroundColor() {
 
-        expect(self.testGallery.backgroundColor).to(equal(UIColor.blackColor()))
-        
-        testGallery.backgroundColor = UIColor.orangeColor()
-        
-        expect(self.testGallery.backgroundColor).to(equal(UIColor.orangeColor()))
+        expect(self.testGallery.backgroundColor).to(equal(UIColor.black))
+
+        testGallery.backgroundColor = UIColor.orange
+
+        expect(self.testGallery.backgroundColor).to(equal(UIColor.orange))
         expect(self.testGallery.view.backgroundColor).to(equal(self.testGallery.backgroundColor))
     }
 
@@ -179,7 +179,7 @@ class HelperCollectionView: UICollectionView {
     var reloadDataCalled = false
     var indexesOfReloadedItems:[Int] = []
 
-    override func scrollToItemAtIndexPath(indexPath: NSIndexPath, atScrollPosition scrollPosition: UICollectionViewScrollPosition, animated: Bool) {
+    override func scrollToItem(at indexPath: IndexPath, at scrollPosition: UICollectionViewScrollPosition, animated: Bool) {
         didScroll = true
     }
 
@@ -189,9 +189,9 @@ class HelperCollectionView: UICollectionView {
         super.reloadData()
     }
 
-    override func reloadItemsAtIndexPaths(indexPaths: [NSIndexPath]) {
+    override func reloadItems(at indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            indexesOfReloadedItems.append(indexPath.row)
+            indexesOfReloadedItems.append((indexPath as NSIndexPath).row)
         }
 
     }

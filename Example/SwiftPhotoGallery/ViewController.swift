@@ -11,8 +11,8 @@ import SwiftPhotoGallery
 
 class HeaderViewController: UIViewController {
 
-    @IBAction func unwindToMainMenu(sender: UIStoryboardSegue) {
-        let _: AnyObject = sender.sourceViewController
+    @IBAction func unwindToMainMenu(_ sender: UIStoryboardSegue) {
+        let _: AnyObject = sender.source
         // Pull any data from the view controller which initiated the unwind segue.
     }
 
@@ -30,18 +30,21 @@ class ViewController: PortraitOnlyViewController, SwiftPhotoGalleryDataSource, S
         super.viewDidLoad()
     }
 
-    @IBAction func didPressShowMeButton(sender: AnyObject) {
+    @IBAction func didPressShowMeButton(_ sender: AnyObject) {
         let gallery = SwiftPhotoGallery(delegate: self, dataSource: self)
 
-        gallery.backgroundColor = UIColor.blackColor()
-        gallery.pageIndicatorTintColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
-        gallery.currentPageIndicatorTintColor = UIColor.whiteColor()
+        gallery.backgroundColor = UIColor.black
+        gallery.pageIndicatorTintColor = UIColor.gray.withAlphaComponent(0.5)
+        gallery.currentPageIndicatorTintColor = UIColor.white
 
-        //presentViewController(gallery, animated: true, completion: nil)
+        present(gallery, animated: true, completion: nil)
 
-        presentViewController(gallery, animated: false, completion: { () -> Void in
+        /// Or load on a specific page like this:
+        /*
+        present(gallery, animated: false, completion: { () -> Void in
             gallery.currentPage = 2
         })
+        */
     }
 
     // MARK: SwiftPhotoGalleryDataSource Methods
@@ -58,7 +61,7 @@ class ViewController: PortraitOnlyViewController, SwiftPhotoGalleryDataSource, S
     // MARK: SwiftPhotoGalleryDelegate Methods
 
     func galleryDidTapToClose(gallery: SwiftPhotoGallery) {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
 }

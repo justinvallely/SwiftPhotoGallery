@@ -64,9 +64,9 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     public var currentPage: Int {
         set(page) {
             if page < numberOfImages {
-                scrollToImage(page, animated: false)
+                scrollToImage(withIndex: page, animated: false)
             } else {
-                scrollToImage(numberOfImages - 1, animated: false)
+                scrollToImage(withIndex: numberOfImages - 1, animated: false)
             }
             updatePageControl()
         }
@@ -78,12 +78,12 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     public var hidePageControl: Bool = false {
         didSet {
-            pageControl.hidden = hidePageControl
+            pageControl.isHidden = hidePageControl
         }
     }
 
     private var pageBeforeRotation: Int = 0
-    private var currentIndexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
+    private var currentIndexPath: IndexPath = IndexPath(item: 0, section: 0)
     private var flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     private var pageControl: UIPageControl = UIPageControl()
     private var pageControlBottomConstraint: NSLayoutConstraint?
@@ -108,8 +108,8 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
             imageCollectionView.reloadData()
 
         } else {
-            let indexPaths: [NSIndexPath] = imageIndexes.map({NSIndexPath(forItem: $0, inSection: 0)})
-            imageCollectionView.reloadItemsAtIndexPaths(indexPaths)
+            let indexPaths: [IndexPath] = imageIndexes.map({IndexPath(item: $0, section: 0)})
+            imageCollectionView.reloadItems(at: indexPaths)
         }
     }
     
@@ -123,15 +123,15 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     }
 
     override public func viewDidLayoutSubviews() {
-        let desiredIndexPath = NSIndexPath(forItem: pageBeforeRotation, inSection: 0)
+        let desiredIndexPath = IndexPath(item: pageBeforeRotation, section: 0)
 
         if pageBeforeRotation > 0 {
-            scrollToImage(pageBeforeRotation, animated: false)
+            scrollToImage(withIndex: pageBeforeRotation, animated: false)
         }
 
-        imageCollectionView.reloadItemsAtIndexPaths([desiredIndexPath])
+        imageCollectionView.reloadItems(at: [desiredIndexPath])
 
-        if let currentCell = imageCollectionView.cellForItemAtIndexPath(desiredIndexPath) as? SwiftPhotoGalleryCell {
+        if let currentCell = imageCollectionView.cellForItem(at: desiredIndexPath) as? SwiftPhotoGalleryCell {
             currentCell.configureForNewImage()
         }
         
@@ -140,7 +140,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.blackColor()
+        view.backgroundColor = UIColor.black
 
         pageControl.currentPageIndicatorTintColor = UIColor(red: 0.0, green: 0.66, blue: 0.875, alpha: 1.0)  //Inspirato Blue
         pageControl.pageIndicatorTintColor = UIColor(red: 0.75, green: 0.75, blue: 0.75, alpha: 0.35) //Dim Grey
@@ -149,8 +149,10 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         setupGestureRecognizer()
     }
 
-    override public func prefersStatusBarHidden() -> Bool {
-        return true
+    public override var prefersStatusBarHidden: Bool {
+        get {
+            return true
+        }  
     }
 
     public override func didReceiveMemoryWarning() {
@@ -160,12 +162,16 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     // MARK: Rotation Handling
 
-    override public func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.AllButUpsideDown
+    public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        get {
+            return .allButUpsideDown
+        }
     }
 
-    override public func shouldAutorotate() -> Bool {
-        return true
+    public override var shouldAutorotate: Bool {
+        get {
+            return true
+        }
     }
 
 
@@ -181,14 +187,14 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         return 1
     }
 
-    public func collectionView(imageCollectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource?.numberOfImagesInGallery(self) ?? 0
+    public func collectionView(_ imageCollectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dataSource?.numberOfImagesInGallery(gallery: self) ?? 0
     }
 
-    public func collectionView(imageCollectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = imageCollectionView.dequeueReusableCellWithReuseIdentifier("SwiftPhotoGalleryCell", forIndexPath: indexPath) as! SwiftPhotoGalleryCell
+    public func collectionView(_ imageCollectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: "SwiftPhotoGalleryCell", for: indexPath) as! SwiftPhotoGalleryCell
 
-        cell.image = getImage(indexPath.row)
+        cell.image = getImage(currentPage: indexPath.row)
 
         return cell
     }
@@ -206,7 +212,7 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         // If the scroll animation ended, update the page control to reflect the current page we are on
         updatePageControl()
 
-        UIView.animateWithDuration(1.0, delay: 2.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+        UIView.animate(withDuration: 1.0, delay: 2.0, options: UIViewAnimationOptions.curveEaseInOut, animations: { () -> Void in
             self.pageControl.alpha = 0.0
         }, completion: nil)
     }
@@ -226,14 +232,14 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     private func setupGestureRecognizer() {
 
-        let singleTap = UITapGestureRecognizer(target: self, action: #selector(SwiftPhotoGallery.singleTapAction(_:)))
+        let singleTap = UITapGestureRecognizer(target: self, action: #selector(singleTapAction(recognizer:)))
         singleTap.numberOfTapsRequired = 1
         singleTap.delegate = self
         imageCollectionView.addGestureRecognizer(singleTap)
     }
 
     public func singleTapAction(recognizer: UITapGestureRecognizer) {
-        delegate?.galleryDidTapToClose(self)
+        delegate?.galleryDidTapToClose(gallery: self)
     }
 
 
@@ -241,25 +247,25 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
 
     private func setupCollectionView() -> UICollectionView {
         // Set up flow layout
-        flowLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
+        flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 0
 
         // Set up collection view
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.registerClass(SwiftPhotoGalleryCell.self, forCellWithReuseIdentifier: "SwiftPhotoGalleryCell")
+        collectionView.register(SwiftPhotoGalleryCell.self, forCellWithReuseIdentifier: "SwiftPhotoGalleryCell")
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.pagingEnabled = true
-        collectionView.backgroundColor = UIColor.clearColor()
+        collectionView.isPagingEnabled = true
+        collectionView.backgroundColor = UIColor.clear
 
         // Set up collection view constraints
         var imageCollectionViewConstraints: [NSLayoutConstraint] = []
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0))
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: 0))
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .Trailing, multiplier: 1, constant: 0))
-        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .Bottom, relatedBy: .Equal, toItem: view, attribute: .Bottom, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
+        imageCollectionViewConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0))
 
         view.addSubview(collectionView)
         view.addConstraints(imageCollectionViewConstraints)
@@ -280,23 +286,23 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
         pageControl.pageIndicatorTintColor = pageIndicatorTintColor
 
         pageControl.alpha = 1
-        pageControl.hidden = hidePageControl
+        pageControl.isHidden = hidePageControl
 
         view.addSubview(pageControl)
 
         pageControlCenterXConstraint = NSLayoutConstraint(item: pageControl,
-                                                          attribute: NSLayoutAttribute.CenterX,
-                                                          relatedBy: NSLayoutRelation.Equal,
+                                                          attribute: NSLayoutAttribute.centerX,
+                                                          relatedBy: NSLayoutRelation.equal,
                                                           toItem: view,
-                                                          attribute: NSLayoutAttribute.CenterX,
+                                                          attribute: NSLayoutAttribute.centerX,
                                                           multiplier: 1.0,
                                                           constant: 0)
 
         pageControlBottomConstraint = NSLayoutConstraint(item: view,
-                                                         attribute: NSLayoutAttribute.Bottom,
-                                                         relatedBy: NSLayoutRelation.Equal,
+                                                         attribute: NSLayoutAttribute.bottom,
+                                                         relatedBy: NSLayoutRelation.equal,
                                                          toItem: pageControl,
-                                                         attribute: NSLayoutAttribute.Bottom,
+                                                         attribute: NSLayoutAttribute.bottom,
                                                          multiplier: 1.0,
                                                          constant: 15)
         
@@ -304,11 +310,11 @@ public class SwiftPhotoGallery: UIViewController, UICollectionViewDataSource, UI
     }
     
     private func scrollToImage(withIndex: Int, animated: Bool = false) {
-        imageCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: withIndex, inSection: 0), atScrollPosition: .CenteredHorizontally, animated: animated)
+        imageCollectionView.scrollToItem(at: IndexPath(item: withIndex, section: 0), at: .centeredHorizontally, animated: animated)
     }
 
     private func getImage(currentPage: Int) -> UIImage {
-        let imageForPage = dataSource?.imageInGallery(self, forIndex: currentPage)
+        let imageForPage = dataSource?.imageInGallery(gallery: self, forIndex: currentPage)
         return imageForPage!
     }
 
