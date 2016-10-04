@@ -122,7 +122,7 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell {
         imageView.alpha = 0.0
 
         setZoomScale()
-        scrollViewDidZoom(scrollView: scrollView)
+        scrollViewDidZoom(scrollView)
         
         UIView.animate(withDuration: 0.5) {
             self.imageView.alpha = 1.0
@@ -152,11 +152,11 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell {
     // MARK: UIScrollViewDelegate Methods
 extension SwiftPhotoGalleryCell: UIScrollViewDelegate {
 
-    public func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+    public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
 
-    public func scrollViewDidZoom(scrollView: UIScrollView) {
+    public func scrollViewDidZoom(_ scrollView: UIScrollView) {
 
         let imageViewSize = imageView.frame.size
         let scrollViewSize = scrollView.bounds.size

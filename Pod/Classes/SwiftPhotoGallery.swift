@@ -35,7 +35,6 @@ public class SwiftPhotoGallery: UIViewController {
         get {
             return view.backgroundColor!
         }
-        
         set(newBackgroundColor) {
             view.backgroundColor = newBackgroundColor
         }
@@ -69,7 +68,7 @@ public class SwiftPhotoGallery: UIViewController {
                 scrollToImage(withIndex: numberOfImages - 1, animated: false)
             }
             updatePageControl()
-            }
+        }
         get {
             pageBeforeRotation = Int(imageCollectionView.contentOffset.x / imageCollectionView.frame.size.width)
             return Int(imageCollectionView.contentOffset.x / imageCollectionView.frame.size.width)
@@ -123,6 +122,8 @@ public class SwiftPhotoGallery: UIViewController {
     }
 
     override public func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
         let desiredIndexPath = IndexPath(item: pageBeforeRotation, section: 0)
 
         if pageBeforeRotation > 0 {
@@ -319,7 +320,6 @@ extension SwiftPhotoGallery: UICollectionViewDataSource {
 extension SwiftPhotoGallery: UICollectionViewDelegate {
 
     public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-
         self.pageControl.alpha = 1.0
     }
 
@@ -337,7 +337,8 @@ extension SwiftPhotoGallery: UICollectionViewDelegate {
 // MARK: UIGestureRecognizerDelegate Methods
 extension SwiftPhotoGallery: UIGestureRecognizerDelegate {
 
-    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOfGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+      
         return otherGestureRecognizer is UITapGestureRecognizer &&
             gestureRecognizer is UITapGestureRecognizer &&
             otherGestureRecognizer.view is SwiftPhotoGalleryCell &&
