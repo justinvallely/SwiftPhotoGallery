@@ -301,7 +301,7 @@ public class SwiftPhotoGallery: UIViewController {
 // MARK: UICollectionViewDataSource Methods
 extension SwiftPhotoGallery: UICollectionViewDataSource {
 
-    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
@@ -319,11 +319,11 @@ extension SwiftPhotoGallery: UICollectionViewDataSource {
 // MARK: UICollectionViewDelegate Methods
 extension SwiftPhotoGallery: UICollectionViewDelegate {
 
-    public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.pageControl.alpha = 1.0
     }
 
-    public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 
         // If the scroll animation ended, update the page control to reflect the current page we are on
         updatePageControl()
