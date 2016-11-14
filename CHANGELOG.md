@@ -1,5 +1,14 @@
 ## Master
 
+
+## 3.0.1 (2016-11-14)
+
+##### Bug Fixes
+
+* Fixes flicker on second image
+* Fixes images not being sized properly after rotation
+
+
 ## 3.0.0 (2016-10-06)
 
 ##### Enhancements
