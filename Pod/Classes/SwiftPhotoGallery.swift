@@ -87,7 +87,7 @@ public class SwiftPhotoGallery: UIViewController {
     fileprivate var pageControl: UIPageControl = UIPageControl()
     private var pageControlBottomConstraint: NSLayoutConstraint?
     private var pageControlCenterXConstraint: NSLayoutConstraint?
-
+    private var needsLayout = true
     
     // MARK: Public Interface
     public init(delegate: SwiftPhotoGalleryDelegate, dataSource: SwiftPhotoGalleryDataSource) {
@@ -115,30 +115,35 @@ public class SwiftPhotoGallery: UIViewController {
 
     // MARK: Lifecycle methods
 
-    override public func viewWillLayoutSubviews() {
+    public override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
         flowLayout.itemSize = view.bounds.size
     }
 
-    override public func viewDidLayoutSubviews() {
+    public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        if needsLayout {
+            let desiredIndexPath = IndexPath(item: pageBeforeRotation, section: 0)
 
-        let desiredIndexPath = IndexPath(item: pageBeforeRotation, section: 0)
+            if pageBeforeRotation > 0 {
+                scrollToImage(withIndex: pageBeforeRotation, animated: false)
+            }
 
-        if pageBeforeRotation > 0 {
-            scrollToImage(withIndex: pageBeforeRotation, animated: false)
+            imageCollectionView.reloadItems(at: [desiredIndexPath])
+
+            for cell in imageCollectionView.visibleCells {
+                if let cell = cell as? SwiftPhotoGalleryCell {
+                    cell.configureForNewImage()
+                }
+
+            }
+
+            needsLayout = false
         }
-
-        imageCollectionView.reloadItems(at: [desiredIndexPath])
-
-        if let currentCell = imageCollectionView.cellForItem(at: desiredIndexPath) as? SwiftPhotoGalleryCell {
-            currentCell.configureForNewImage()
-        }
-        
     }
 
-    override public func viewDidLoad() {
+     public override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.black
@@ -158,6 +163,10 @@ public class SwiftPhotoGallery: UIViewController {
 
 
     // MARK: Rotation Handling
+    public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        needsLayout = true
+    }
 
     public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         get {
@@ -331,6 +340,12 @@ extension SwiftPhotoGallery: UICollectionViewDelegate {
         UIView.animate(withDuration: 1.0, delay: 2.0, options: UIViewAnimationOptions.curveEaseInOut, animations: { () -> Void in
             self.pageControl.alpha = 0.0
         }, completion: nil)
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let cell = cell as? SwiftPhotoGalleryCell {
+            cell.configureForNewImage()
+        }
     }
 }
 
