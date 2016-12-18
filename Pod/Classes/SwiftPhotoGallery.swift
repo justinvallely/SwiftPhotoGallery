@@ -155,11 +155,13 @@ public class SwiftPhotoGallery: UIViewController {
         setupGestureRecognizer()
     }
 
+    #if os(iOS)
     public override var prefersStatusBarHidden: Bool {
         get {
             return true
         }  
     }
+    #endif
 
 
     // MARK: Rotation Handling
@@ -168,17 +170,21 @@ public class SwiftPhotoGallery: UIViewController {
         needsLayout = true
     }
 
+    #if os(iOS)
     public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         get {
             return .allButUpsideDown
         }
     }
+    #endif
 
+    #if os(iOS)
     public override var shouldAutorotate: Bool {
         get {
             return true
         }
     }
+    #endif
 
 
     // MARK: - Internal Methods
@@ -217,8 +223,10 @@ public class SwiftPhotoGallery: UIViewController {
         collectionView.register(SwiftPhotoGalleryCell.self, forCellWithReuseIdentifier: "SwiftPhotoGalleryCell")
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.isPagingEnabled = true
         collectionView.backgroundColor = UIColor.clear
+        #if os(iOS)
+            collectionView.isPagingEnabled = true
+        #endif
 
         // Set up collection view constraints
         var imageCollectionViewConstraints: [NSLayoutConstraint] = []
