@@ -51,4 +51,3 @@ extension ViewController: SwiftPhotoGalleryDelegate {
         dismiss(animated: true, completion: nil)
     }
 }
-
