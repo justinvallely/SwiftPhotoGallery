@@ -81,6 +81,12 @@ public class SwiftPhotoGallery: UIViewController {
         }
     }
 
+    public var hideStatusBar: Bool = true {
+        didSet {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+
     public var isSwipeToDismissEnabled: Bool = true
 
     private var pageBeforeRotation: Int = 0
@@ -161,7 +167,7 @@ public class SwiftPhotoGallery: UIViewController {
     #if os(iOS)
     public override var prefersStatusBarHidden: Bool {
         get {
-            return true
+            return hideStatusBar
         }
     }
     #endif
