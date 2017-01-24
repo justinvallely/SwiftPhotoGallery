@@ -19,7 +19,9 @@ Pod::Spec.new do |s|
   s.author           = { "Justin Vallely" => "jvallely@inspirato.com" }
   s.source           = { :git => "https://github.com/Inspirato/SwiftPhotoGallery.git", :tag => "#{s.version}" }
 
-  s.platform     = :ios, '8.0'
+  s.ios.deployment_target = "8.0"
+  s.tvos.deployment_target = "10.0"
+
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes/**/*'
