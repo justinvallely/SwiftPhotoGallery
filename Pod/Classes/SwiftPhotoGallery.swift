@@ -157,7 +157,6 @@ public class SwiftPhotoGallery: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = UIColor.black
-        self.modalPresentationStyle = .overCurrentContext
 
         pageControl.currentPageIndicatorTintColor = UIColor.white
         pageControl.pageIndicatorTintColor = UIColor(white: 0.75, alpha: 0.35) //Dim Grey

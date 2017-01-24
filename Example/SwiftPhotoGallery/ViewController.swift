@@ -20,6 +20,7 @@ class ViewController: PortraitOnlyViewController {
         gallery.pageIndicatorTintColor = UIColor.gray.withAlphaComponent(0.5)
         gallery.currentPageIndicatorTintColor = UIColor(red: 0.0, green: 0.66, blue: 0.875, alpha: 1.0)
         gallery.hidePageControl = false
+        gallery.modalPresentationStyle = .overCurrentContext
 
         present(gallery, animated: true, completion: nil)
 
