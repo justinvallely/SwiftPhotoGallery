@@ -18,7 +18,7 @@ import UIKit
     func galleryDidTapToClose(gallery:SwiftPhotoGallery)
 }
 
-    // MARK: ------ SwiftPhotoGallery ------
+// MARK: ------ SwiftPhotoGallery ------
 
 public class SwiftPhotoGallery: UIViewController {
 
@@ -26,7 +26,7 @@ public class SwiftPhotoGallery: UIViewController {
     public weak var delegate: SwiftPhotoGalleryDelegate?
 
     public lazy var imageCollectionView: UICollectionView = self.setupCollectionView()
-    
+
     public var numberOfImages: Int {
         return collectionView(imageCollectionView, numberOfItemsInSection: 0)
     }
@@ -81,6 +81,16 @@ public class SwiftPhotoGallery: UIViewController {
         }
     }
 
+    #if os(iOS)
+    public var hideStatusBar: Bool = true {
+        didSet {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+    #endif
+
+    public var isSwipeToDismissEnabled: Bool = true
+
     private var pageBeforeRotation: Int = 0
     private var currentIndexPath: IndexPath = IndexPath(item: 0, section: 0)
     private var flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -88,7 +98,7 @@ public class SwiftPhotoGallery: UIViewController {
     private var pageControlBottomConstraint: NSLayoutConstraint?
     private var pageControlCenterXConstraint: NSLayoutConstraint?
     private var needsLayout = true
-    
+
     // MARK: Public Interface
     public init(delegate: SwiftPhotoGalleryDelegate, dataSource: SwiftPhotoGalleryDataSource) {
         super.init(nibName: nil, bundle: nil)
@@ -111,7 +121,7 @@ public class SwiftPhotoGallery: UIViewController {
             imageCollectionView.reloadItems(at: indexPaths)
         }
     }
-    
+
 
     // MARK: Lifecycle methods
 
@@ -123,6 +133,7 @@ public class SwiftPhotoGallery: UIViewController {
 
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+
         if needsLayout {
             let desiredIndexPath = IndexPath(item: pageBeforeRotation, section: 0)
 
@@ -136,30 +147,29 @@ public class SwiftPhotoGallery: UIViewController {
                 if let cell = cell as? SwiftPhotoGalleryCell {
                     cell.configureForNewImage()
                 }
-
             }
 
             needsLayout = false
         }
     }
 
-     public override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.backgroundColor = UIColor.black
 
         pageControl.currentPageIndicatorTintColor = UIColor.white
         pageControl.pageIndicatorTintColor = UIColor(white: 0.75, alpha: 0.35) //Dim Grey
 
         setupPageControl()
-        setupGestureRecognizer()
+        setupGestureRecognizers()
     }
 
     #if os(iOS)
     public override var prefersStatusBarHidden: Bool {
         get {
-            return true
-        }  
+            return hideStatusBar
+        }
     }
     #endif
 
@@ -196,13 +206,65 @@ public class SwiftPhotoGallery: UIViewController {
 
     // MARK: Gesture Handlers
 
-    private func setupGestureRecognizer() {
+    private func setupGestureRecognizers() {
+
+        #if os(iOS)
+            let panGesture = PanDirectionGestureRecognizer(direction: PanDirection.vertical, target: self, action: #selector(wasDragged(_:)))
+            imageCollectionView.addGestureRecognizer(panGesture)
+            imageCollectionView.isUserInteractionEnabled = true
+        #endif
+
 
         let singleTap = UITapGestureRecognizer(target: self, action: #selector(singleTapAction(recognizer:)))
         singleTap.numberOfTapsRequired = 1
         singleTap.delegate = self
         imageCollectionView.addGestureRecognizer(singleTap)
     }
+
+    #if os(iOS)
+    @objc private func wasDragged(_ gesture: PanDirectionGestureRecognizer) {
+
+        guard let image = gesture.view, isSwipeToDismissEnabled else { return }
+
+        let translation = gesture.translation(in: self.view)
+        image.center = CGPoint(x: self.view.bounds.midX, y: self.view.bounds.midY + translation.y)
+
+        let yFromCenter = image.center.y - self.view.bounds.midY
+
+        let alpha = 1 - abs(yFromCenter / self.view.bounds.midY)
+        self.view.backgroundColor = backgroundColor.withAlphaComponent(alpha)
+
+        if gesture.state == UIGestureRecognizerState.ended {
+
+            var swipeDistance: CGFloat = 0
+            let swipeBuffer: CGFloat = 50
+            var animateImageAway = false
+
+            if yFromCenter > -swipeBuffer && yFromCenter < swipeBuffer {
+                // reset everything
+                UIView.animate(withDuration: 0.25, animations: {
+                    self.view.backgroundColor = self.backgroundColor.withAlphaComponent(1.0)
+                    image.center = CGPoint(x: self.view.bounds.midX, y: self.view.bounds.midY)
+                })
+            } else if yFromCenter < -swipeBuffer {
+                swipeDistance = 0
+                animateImageAway = true
+            } else {
+                swipeDistance = self.view.bounds.height
+                animateImageAway = true
+            }
+
+            if animateImageAway {
+                UIView.animate(withDuration: 0.35, animations: {
+                    self.view.alpha = 0
+                    image.center = CGPoint(x: self.view.bounds.midX, y: swipeDistance)
+                }, completion: { (complete) in
+                    self.delegate?.galleryDidTapToClose(gallery: self)
+                })
+            }
+        }
+    }
+    #endif
 
     public func singleTapAction(recognizer: UITapGestureRecognizer) {
         delegate?.galleryDidTapToClose(gallery: self)
@@ -359,9 +421,9 @@ extension SwiftPhotoGallery: UICollectionViewDelegate {
 
 // MARK: UIGestureRecognizerDelegate Methods
 extension SwiftPhotoGallery: UIGestureRecognizerDelegate {
-
+    
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-      
+        
         return otherGestureRecognizer is UITapGestureRecognizer &&
             gestureRecognizer is UITapGestureRecognizer &&
             otherGestureRecognizer.view is SwiftPhotoGalleryCell &&
