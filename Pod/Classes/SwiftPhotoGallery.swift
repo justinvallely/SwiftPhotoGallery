@@ -81,11 +81,13 @@ public class SwiftPhotoGallery: UIViewController {
         }
     }
 
+    #if os(iOS)
     public var hideStatusBar: Bool = true {
         didSet {
             self.setNeedsStatusBarAppearanceUpdate()
         }
     }
+    #endif
 
     public var isSwipeToDismissEnabled: Bool = true
 
@@ -207,9 +209,12 @@ public class SwiftPhotoGallery: UIViewController {
 
     private func setupGestureRecognizers() {
 
-        let panGesture = PanDirectionGestureRecognizer(direction: PanDirection.vertical, target: self, action: #selector(wasDragged(_:)))
-        imageCollectionView.addGestureRecognizer(panGesture)
-        imageCollectionView.isUserInteractionEnabled = true
+        #if os(iOS)
+            let panGesture = PanDirectionGestureRecognizer(direction: PanDirection.vertical, target: self, action: #selector(wasDragged(_:)))
+            imageCollectionView.addGestureRecognizer(panGesture)
+            imageCollectionView.isUserInteractionEnabled = true
+        #endif
+
 
         let singleTap = UITapGestureRecognizer(target: self, action: #selector(singleTapAction(recognizer:)))
         singleTap.numberOfTapsRequired = 1
@@ -217,6 +222,7 @@ public class SwiftPhotoGallery: UIViewController {
         imageCollectionView.addGestureRecognizer(singleTap)
     }
 
+    #if os(iOS)
     @objc private func wasDragged(_ gesture: PanDirectionGestureRecognizer) {
 
         guard let image = gesture.view, isSwipeToDismissEnabled else { return }
@@ -259,6 +265,7 @@ public class SwiftPhotoGallery: UIViewController {
             }
         }
     }
+    #endif
 
     public func singleTapAction(recognizer: UITapGestureRecognizer) {
         delegate?.galleryDidTapToClose(gallery: self)
