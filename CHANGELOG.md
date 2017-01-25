@@ -1,5 +1,14 @@
 ## Master
 
+## 3.1.0 (2017-01-25)
+
+##### Enhancements
+
+* Adds support for tvOS
+* Adds Twitter-style swipe to dismiss (can be disabled)
+* Adds public access to hide/show the status bar
+
+
 
 ## 3.0.1 (2016-11-14)
 
@@ -7,6 +16,7 @@
 
 * Fixes flicker on second image
 * Fixes images not being sized properly after rotation
+
 
 
 ## 3.0.0 (2016-10-06)
