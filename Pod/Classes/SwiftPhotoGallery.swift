@@ -44,7 +44,6 @@ public class SwiftPhotoGallery: UIViewController {
         get {
             return pageControl.currentPageIndicatorTintColor!
         }
-
         set(newCurrentPageIndicatorTintColor) {
             pageControl.currentPageIndicatorTintColor = newCurrentPageIndicatorTintColor
         }
@@ -54,7 +53,6 @@ public class SwiftPhotoGallery: UIViewController {
         get {
             return pageControl.pageIndicatorTintColor!
         }
-
         set(newPageIndicatorTintColor) {
             pageControl.pageIndicatorTintColor = newPageIndicatorTintColor
         }
