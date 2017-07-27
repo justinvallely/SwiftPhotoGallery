@@ -11,44 +11,47 @@ import pop
 
 class PresentingAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
+    var originFrame = CGRect.zero
+
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.5
+        return 1
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
 
-        if let fromView = transitionContext.viewController(forKey: .from)?.view, let toView = transitionContext.viewController(forKey: .to)?.view {
-            fromView.tintAdjustmentMode = .dimmed
-            fromView.isUserInteractionEnabled = false
+        if let fromVC = transitionContext.viewController(forKey: .from),
+            let toView = transitionContext.view(forKey: .to) {
 
-            let dimmingView = UIView(frame: fromView.bounds)
-            dimmingView.backgroundColor = UIColor.black
-            dimmingView.layer.opacity = 0.0
+            let containerView = transitionContext.containerView
 
-            let width: CGFloat = UIScreen.main.traitCollection.horizontalSizeClass == .regular ? 335 : transitionContext.containerView.bounds.width - 40
+//            toView.frame = transitionContext.finalFrame(for: toVC)
 
-            toView.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: width, height: CGFloat(364))
-            toView.center = CGPoint(x: CGFloat(transitionContext.containerView.center.x), y: CGFloat(transitionContext.containerView.center.y))
-            transitionContext.containerView.addSubview(dimmingView)
-            transitionContext.containerView.addSubview(toView)
+            containerView.addSubview(toView)
+            containerView.bringSubview(toFront: toView)
 
-            let positionAnimation = POPSpringAnimation(propertyNamed: kPOPLayerPositionY)!
-            positionAnimation.toValue = (transitionContext.containerView.center.y)
-            positionAnimation.springBounciness = 10
-            positionAnimation.completionBlock = {(_ anim: POPAnimation?, _ finished: Bool) -> Void in
+
+            let duration = transitionDuration(using: transitionContext)
+
+            let finalFrame = toView.frame
+
+            let xScaleFactor = originFrame.width / finalFrame.width
+            let yScaleFactor = originFrame.height / finalFrame.height
+
+            let scaleTransform = CGAffineTransform(scaleX: xScaleFactor, y: yScaleFactor)
+
+            toView.transform = scaleTransform
+            toView.center = CGPoint(x: originFrame.midX, y: originFrame.midY)
+            toView.clipsToBounds = true
+
+            UIView.animate(withDuration: duration, delay:0.0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.0, animations: {
+                toView.transform = CGAffineTransform.identity
+                toView.center = CGPoint(x: finalFrame.midX, y: finalFrame.midY)
+            }, completion:{ _ in
                 transitionContext.completeTransition(true)
-            }
+            })
 
-            let scaleAnimation = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)!
-            scaleAnimation.springBounciness = 10
-            scaleAnimation.fromValue = NSValue(cgPoint: CGPoint(x: CGFloat(1.2), y: CGFloat(1.4)))
-
-            let opacityAnimation = POPBasicAnimation(propertyNamed: kPOPLayerOpacity)!
-            opacityAnimation.toValue = (0.7)
-
-            toView.layer.pop_add(positionAnimation, forKey: "positionAnimation")
-            toView.layer.pop_add(scaleAnimation, forKey: "scaleAnimation")
-            dimmingView.layer.pop_add(opacityAnimation, forKey: "opacityAnimation")
         }
+
     }
+
 }

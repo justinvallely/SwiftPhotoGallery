@@ -76,8 +76,14 @@ extension PageContentViewController: SwiftPhotoGalleryDelegate {
 // MARK: UIViewControllerTransitioningDelegate Methods
 extension PageContentViewController: UIViewControllerTransitioningDelegate {
 
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return DimmingPresentationController(presentedViewController: presented, presenting: presenting)
+    }
+
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return PresentingAnimator()
+        let animator = PresentingAnimator()
+        animator.originFrame = imageView.superview!.convert(imageView.frame, to: nil)
+        return animator
     }
 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
