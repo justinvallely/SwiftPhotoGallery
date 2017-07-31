@@ -81,9 +81,7 @@ extension PageContentViewController: UIViewControllerTransitioningDelegate {
     }
 
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let animator = PresentingAnimator()
-        animator.originFrame = imageView.superview!.convert(imageView.frame, to: nil)
-        return animator
+        return PresentingAnimator()
     }
 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {

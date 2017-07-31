@@ -7,51 +7,57 @@
 //
 
 import Foundation
-import pop
+import UIKit
 
 class PresentingAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
-    var originFrame = CGRect.zero
+    private let duration: TimeInterval = 0.5
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 1
+        return duration
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
 
-        if let fromVC = transitionContext.viewController(forKey: .from),
-            let toView = transitionContext.view(forKey: .to) {
-
-            let containerView = transitionContext.containerView
-
-//            toView.frame = transitionContext.finalFrame(for: toVC)
-
-            containerView.addSubview(toView)
-            containerView.bringSubview(toFront: toView)
-
-
-            let duration = transitionDuration(using: transitionContext)
-
-            let finalFrame = toView.frame
-
-            let xScaleFactor = originFrame.width / finalFrame.width
-            let yScaleFactor = originFrame.height / finalFrame.height
-
-            let scaleTransform = CGAffineTransform(scaleX: xScaleFactor, y: yScaleFactor)
-
-            toView.transform = scaleTransform
-            toView.center = CGPoint(x: originFrame.midX, y: originFrame.midY)
-            toView.clipsToBounds = true
-
-            UIView.animate(withDuration: duration, delay:0.0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.0, animations: {
-                toView.transform = CGAffineTransform.identity
-                toView.center = CGPoint(x: finalFrame.midX, y: finalFrame.midY)
-            }, completion:{ _ in
+        guard let toView = transitionContext.view(forKey: .to),
+            let fromVC = transitionContext.viewController(forKey: .from) as? ViewController,
+            let fromView = fromVC.pageViewController.viewControllers?[0] as? PageContentViewController
+            else {
                 transitionContext.completeTransition(true)
-            })
-
+                return
         }
 
-    }
+        let originFrame = fromView.imageView.frame
+        let finalFrame = toView.frame
 
+        let viewToAnimate = UIImageView(frame: originFrame)
+        viewToAnimate.image = fromView.imageView.image
+        viewToAnimate.contentMode = .scaleAspectFill
+        viewToAnimate.clipsToBounds = false
+        fromView.imageView.isHidden = true
+
+        let containerView = transitionContext.containerView
+        containerView.addSubview(toView)
+        containerView.addSubview(viewToAnimate)
+
+        toView.isHidden = true
+
+        // Determine the new image size
+        let xScaleFactor = finalFrame.width / originFrame.width
+        let aspectRatio = originFrame.width / originFrame.height
+        let newheight = finalFrame.width / aspectRatio
+        let yScaleFactor = newheight / originFrame.height
+
+        // Animate size and position
+        UIView.animate(withDuration: duration, animations: {
+            viewToAnimate.transform = CGAffineTransform(scaleX: xScaleFactor, y: yScaleFactor)
+            viewToAnimate.center = CGPoint(x: finalFrame.midX, y: finalFrame.midY)
+        }, completion:{ _ in
+            toView.isHidden = false
+            fromView.imageView.isHidden = false
+            viewToAnimate.removeFromSuperview()
+            transitionContext.completeTransition(true)
+        })
+
+    }
 }

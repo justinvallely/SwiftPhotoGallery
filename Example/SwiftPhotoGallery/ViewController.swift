@@ -32,6 +32,7 @@ class ViewController: PortraitOnlyViewController {
         addChildViewController(pageViewController)
         view.addSubview(pageViewController.view)
         pageViewController.didMove(toParentViewController: self)
+
     }
 
     func viewController(at index: Int) -> PageContentViewController? {
