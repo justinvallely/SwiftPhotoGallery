@@ -7,38 +7,70 @@
 //
 
 import Foundation
-import pop
+import UIKit
+import SwiftPhotoGallery
 
 class DismissingAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
+    private var pageIndex = 0
+    private let duration: TimeInterval = 0.5
+
+    init(pageIndex: Int) {
+        super.init()
+        self.pageIndex = pageIndex
+    }
+
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.5
+        return duration
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
 
-        if let toView = transitionContext.viewController(forKey: .to)?.view, let fromView = transitionContext.viewController(forKey: .from)?.view {
-            toView.tintAdjustmentMode = .normal
-            toView.isUserInteractionEnabled = true
+        let indexPath = IndexPath(item: pageIndex, section: 0)
 
-            var dimmingView: UIView?
-
-            for subview in transitionContext.containerView.subviews.enumerated() where subview.element.layer.opacity < 1.0 {
-                dimmingView = subview.element
-                break
-            }
-
-            let opacityAnimation = POPBasicAnimation(propertyNamed: kPOPLayerOpacity)!
-            opacityAnimation.toValue = (0.0)
-
-            let offscreenAnimation = POPBasicAnimation(propertyNamed: kPOPLayerPositionY)!
-            offscreenAnimation.toValue = (-fromView.layer.position.y)
-            offscreenAnimation.completionBlock = {(_ anim: POPAnimation?, _ finished: Bool) -> Void in
+        guard let toVC = transitionContext.viewController(forKey: .to) as? ViewController,
+            let pageContentVC = toVC.pageViewController.viewControllers?[0] as? PageContentViewController,
+            let fromVC = transitionContext.viewController(forKey: .from) as? SwiftPhotoGallery,
+            let cell = fromVC.imageCollectionView.cellForItem(at: indexPath) as? SwiftPhotoGalleryCell
+            else {
                 transitionContext.completeTransition(true)
-            }
-
-            fromView.layer.pop_add(offscreenAnimation, forKey: "offscreenAnimation")
-            dimmingView?.layer.pop_add(opacityAnimation, forKey: "opacityAnimation")
+                return
         }
+
+        let containerView = transitionContext.containerView
+
+        // Determine our original and final frames
+        let size = cell.imageView.frame.size
+        let convertedRect = cell.imageView.convert(cell.imageView.bounds, to: containerView)
+        let originFrame = CGRect(origin: convertedRect.origin, size: size)
+        let finalFrame = pageContentVC.imageView.frame
+
+        let viewToAnimate = UIImageView(frame: originFrame)
+        viewToAnimate.center = CGPoint(x: convertedRect.midX, y: convertedRect.midY)
+        viewToAnimate.image = cell.imageView.image
+        viewToAnimate.contentMode = .scaleAspectFill
+        viewToAnimate.clipsToBounds = false
+
+        containerView.addSubview(viewToAnimate)
+
+        // Determine the new image size
+        let xScaleFactor = finalFrame.width / originFrame.width
+        let aspectRatio = cell.imageView.frame.width / cell.imageView.frame.height
+        let newheight = finalFrame.width / aspectRatio
+        let yScaleFactor = newheight / originFrame.height
+
+        pageContentVC.imageView.isHidden = true
+        fromVC.view.isHidden = true
+
+        // Animate size and position
+        UIView.animate(withDuration: duration, animations: {
+            viewToAnimate.transform = CGAffineTransform(scaleX: xScaleFactor, y: yScaleFactor)
+            viewToAnimate.center = CGPoint(x: finalFrame.midX, y: finalFrame.midY)
+        }, completion:{ _ in
+            pageContentVC.imageView.isHidden = false
+            viewToAnimate.removeFromSuperview()
+            transitionContext.completeTransition(true)
+        })
+
     }
 }

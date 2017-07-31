@@ -85,6 +85,6 @@ extension PageContentViewController: UIViewControllerTransitioningDelegate {
     }
 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return DismissingAnimator()
+        return DismissingAnimator(pageIndex: pageIndex)
     }
 }
