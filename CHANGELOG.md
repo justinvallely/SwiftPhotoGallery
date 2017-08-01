@@ -1,5 +1,13 @@
 ## Master
 
+## 3.1.1 (2017-08-01)
+
+##### Enhancements
+
+* Changes access level of collection view cell's imageView to public
+
+
+
 ## 3.1.0 (2017-01-25)
 
 ##### Enhancements
