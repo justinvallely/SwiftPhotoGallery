@@ -11,6 +11,15 @@ import UIKit
 
 class PresentingAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
+    private let indexPath: IndexPath
+    private let originFrame: CGRect
+
+    init(index: Int, originFrame: CGRect) {
+        self.indexPath = IndexPath(item: index, section: 0)
+        self.originFrame = originFrame
+        super.init()
+    }
+
     private let duration: TimeInterval = 0.5
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
@@ -20,20 +29,19 @@ class PresentingAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
 
         guard let toView = transitionContext.view(forKey: .to),
-            let fromVC = transitionContext.viewController(forKey: .from) as? MainViewController,
-            let fromView = fromVC.pageViewController.viewControllers?[0] as? PageContentViewController
+            let fromVC = transitionContext.viewController(forKey: .from) as? MainCollectionViewController,
+            let fromView = fromVC.collectionView?.cellForItem(at: indexPath) as? MainCollectionViewCell
             else {
                 transitionContext.completeTransition(true)
                 return
         }
 
-        let originFrame = fromView.imageView.frame
         let finalFrame = toView.frame
 
         let viewToAnimate = UIImageView(frame: originFrame)
         viewToAnimate.image = fromView.imageView.image
         viewToAnimate.contentMode = .scaleAspectFill
-        viewToAnimate.clipsToBounds = false
+        viewToAnimate.clipsToBounds = true
         fromView.imageView.isHidden = true
 
         let containerView = transitionContext.containerView
@@ -42,15 +50,14 @@ class PresentingAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
         toView.isHidden = true
 
-        // Determine the new image size
-        let xScaleFactor = finalFrame.width / originFrame.width
-        let aspectRatio = originFrame.width / originFrame.height
-        let newheight = finalFrame.width / aspectRatio
-        let yScaleFactor = newheight / originFrame.height
+        // Determine the final image height based on final frame width and image aspect ratio
+        let imageAspectRatio = viewToAnimate.image!.size.width / viewToAnimate.image!.size.height
+        let finalImageheight = finalFrame.width / imageAspectRatio
 
         // Animate size and position
         UIView.animate(withDuration: duration, animations: {
-            viewToAnimate.transform = CGAffineTransform(scaleX: xScaleFactor, y: yScaleFactor)
+            viewToAnimate.frame.size.width = finalFrame.width
+            viewToAnimate.frame.size.height = finalImageheight
             viewToAnimate.center = CGPoint(x: finalFrame.midX, y: finalFrame.midY)
         }, completion:{ _ in
             toView.isHidden = false
