@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  SwiftPhotoGallery
 //
 //  Created by Justin Vallely on 08/25/2015.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: PortraitOnlyViewController {
+class MainViewController: PortraitOnlyViewController {
 
     let imageNames = ["image1.jpeg", "image2.jpeg", "image3.jpeg"]
     let imageTitles = ["Image 1", "Image 2", "Image 3"]
@@ -51,7 +51,7 @@ class ViewController: PortraitOnlyViewController {
 
 
 // MARK: UIPageViewControllerDataSource Methods
-extension ViewController: UIPageViewControllerDataSource {
+extension MainViewController: UIPageViewControllerDataSource {
 
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let pageContentViewController = viewController as? PageContentViewController else { return nil }

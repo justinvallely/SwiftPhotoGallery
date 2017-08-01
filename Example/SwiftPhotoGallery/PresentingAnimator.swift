@@ -20,7 +20,7 @@ class PresentingAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
 
         guard let toView = transitionContext.view(forKey: .to),
-            let fromVC = transitionContext.viewController(forKey: .from) as? ViewController,
+            let fromVC = transitionContext.viewController(forKey: .from) as? MainViewController,
             let fromView = fromVC.pageViewController.viewControllers?[0] as? PageContentViewController
             else {
                 transitionContext.completeTransition(true)

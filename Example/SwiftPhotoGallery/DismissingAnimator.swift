@@ -28,7 +28,7 @@ class DismissingAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
         let indexPath = IndexPath(item: pageIndex, section: 0)
 
-        guard let toVC = transitionContext.viewController(forKey: .to) as? ViewController,
+        guard let toVC = transitionContext.viewController(forKey: .to) as? MainViewController,
             let pageContentVC = toVC.pageViewController.viewControllers?[0] as? PageContentViewController,
             let fromVC = transitionContext.viewController(forKey: .from) as? SwiftPhotoGallery,
             let cell = fromVC.imageCollectionView.cellForItem(at: indexPath) as? SwiftPhotoGalleryCell
