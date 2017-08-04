@@ -256,6 +256,11 @@ public class SwiftPhotoGallery: UIViewController {
             }
 
             if animateImageAway {
+                if self.modalPresentationStyle == .custom {
+                    self.delegate?.galleryDidTapToClose(gallery: self)
+                    return
+                }
+
                 UIView.animate(withDuration: 0.35, animations: {
                     self.view.alpha = 0
                     image.center = CGPoint(x: self.view.bounds.midX, y: swipeDistance)
@@ -263,6 +268,7 @@ public class SwiftPhotoGallery: UIViewController {
                     self.delegate?.galleryDidTapToClose(gallery: self)
                 })
             }
+
         }
     }
     #endif
