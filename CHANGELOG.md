@@ -1,5 +1,12 @@
 ## Master
 
+## 3.1.3 (2017-08-04)
+
+##### Bug Fixes
+
+* cancels swipe to close when dismissing with custom presentation style
+
+
 ## 3.1.2 (2017-08-04)
 
 ##### Enhancements
