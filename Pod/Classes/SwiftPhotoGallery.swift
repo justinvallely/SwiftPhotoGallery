@@ -22,6 +22,8 @@ import UIKit
 
 public class SwiftPhotoGallery: UIViewController {
 
+    fileprivate var animateImageTransition = false
+
     public weak var dataSource: SwiftPhotoGalleryDataSource?
     public weak var delegate: SwiftPhotoGalleryDelegate?
 
@@ -143,7 +145,7 @@ public class SwiftPhotoGallery: UIViewController {
 
             for cell in imageCollectionView.visibleCells {
                 if let cell = cell as? SwiftPhotoGalleryCell {
-                    cell.configureForNewImage()
+                    cell.configureForNewImage(animated: false)
                 }
             }
 
@@ -157,7 +159,7 @@ public class SwiftPhotoGallery: UIViewController {
         view.backgroundColor = UIColor.black
 
         pageControl.currentPageIndicatorTintColor = UIColor.white
-        pageControl.pageIndicatorTintColor = UIColor(white: 0.75, alpha: 0.35) //Dim Grey
+        pageControl.pageIndicatorTintColor = UIColor(white: 0.75, alpha: 0.35) //Dim Gray
 
         setupPageControl()
         setupGestureRecognizers()
@@ -397,10 +399,12 @@ extension SwiftPhotoGallery: UICollectionViewDataSource {
 extension SwiftPhotoGallery: UICollectionViewDelegate {
 
     public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        animateImageTransition = true
         self.pageControl.alpha = 1.0
     }
 
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        animateImageTransition = false
 
         // If the scroll animation ended, update the page control to reflect the current page we are on
         updatePageControl()
@@ -412,7 +416,7 @@ extension SwiftPhotoGallery: UICollectionViewDelegate {
 
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? SwiftPhotoGalleryCell {
-            cell.configureForNewImage()
+            cell.configureForNewImage(animated: animateImageTransition)
         }
     }
 }
