@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
-		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
@@ -19,6 +18,11 @@
 		94D1C35F1B94D102006B6715 /* image2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 94D1C3551B94D102006B6715 /* image2.jpeg */; };
 		94D1C3611B94D102006B6715 /* image3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 94D1C3571B94D102006B6715 /* image3.jpeg */; };
 		D7B6588EF611EB28F6B267B7 /* Pods_SwiftPhotoGallery_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8B9096CBB1D0A7AE247E9B2 /* Pods_SwiftPhotoGallery_Tests.framework */; };
+		EB3955AC1F314BB000DF4985 /* MainCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3955AB1F314BB000DF4985 /* MainCollectionViewController.swift */; };
+		EB3955AE1F314C6D00DF4985 /* MainCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3955AD1F314C6D00DF4985 /* MainCollectionViewCell.swift */; };
+		EB6C68751F2B9A3E00F7123F /* DimmingPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6C68741F2B9A3E00F7123F /* DimmingPresentationController.swift */; };
+		EB819DC51EF2D98900A9EC4E /* DismissingAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB819DC31EF2D98900A9EC4E /* DismissingAnimator.swift */; };
+		EB819DC61EF2D98900A9EC4E /* PresentingAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB819DC41EF2D98900A9EC4E /* PresentingAnimator.swift */; };
 		EB920A741CD41C0E004ECC50 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = EB920A731CD41C0E004ECC50 /* CHANGELOG.md */; };
 /* End PBXBuildFile section */
 
@@ -39,7 +43,6 @@
 		607FACD01AFB9204008FA782 /* SwiftPhotoGallery_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftPhotoGallery_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -55,6 +58,11 @@
 		94D1C3571B94D102006B6715 /* image3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image3.jpeg; sourceTree = "<group>"; };
 		B8B9096CBB1D0A7AE247E9B2 /* Pods_SwiftPhotoGallery_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftPhotoGallery_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4D0C5886E467AB445AE834E /* Pods-SwiftPhotoGallery_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftPhotoGallery_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftPhotoGallery_Tests/Pods-SwiftPhotoGallery_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		EB3955AB1F314BB000DF4985 /* MainCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCollectionViewController.swift; sourceTree = "<group>"; };
+		EB3955AD1F314C6D00DF4985 /* MainCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCell.swift; sourceTree = "<group>"; };
+		EB6C68741F2B9A3E00F7123F /* DimmingPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DimmingPresentationController.swift; sourceTree = "<group>"; };
+		EB819DC31EF2D98900A9EC4E /* DismissingAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissingAnimator.swift; sourceTree = "<group>"; };
+		EB819DC41EF2D98900A9EC4E /* PresentingAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentingAnimator.swift; sourceTree = "<group>"; };
 		EB920A731CD41C0E004ECC50 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../CHANGELOG.md; sourceTree = "<group>"; };
 		ED897227DF3D3D9C16756449 /* Pods-SwiftPhotoGallery_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftPhotoGallery_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftPhotoGallery_Tests/Pods-SwiftPhotoGallery_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -112,12 +120,13 @@
 		607FACD21AFB9204008FA782 /* Example for SwiftPhotoGallery */ = {
 			isa = PBXGroup;
 			children = (
+				EB606F8C1F3256E900E7B595 /* Custom Transitions */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
-				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				EB3955AB1F314BB000DF4985 /* MainCollectionViewController.swift */,
+				EB3955AD1F314C6D00DF4985 /* MainCollectionViewCell.swift */,
 				940730E21BA8BFE500C11640 /* PortraitOnlyViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
-				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
 			name = "Example for SwiftPhotoGallery";
@@ -127,6 +136,7 @@
 		607FACD31AFB9204008FA782 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				94E9F20B1B8CE60B00883622 /* Images */,
 				607FACD41AFB9204008FA782 /* Info.plist */,
 			);
@@ -180,6 +190,16 @@
 				C4D0C5886E467AB445AE834E /* Pods-SwiftPhotoGallery_Tests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		EB606F8C1F3256E900E7B595 /* Custom Transitions */ = {
+			isa = PBXGroup;
+			children = (
+				EB819DC31EF2D98900A9EC4E /* DismissingAnimator.swift */,
+				EB819DC41EF2D98900A9EC4E /* PresentingAnimator.swift */,
+				EB6C68741F2B9A3E00F7123F /* DimmingPresentationController.swift */,
+			);
+			name = "Custom Transitions";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -240,7 +260,7 @@
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						LastSwiftMigration = 0800;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -335,7 +355,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		C0781810D990DFE1C7DC5A43 /* [CP] Embed Pods Frameworks */ = {
@@ -365,7 +385,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		D87634DB0F545B43C40BA7D9 /* [CP] Copy Pods Resources */ = {
@@ -390,9 +410,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				EB3955AE1F314C6D00DF4985 /* MainCollectionViewCell.swift in Sources */,
+				EB3955AC1F314BB000DF4985 /* MainCollectionViewController.swift in Sources */,
+				EB6C68751F2B9A3E00F7123F /* DimmingPresentationController.swift in Sources */,
+				EB819DC51EF2D98900A9EC4E /* DismissingAnimator.swift in Sources */,
 				940730E31BA8BFE500C11640 /* PortraitOnlyViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				EB819DC61EF2D98900A9EC4E /* PresentingAnimator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,14 +551,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8C9B60D94EEDBFDC1FA83EF1 /* Pods-SwiftPhotoGallery_Example.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SwiftPhotoGallery/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -544,14 +570,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 63F53AE155C602A43F1087BD /* Pods-SwiftPhotoGallery_Example.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SwiftPhotoGallery/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -561,8 +589,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ED897227DF3D3D9C16756449 /* Pods-SwiftPhotoGallery_Tests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -580,8 +609,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C4D0C5886E467AB445AE834E /* Pods-SwiftPhotoGallery_Tests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
