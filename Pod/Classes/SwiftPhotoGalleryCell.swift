@@ -130,6 +130,7 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell {
             }
         }
     }
+
     
     // MARK: Private Methods
 
@@ -151,7 +152,9 @@ public class SwiftPhotoGalleryCell: UICollectionViewCell {
     }
     
 }
-    // MARK: UIScrollViewDelegate Methods
+
+
+// MARK: UIScrollViewDelegate Methods
 extension SwiftPhotoGalleryCell: UIScrollViewDelegate {
 
     public func viewForZooming(in scrollView: UIScrollView) -> UIView? {

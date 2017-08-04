@@ -12,12 +12,12 @@ import SwiftPhotoGallery
 
 class DismissingAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
-    private let pageIndex: Int
+    private let indexPath: IndexPath
     private let finalFrame: CGRect
     private let duration: TimeInterval = 0.5
 
     init(pageIndex: Int, finalFrame: CGRect) {
-        self.pageIndex = pageIndex
+        self.indexPath = IndexPath(item: pageIndex, section: 0)
         self.finalFrame = finalFrame
         super.init()
     }
@@ -27,8 +27,6 @@ class DismissingAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-
-        let indexPath = IndexPath(item: pageIndex, section: 0)
 
         guard let toVC = transitionContext.viewController(forKey: .to) as? MainCollectionViewController,
             let fromVC = transitionContext.viewController(forKey: .from) as? SwiftPhotoGallery,
@@ -53,7 +51,7 @@ class DismissingAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
         containerView.addSubview(viewToAnimate)
 
-        toVC.collectionView?.cellForItem(at: indexPath)?.isHidden = true
+        toVC.collectionView?.cellForItem(at: self.indexPath)?.isHidden = true
         fromVC.view.isHidden = true
 
         // Animate size and position
@@ -62,7 +60,7 @@ class DismissingAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             viewToAnimate.frame.size.height = self.finalFrame.height
             viewToAnimate.center = CGPoint(x: self.finalFrame.midX, y: self.finalFrame.midY)
         }, completion: { _ in
-            toVC.collectionView?.cellForItem(at: indexPath)?.isHidden = false
+            toVC.collectionView?.cellForItem(at: self.indexPath)?.isHidden = false
             viewToAnimate.removeFromSuperview()
             transitionContext.completeTransition(true)
         })

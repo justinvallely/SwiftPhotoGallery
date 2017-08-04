@@ -9,18 +9,18 @@
 import Foundation
 import UIKit
 
+
 class PresentingAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
     private let indexPath: IndexPath
     private let originFrame: CGRect
+    private let duration: TimeInterval = 0.5
 
-    init(index: Int, originFrame: CGRect) {
-        self.indexPath = IndexPath(item: index, section: 0)
+    init(pageIndex: Int, originFrame: CGRect) {
+        self.indexPath = IndexPath(item: pageIndex, section: 0)
         self.originFrame = originFrame
         super.init()
     }
-
-    private let duration: TimeInterval = 0.5
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return duration

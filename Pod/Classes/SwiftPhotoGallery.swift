@@ -18,6 +18,7 @@ import UIKit
     func galleryDidTapToClose(gallery:SwiftPhotoGallery)
 }
 
+
 // MARK: ------ SwiftPhotoGallery ------
 
 public class SwiftPhotoGallery: UIViewController {
@@ -377,6 +378,7 @@ public class SwiftPhotoGallery: UIViewController {
 
 }
 
+
 // MARK: UICollectionViewDataSource Methods
 extension SwiftPhotoGallery: UICollectionViewDataSource {
 
@@ -394,6 +396,7 @@ extension SwiftPhotoGallery: UICollectionViewDataSource {
         return cell
     }
 }
+
 
 // MARK: UICollectionViewDelegate Methods
 extension SwiftPhotoGallery: UICollectionViewDelegate {
@@ -421,6 +424,7 @@ extension SwiftPhotoGallery: UICollectionViewDelegate {
     }
 }
 
+
 // MARK: UIGestureRecognizerDelegate Methods
 extension SwiftPhotoGallery: UIGestureRecognizerDelegate {
     
@@ -432,4 +436,3 @@ extension SwiftPhotoGallery: UIGestureRecognizerDelegate {
             gestureRecognizer.view == imageCollectionView
     }
 }
-

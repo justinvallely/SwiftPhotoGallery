@@ -60,7 +60,6 @@ class MainCollectionViewController: UICollectionViewController {
         present(gallery, animated: true, completion: { () -> Void in
             gallery.currentPage = self.index
         })
-
     }
 
 }
@@ -98,7 +97,7 @@ extension MainCollectionViewController: UIViewControllerTransitioningDelegate {
 
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         guard let selectedCellFrame = self.collectionView?.cellForItem(at: IndexPath(item: index, section: 0))?.frame else { return nil }
-        return PresentingAnimator(index: index, originFrame: selectedCellFrame)
+        return PresentingAnimator(pageIndex: index, originFrame: selectedCellFrame)
     }
 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
