@@ -12,12 +12,14 @@ import SwiftPhotoGallery
 
 class DismissingAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
-    private var pageIndex = 0
+    private let pageIndex: Int
+    private let finalFrame: CGRect
     private let duration: TimeInterval = 0.5
 
-    init(pageIndex: Int) {
-        super.init()
+    init(pageIndex: Int, finalFrame: CGRect) {
         self.pageIndex = pageIndex
+        self.finalFrame = finalFrame
+        super.init()
     }
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
@@ -26,51 +28,44 @@ class DismissingAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
 
-//        let indexPath = IndexPath(item: pageIndex, section: 0)
-//
-//        guard let toVC = transitionContext.viewController(forKey: .to) as? MainCollectionViewController,
-//            let pageContentVC = toVC.pageViewController.viewControllers?[0] as? PageContentViewController,
-//            let fromVC = transitionContext.viewController(forKey: .from) as? SwiftPhotoGallery,
-//            let cell = fromVC.imageCollectionView.cellForItem(at: indexPath) as? SwiftPhotoGalleryCell
-//            else {
-//                transitionContext.completeTransition(true)
-//                return
-//        }
-//
-//        let containerView = transitionContext.containerView
-//
-//        // Determine our original and final frames
-//        let size = cell.imageView.frame.size
-//        let convertedRect = cell.imageView.convert(cell.imageView.bounds, to: containerView)
-//        let originFrame = CGRect(origin: convertedRect.origin, size: size)
-//        let finalFrame = pageContentVC.imageView.frame
-//
-//        let viewToAnimate = UIImageView(frame: originFrame)
-//        viewToAnimate.center = CGPoint(x: convertedRect.midX, y: convertedRect.midY)
-//        viewToAnimate.image = cell.imageView.image
-//        viewToAnimate.contentMode = .scaleAspectFill
-//        viewToAnimate.clipsToBounds = false
-//
-//        containerView.addSubview(viewToAnimate)
-//
-//        // Determine the new image size
-//        let xScaleFactor = finalFrame.width / originFrame.width
-//        let aspectRatio = cell.imageView.frame.width / cell.imageView.frame.height
-//        let newheight = finalFrame.width / aspectRatio
-//        let yScaleFactor = newheight / originFrame.height
-//
-//        pageContentVC.imageView.isHidden = true
-//        fromVC.view.isHidden = true
-//
-//        // Animate size and position
-//        UIView.animate(withDuration: duration, animations: {
-//            viewToAnimate.transform = CGAffineTransform(scaleX: xScaleFactor, y: yScaleFactor)
-//            viewToAnimate.center = CGPoint(x: finalFrame.midX, y: finalFrame.midY)
-//        }, completion:{ _ in
-//            pageContentVC.imageView.isHidden = false
-//            viewToAnimate.removeFromSuperview()
-//            transitionContext.completeTransition(true)
-//        })
-//
+        let indexPath = IndexPath(item: pageIndex, section: 0)
+
+        guard let toVC = transitionContext.viewController(forKey: .to) as? MainCollectionViewController,
+            let fromVC = transitionContext.viewController(forKey: .from) as? SwiftPhotoGallery,
+            let swiftPhotoGalleryCell = fromVC.imageCollectionView.cellForItem(at: indexPath) as? SwiftPhotoGalleryCell
+            else {
+                transitionContext.completeTransition(true)
+                return
+        }
+
+        let containerView = transitionContext.containerView
+
+        // Determine our original and final frames
+        let size = swiftPhotoGalleryCell.imageView.frame.size
+        let convertedRect = swiftPhotoGalleryCell.imageView.convert(swiftPhotoGalleryCell.imageView.bounds, to: containerView)
+        let originFrame = CGRect(origin: convertedRect.origin, size: size)
+
+        let viewToAnimate = UIImageView(frame: originFrame)
+        viewToAnimate.center = CGPoint(x: convertedRect.midX, y: convertedRect.midY)
+        viewToAnimate.image = swiftPhotoGalleryCell.imageView.image
+        viewToAnimate.contentMode = .scaleAspectFill
+        viewToAnimate.clipsToBounds = true
+
+        containerView.addSubview(viewToAnimate)
+
+        toVC.collectionView?.cellForItem(at: indexPath)?.isHidden = true
+        fromVC.view.isHidden = true
+
+        // Animate size and position
+        UIView.animate(withDuration: duration, animations: {
+            viewToAnimate.frame.size.width = self.finalFrame.width
+            viewToAnimate.frame.size.height = self.finalFrame.height
+            viewToAnimate.center = CGPoint(x: self.finalFrame.midX, y: self.finalFrame.midY)
+        }, completion: { _ in
+            toVC.collectionView?.cellForItem(at: indexPath)?.isHidden = false
+            viewToAnimate.removeFromSuperview()
+            transitionContext.completeTransition(true)
+        })
+
     }
 }

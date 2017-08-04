@@ -83,6 +83,7 @@ extension MainCollectionViewController: SwiftPhotoGalleryDataSource {
 extension MainCollectionViewController: SwiftPhotoGalleryDelegate {
 
     func galleryDidTapToClose(gallery: SwiftPhotoGallery) {
+        self.index = gallery.currentPage
         dismiss(animated: true, completion: nil)
     }
 }
@@ -100,7 +101,8 @@ extension MainCollectionViewController: UIViewControllerTransitioningDelegate {
         return PresentingAnimator(index: index, originFrame: selectedCellFrame)
     }
 
-//    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//        return DismissingAnimator(pageIndex: pageIndex)
-//    }
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        guard let returnCellFrame = self.collectionView?.cellForItem(at: IndexPath(item: index, section: 0))?.frame else { return nil }
+        return DismissingAnimator(pageIndex: index, finalFrame: returnCellFrame)
+    }
 }
