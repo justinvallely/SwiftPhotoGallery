@@ -39,8 +39,8 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 SwiftPhotoGallery is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
-```ruby
-pod "SwiftPhotoGallery"
+```swift
+pod 'SwiftPhotoGallery'
 ```
 
 ## Implementation
@@ -60,6 +60,7 @@ let gallery = SwiftPhotoGallery(delegate: self, dataSource: self)
 gallery.backgroundColor = UIColor.blackColor()
 gallery.pageIndicatorTintColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
 gallery.currentPageIndicatorTintColor = UIColor.whiteColor()
+gallery.hidePageControl = false
 ```
 
 * **Implement the datasource**
@@ -67,28 +68,36 @@ gallery.currentPageIndicatorTintColor = UIColor.whiteColor()
 let imageNames = ["image1.jpeg", "image2.jpeg", "image3.jpeg"]
 
 func numberOfImagesInGallery(gallery: SwiftPhotoGallery) -> Int {
-  return imageNames.count
+    return imageNames.count
 }
 
 func imageInGallery(gallery: SwiftPhotoGallery, forIndex: Int) -> UIImage? {
-  return UIImage(named: imageNames[forIndex])
+    return UIImage(named: imageNames[forIndex])
 }
 ```
 
 * **Implement the delegate**
 ```swift
 func galleryDidTapToClose(gallery: SwiftPhotoGallery) {
-  // do something cool like:
-  dismissViewControllerAnimated(true, completion: nil)
+    // do something cool like:
+    dismiss(animated: true, completion: nil)
 }
 ```
 
+* **Present the gallery**
+```swift
+present(gallery, animated: true, completion: nil)
+```
 
-* **Full example:**
+
+
+
+## Full Example
 ```swift
 class ViewController: UIViewController, SwiftPhotoGalleryDataSource, SwiftPhotoGalleryDelegate {
 
     let imageNames = ["image1.jpeg", "image2.jpeg", "image3.jpeg"]
+    var index: Int = 2
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,8 +109,18 @@ class ViewController: UIViewController, SwiftPhotoGalleryDataSource, SwiftPhotoG
         gallery.backgroundColor = UIColor.blackColor()
         gallery.pageIndicatorTintColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
         gallery.currentPageIndicatorTintColor = UIColor.whiteColor()
+        gallery.hidePageControl = false
 
-        presentViewController(gallery, animated: true, completion: nil)
+        present(gallery, animated: true, completion: nil)
+
+        /*
+        /// Or load on a specific page like this:
+
+        present(gallery, animated: true, completion: { () -> Void in
+            gallery.currentPage = self.index
+        })
+        */
+
     }
 
     // MARK: SwiftPhotoGalleryDataSource Methods
@@ -111,14 +130,13 @@ class ViewController: UIViewController, SwiftPhotoGalleryDataSource, SwiftPhotoG
     }
 
     func imageInGallery(gallery: SwiftPhotoGallery, forIndex: Int) -> UIImage? {
-
         return UIImage(named: imageNames[forIndex])
     }
 
     // MARK: SwiftPhotoGalleryDelegate Methods
 
     func galleryDidTapToClose(gallery: SwiftPhotoGallery) {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
 }
