@@ -1,5 +1,19 @@
 ## Master
 
+## 3.1.2 (2017-08-04)
+
+##### Enhancements
+
+* Example project: Converted to a more common collection view
+* Example project: adds presenting and dismissing animators using UIPresentationController and UIViewControllerAnimatedTransitioning
+* General code cleanup
+* Updates README.md
+
+##### Bug Fixes
+
+* Fixes image flash when loading gallery to a specific page
+
+
 ## 3.1.1 (2017-08-01)
 
 ##### Enhancements
