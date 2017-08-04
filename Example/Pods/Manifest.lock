@@ -1,6 +1,6 @@
 PODS:
   - Nimble (5.0.0)
-  - SwiftPhotoGallery (3.1.1)
+  - SwiftPhotoGallery (3.1.2)
 
 DEPENDENCIES:
   - Nimble (~> 5.0.0)
@@ -12,7 +12,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Nimble: 56fc9f5020effa2206de22c3dd910f4fb011b92f
-  SwiftPhotoGallery: 9c5a97cd312753e388a774fe53a7afd2ee7d78e5
+  SwiftPhotoGallery: 04fb0fa512ba64deb8fbe4ad3f0d1c289b81c29c
 
 PODFILE CHECKSUM: 74627899640086e825cae05dd62d9b91ec68d132
 
