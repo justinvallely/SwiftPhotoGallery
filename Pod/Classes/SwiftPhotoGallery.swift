@@ -24,7 +24,6 @@ import UIKit
 public class SwiftPhotoGallery: UIViewController {
 
     fileprivate var animateImageTransition = false
-    fileprivate var wasSwipeLeft = false
 
     public weak var dataSource: SwiftPhotoGalleryDataSource?
     public weak var delegate: SwiftPhotoGalleryDelegate?
@@ -483,13 +482,5 @@ extension SwiftPhotoGallery: UIGestureRecognizerDelegate {
             gestureRecognizer is UITapGestureRecognizer &&
             otherGestureRecognizer.view is SwiftPhotoGalleryCell &&
             gestureRecognizer.view == imageCollectionView
-    }
-
-    public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if velocity.x >= 0 {
-            wasSwipeLeft = true
-        } else {
-            wasSwipeLeft = false
-        }
     }
 }
