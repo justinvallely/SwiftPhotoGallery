@@ -290,6 +290,7 @@ public class SwiftPhotoGallery: UIViewController {
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(SwiftPhotoGalleryCell.self, forCellWithReuseIdentifier: "SwiftPhotoGalleryCell")
+        collectionView.register(SwiftPhotoGalleryCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "SwiftPhotoGalleryCell")
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = UIColor.clear
@@ -401,6 +402,23 @@ extension SwiftPhotoGallery: UICollectionViewDataSource {
         cell.image = getImage(currentPage: indexPath.row)
         return cell
     }
+
+    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let cell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "SwiftPhotoGalleryCell", for: indexPath) as! SwiftPhotoGalleryCell
+
+        switch kind {
+        case UICollectionElementKindSectionFooter:
+            cell.image = getImage(currentPage: 0)
+        default:
+            assert(false, "Unexpected element kind")
+        }
+
+        return cell
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+    }
 }
 
 
@@ -426,6 +444,19 @@ extension SwiftPhotoGallery: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? SwiftPhotoGalleryCell {
             cell.configureForNewImage(animated: animateImageTransition)
+        }
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+        if let cell = view as? SwiftPhotoGalleryCell {
+            collectionView.layoutIfNeeded()
+            cell.configureForNewImage(animated: animateImageTransition)
+        }
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if !collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionFooter).isEmpty {
+            currentPage = 0
         }
     }
 }
