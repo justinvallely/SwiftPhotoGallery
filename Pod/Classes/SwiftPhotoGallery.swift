@@ -418,7 +418,7 @@ extension SwiftPhotoGallery: UICollectionViewDataSource {
             cell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SwiftPhotoGalleryCell", for: indexPath) as! SwiftPhotoGalleryCell
             cell.image = getImage(currentPage: numberOfImages - 1)
         default:
-            assert(false, "Unexpected element kind")
+            assertionFailure("Unexpected element kind")
         }
 
         return cell
