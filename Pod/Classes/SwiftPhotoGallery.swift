@@ -291,6 +291,7 @@ public class SwiftPhotoGallery: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(SwiftPhotoGalleryCell.self, forCellWithReuseIdentifier: "SwiftPhotoGalleryCell")
         collectionView.register(SwiftPhotoGalleryCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "SwiftPhotoGalleryCell")
+        collectionView.register(SwiftPhotoGalleryCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SwiftPhotoGalleryCell")
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = UIColor.clear
@@ -404,11 +405,14 @@ extension SwiftPhotoGallery: UICollectionViewDataSource {
     }
 
     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let cell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "SwiftPhotoGalleryCell", for: indexPath) as! SwiftPhotoGalleryCell
+        var cell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "SwiftPhotoGalleryCell", for: indexPath) as! SwiftPhotoGalleryCell
 
         switch kind {
         case UICollectionElementKindSectionFooter:
             cell.image = getImage(currentPage: 0)
+        case UICollectionElementKindSectionHeader:
+            cell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SwiftPhotoGalleryCell", for: indexPath) as! SwiftPhotoGalleryCell
+            cell.image = getImage(currentPage: numberOfImages - 1)
         default:
             assert(false, "Unexpected element kind")
         }
@@ -417,6 +421,10 @@ extension SwiftPhotoGallery: UICollectionViewDataSource {
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
     }
 }
@@ -457,6 +465,9 @@ extension SwiftPhotoGallery: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if !collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionFooter).isEmpty {
             currentPage = 0
+        }
+        if !collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionHeader).isEmpty {
+            currentPage = numberOfImages - 1
         }
     }
 }
