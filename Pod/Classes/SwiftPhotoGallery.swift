@@ -72,7 +72,10 @@ public class SwiftPhotoGallery: UIViewController {
         }
         get {
             pageBeforeRotation = Int(imageCollectionView.contentOffset.x / imageCollectionView.frame.size.width)
-            return Int(imageCollectionView.contentOffset.x / imageCollectionView.frame.size.width)
+            guard isRevolvingCarouselEnabled else {
+                return Int(imageCollectionView.contentOffset.x / imageCollectionView.frame.size.width)
+            }
+            return Int(imageCollectionView.contentOffset.x / imageCollectionView.frame.size.width) - 1
         }
     }
 
@@ -91,6 +94,7 @@ public class SwiftPhotoGallery: UIViewController {
     #endif
 
     public var isSwipeToDismissEnabled: Bool = true
+    public var isRevolvingCarouselEnabled: Bool = true
 
     private var pageBeforeRotation: Int = 0
     private var currentIndexPath: IndexPath = IndexPath(item: 0, section: 0)
@@ -421,10 +425,12 @@ extension SwiftPhotoGallery: UICollectionViewDataSource {
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        guard isRevolvingCarouselEnabled else { return CGSize.zero }
         return CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        guard isRevolvingCarouselEnabled else { return CGSize.zero }
         return CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
     }
 }
