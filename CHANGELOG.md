@@ -1,5 +1,16 @@
 ## Master
 
+## 3.2.0 (2017-10-18)
+
+##### Enhancements
+
+* DROPS SUPPORT FOR IOS 8
+* Adds revolving gallery carousel. Swipe through last image to get to the first image. (enabled by default)
+* Opens up imageView and scrollView access level
+* Updates Nimble to 7.0.2 for unit tests on the example project.
+* Updates README.md
+
+
 ## 3.1.3 (2017-08-04)
 
 ##### Bug Fixes
