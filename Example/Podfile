@@ -1,4 +1,4 @@
-platform :ios, ‘9.0’
+platform :ios, '9.0'
 use_frameworks!
 inhibit_all_warnings!
 
@@ -8,6 +8,5 @@ end
 
 target 'SwiftPhotoGallery_Tests' do
   pod "SwiftPhotoGallery", :path => "../"
-  pod 'Nimble', '~> 6.0.0’
+  pod 'Nimble', '~> 7.0.0'
 end
-
