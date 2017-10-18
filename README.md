@@ -34,6 +34,14 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 - Xcode 8.0+
 - Swift 3.0+
 
+## Communication
+
+- If you **need help**, use [Stack Overflow](https://stackoverflow.com/questions/tagged/swiftphotogallery). (Tag 'swiftphotogallery')
+- If you'd like to **ask a general question**, use [Stack Overflow](https://stackoverflow.com/questions/tagged/swiftphotogallery).
+- If you **found a bug**, open an issue.
+- If you **have a feature request**, open an issue.
+- If you **want to contribute**, submit a pull request.
+
 ## Installation
 
 SwiftPhotoGallery is available through [CocoaPods](http://cocoapods.org). To install
