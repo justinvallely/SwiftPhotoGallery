@@ -4,7 +4,7 @@
 [![Version](https://img.shields.io/cocoapods/v/SwiftPhotoGallery.svg?style=flat)](http://cocoapods.org/pods/SwiftPhotoGallery)
 [![License](https://img.shields.io/cocoapods/l/SwiftPhotoGallery.svg?style=flat)](http://cocoapods.org/pods/SwiftPhotoGallery)
 [![CocoaPods](https://img.shields.io/cocoapods/dt/SwiftPhotoGallery.svg?style=flat)](https://cocoapods.org/pods/SwiftPhotoGallery)
-![tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)
+![tests](https://img.shields.io/badge/tests-failing-red.svg)
 ![Swift](https://img.shields.io/badge/Swift-3.0-orange.svg)
 ![Dependencies](https://img.shields.io/badge/dependencies-none-lightgrey.svg?style=flat)
 
