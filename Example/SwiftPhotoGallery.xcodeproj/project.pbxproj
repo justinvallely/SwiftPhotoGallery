@@ -13,7 +13,6 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* SwiftPhotoGalleryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* SwiftPhotoGalleryTests.swift */; };
 		66E5D0CC118D35120C6AD0B1 /* Pods_SwiftPhotoGallery_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D5CD668E68FD0135061A3DB /* Pods_SwiftPhotoGallery_Example.framework */; };
-		940730E31BA8BFE500C11640 /* PortraitOnlyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940730E21BA8BFE500C11640 /* PortraitOnlyViewController.swift */; };
 		94D1C35E1B94D102006B6715 /* image1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 94D1C3541B94D102006B6715 /* image1.jpeg */; };
 		94D1C35F1B94D102006B6715 /* image2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 94D1C3551B94D102006B6715 /* image2.jpeg */; };
 		94D1C3611B94D102006B6715 /* image3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 94D1C3571B94D102006B6715 /* image3.jpeg */; };
@@ -52,7 +51,6 @@
 		63F53AE155C602A43F1087BD /* Pods-SwiftPhotoGallery_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftPhotoGallery_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftPhotoGallery_Example/Pods-SwiftPhotoGallery_Example.release.xcconfig"; sourceTree = "<group>"; };
 		81B3235EC26C5D0E4FC15C58 /* SwiftPhotoGallery.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SwiftPhotoGallery.podspec; path = ../SwiftPhotoGallery.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		8C9B60D94EEDBFDC1FA83EF1 /* Pods-SwiftPhotoGallery_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftPhotoGallery_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftPhotoGallery_Example/Pods-SwiftPhotoGallery_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		940730E21BA8BFE500C11640 /* PortraitOnlyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PortraitOnlyViewController.swift; sourceTree = "<group>"; };
 		94D1C3541B94D102006B6715 /* image1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image1.jpeg; sourceTree = "<group>"; };
 		94D1C3551B94D102006B6715 /* image2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image2.jpeg; sourceTree = "<group>"; };
 		94D1C3571B94D102006B6715 /* image3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image3.jpeg; sourceTree = "<group>"; };
@@ -124,7 +122,6 @@
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				EB3955AB1F314BB000DF4985 /* MainCollectionViewController.swift */,
 				EB3955AD1F314C6D00DF4985 /* MainCollectionViewCell.swift */,
-				940730E21BA8BFE500C11640 /* PortraitOnlyViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -428,7 +425,6 @@
 				EB3955AC1F314BB000DF4985 /* MainCollectionViewController.swift in Sources */,
 				EB6C68751F2B9A3E00F7123F /* DimmingPresentationController.swift in Sources */,
 				EB819DC51EF2D98900A9EC4E /* DismissingAnimator.swift in Sources */,
-				940730E31BA8BFE500C11640 /* PortraitOnlyViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				EB819DC61EF2D98900A9EC4E /* PresentingAnimator.swift in Sources */,
 			);
