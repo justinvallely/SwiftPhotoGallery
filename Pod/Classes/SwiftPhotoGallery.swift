@@ -290,7 +290,7 @@ public class SwiftPhotoGallery: UIViewController {
     }
     #endif
 
-    public func singleTapAction(recognizer: UITapGestureRecognizer) {
+    @objc public func singleTapAction(recognizer: UITapGestureRecognizer) {
         delegate?.galleryDidTapToClose(gallery: self)
     }
 
