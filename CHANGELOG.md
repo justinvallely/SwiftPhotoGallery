@@ -1,5 +1,12 @@
 ## Master
 
+## 3.2.1 (2017-10-19)
+
+##### Bug Fixes
+
+* Fixes issue with loading the first image when a page isn't specified in the presentation completion block
+* Fixes unit tests
+
 ## 3.2.0 (2017-10-18)
 
 ##### Enhancements
