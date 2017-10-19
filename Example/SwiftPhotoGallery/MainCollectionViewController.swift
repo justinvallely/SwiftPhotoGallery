@@ -53,7 +53,9 @@ class MainCollectionViewController: UICollectionViewController {
         gallery.modalPresentationStyle = .custom
         gallery.transitioningDelegate = self
 
-        //        present(gallery, animated: true, completion: nil)
+        /// Load the first page like this:
+
+//        present(gallery, animated: true, completion: nil)
 
         /// Or load on a specific page like this:
 
