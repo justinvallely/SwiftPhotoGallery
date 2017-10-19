@@ -24,6 +24,7 @@ import UIKit
 public class SwiftPhotoGallery: UIViewController {
 
     fileprivate var animateImageTransition = false
+    fileprivate var isViewFirstAppearing = true
 
     public weak var dataSource: SwiftPhotoGalleryDataSource?
     public weak var delegate: SwiftPhotoGalleryDelegate?
@@ -72,10 +73,11 @@ public class SwiftPhotoGallery: UIViewController {
         }
         get {
             pageBeforeRotation = Int(imageCollectionView.contentOffset.x / imageCollectionView.frame.size.width)
-            guard isRevolvingCarouselEnabled else {
+            if isRevolvingCarouselEnabled {
+                return Int(imageCollectionView.contentOffset.x / imageCollectionView.frame.size.width) - 1
+            } else {
                 return Int(imageCollectionView.contentOffset.x / imageCollectionView.frame.size.width)
             }
-            return Int(imageCollectionView.contentOffset.x / imageCollectionView.frame.size.width) - 1
         }
     }
 
@@ -168,6 +170,13 @@ public class SwiftPhotoGallery: UIViewController {
 
         setupPageControl()
         setupGestureRecognizers()
+    }
+
+    public override func viewDidAppear(_ animated: Bool) {
+        if currentPage < 0 {
+            currentPage = 0
+            isViewFirstAppearing = false
+        }
     }
 
     #if os(iOS)
@@ -416,7 +425,11 @@ extension SwiftPhotoGallery: UICollectionViewDataSource {
             cell.image = getImage(currentPage: 0)
         case UICollectionElementKindSectionHeader:
             cell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SwiftPhotoGalleryCell", for: indexPath) as! SwiftPhotoGalleryCell
-            cell.image = getImage(currentPage: numberOfImages - 1)
+            if isViewFirstAppearing {
+                cell.image = getImage(currentPage: 0)
+            } else {
+                cell.image = getImage(currentPage: numberOfImages - 1)
+            }
         default:
             assertionFailure("Unexpected element kind")
         }
