@@ -485,10 +485,10 @@ extension SwiftPhotoGallery: UICollectionViewDelegate {
     }
 
     public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if !collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionFooter).isEmpty && !deviceInRotation {
+        if !collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionFooter).isEmpty && !deviceInRotation || (currentPage == numberOfImages && !deviceInRotation) {
             currentPage = 0
         }
-        if !collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionHeader).isEmpty && !deviceInRotation {
+        if !collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionHeader).isEmpty && !deviceInRotation || (currentPage == -1 && !deviceInRotation) {
             currentPage = numberOfImages - 1
         }
         deviceInRotation = false
