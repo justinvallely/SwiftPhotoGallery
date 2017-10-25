@@ -25,6 +25,7 @@ public class SwiftPhotoGallery: UIViewController {
 
     fileprivate var animateImageTransition = false
     fileprivate var isViewFirstAppearing = true
+    fileprivate var deviceInRotation = false
 
     public weak var dataSource: SwiftPhotoGalleryDataSource?
     public weak var delegate: SwiftPhotoGalleryDelegate?
@@ -72,10 +73,11 @@ public class SwiftPhotoGallery: UIViewController {
             updatePageControl()
         }
         get {
-            pageBeforeRotation = Int(imageCollectionView.contentOffset.x / imageCollectionView.frame.size.width)
             if isRevolvingCarouselEnabled {
+                pageBeforeRotation = Int(imageCollectionView.contentOffset.x / imageCollectionView.frame.size.width) - 1
                 return Int(imageCollectionView.contentOffset.x / imageCollectionView.frame.size.width) - 1
             } else {
+                pageBeforeRotation = Int(imageCollectionView.contentOffset.x / imageCollectionView.frame.size.width)
                 return Int(imageCollectionView.contentOffset.x / imageCollectionView.frame.size.width)
             }
         }
@@ -144,7 +146,7 @@ public class SwiftPhotoGallery: UIViewController {
         if needsLayout {
             let desiredIndexPath = IndexPath(item: pageBeforeRotation, section: 0)
 
-            if pageBeforeRotation > 0 {
+            if pageBeforeRotation >= 0 {
                 scrollToImage(withIndex: pageBeforeRotation, animated: false)
             }
 
@@ -175,8 +177,8 @@ public class SwiftPhotoGallery: UIViewController {
     public override func viewDidAppear(_ animated: Bool) {
         if currentPage < 0 {
             currentPage = 0
-            isViewFirstAppearing = false
         }
+        isViewFirstAppearing = false
     }
 
     #if os(iOS)
@@ -191,6 +193,7 @@ public class SwiftPhotoGallery: UIViewController {
     // MARK: Rotation Handling
     public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
+        deviceInRotation = true
         needsLayout = true
     }
 
@@ -482,12 +485,13 @@ extension SwiftPhotoGallery: UICollectionViewDelegate {
     }
 
     public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if !collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionFooter).isEmpty {
+        if !collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionFooter).isEmpty && !deviceInRotation || (currentPage == numberOfImages && !deviceInRotation) {
             currentPage = 0
         }
-        if !collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionHeader).isEmpty {
+        if !collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionHeader).isEmpty && !deviceInRotation || (currentPage == -1 && !deviceInRotation) {
             currentPage = numberOfImages - 1
         }
+        deviceInRotation = false
     }
 }
 
