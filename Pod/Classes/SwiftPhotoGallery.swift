@@ -170,6 +170,7 @@ public class SwiftPhotoGallery: UIViewController {
         pageControl.currentPageIndicatorTintColor = UIColor.white
         pageControl.pageIndicatorTintColor = UIColor(white: 0.75, alpha: 0.35) //Dim Gray
 
+        isRevolvingCarouselEnabled = numberOfImages > 1
         setupPageControl()
         setupGestureRecognizers()
     }
