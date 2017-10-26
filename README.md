@@ -29,7 +29,7 @@ A full screen photo gallery for iOS and tvOS written in Swift.
 To run the example project, clone the repo, and run `pod install` from the Example directory.
 
 ## Requirements
-- iOS 8.3+
+- iOS 9.0+
 - tvOS 10.0+
 - Xcode 8.0+
 - Swift 3.0+

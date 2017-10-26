@@ -1,5 +1,15 @@
 ## Master
 
+## 3.2.2 (2017-10-26)
+
+##### Bug Fixes
+
+* Fixes bug when rotation occurs on first image and content is offset, or header display causing last page to be scrolled to during that rotation
+* Fixes issue for isViewFirstAppearing not being called in certain conditions
+* Improves accuracy and efficiency of revolving carousel when header or footer is reached
+* Implements fix to prevent infinite scrolling when only one image is present
+* Fixes unit tests
+
 ## 3.2.1 (2017-10-19)
 
 ##### Bug Fixes
