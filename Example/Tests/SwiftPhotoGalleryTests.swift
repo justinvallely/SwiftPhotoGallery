@@ -74,7 +74,7 @@ class SwiftPhotoGalleryTests: XCTestCase {
 
         let timesAskedForNumberOfImagesInGallery = testHelper.timesAskedForNumberOfImagesInGallery
 
-        expect(self.testHelper.timesAskedForNumberOfImagesInGallery).to(equal(2))
+        expect(self.testHelper.timesAskedForNumberOfImagesInGallery).to(equal(4))
 
         testGallery.dataSource = testHelper
 
