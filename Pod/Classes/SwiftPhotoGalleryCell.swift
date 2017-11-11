@@ -107,7 +107,7 @@ open class SwiftPhotoGalleryCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public func doubleTapAction(recognizer: UITapGestureRecognizer) {
+    @objc public func doubleTapAction(recognizer: UITapGestureRecognizer) {
 
         if (scrollView.zoomScale > scrollView.minimumZoomScale) {
             scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
