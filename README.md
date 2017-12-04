@@ -10,7 +10,11 @@
 
 ## Overview
 
-A full screen photo gallery for iOS and tvOS written in Swift. 
+A full screen photo gallery for iOS and tvOS written in Swift.
+
+<p align="center">
+    <img src="https://s3.amazonaws.com/inspirato-ios/SwiftPhotoGallery_animation.gif">
+</p>
 
 - Photos can be panned and zoomed (iOS only)
 - Pinch to zoom (iOS only)
@@ -157,4 +161,4 @@ Justin Vallely, jvallely@inspirato.com
 
 ## License
 
-SwiftPhotoGallery is available under the GNU General Public License. See the LICENSE file for more info.
+SwiftPhotoGallery is available under the Apache License 2.0. See the LICENSE file for more info.

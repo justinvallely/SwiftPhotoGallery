@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
                        DESC
 
   s.homepage         = "https://github.com/Inspirato/SwiftPhotoGallery"
-  s.license          = 'GNU'
+  s.license          = 'Apache-2.0'
   s.author           = { "Justin Vallely" => "jvallely@inspirato.com" }
   s.source           = { :git => "https://github.com/Inspirato/SwiftPhotoGallery.git", :tag => "#{s.version}" }
 
