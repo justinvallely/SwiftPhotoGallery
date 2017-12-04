@@ -1,5 +1,11 @@
 ## Master
 
+## 3.3.0 (2017-12-01)
+
+##### Enhancements
+
+* Adds support for Swift 4.0
+
 ## 3.2.2 (2017-10-26)
 
 ##### Bug Fixes
