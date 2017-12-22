@@ -1,10 +1,22 @@
 ## Master
 
+## 3.3.1 (2017-12-21)
+
+##### Enhancements
+
+* Changes license from GNU to Apache 2.0 (Big thanks to chrisballinger)
+
+##### Bug Fixes
+
+* Fixes content inset adjustment in the example project. This will not affect your projects.
+
+
 ## 3.3.0 (2017-12-01)
 
 ##### Enhancements
 
 * Adds support for Swift 4.0
+
 
 ## 3.2.2 (2017-10-26)
 
@@ -16,12 +28,14 @@
 * Implements fix to prevent infinite scrolling when only one image is present
 * Fixes unit tests
 
+
 ## 3.2.1 (2017-10-19)
 
 ##### Bug Fixes
 
 * Fixes issue with loading the first image when a page isn't specified in the presentation completion block
 * Fixes unit tests
+
 
 ## 3.2.0 (2017-10-18)
 
@@ -62,7 +76,6 @@
 * Changes access level of collection view cell's imageView to public
 
 
-
 ## 3.1.0 (2017-01-25)
 
 ##### Enhancements
@@ -70,7 +83,6 @@
 * Adds support for tvOS
 * Adds Twitter-style swipe to dismiss (can be disabled)
 * Adds public access to hide/show the status bar
-
 
 
 ## 3.0.1 (2016-11-14)
@@ -81,7 +93,6 @@
 * Fixes images not being sized properly after rotation
 
 
-
 ## 3.0.0 (2016-10-06)
 
 ##### Enhancements
@@ -89,13 +100,11 @@
 * Adds support for Swift 3.0 and Xcode 8
 
 
-
 ## 2.0.6 (2016-09-12)
 
 ##### Enhancements
 
 * Adds support for Swift 2.3 and Xcode 8
-
 
 
 ## 2.0.5 (2016-07-20)
@@ -110,7 +119,6 @@
 * Fix for pages jumping by 2 on the first swipe when presenting a gallery.
 
 
-
 ## 2.0.4 (2016-05-02)
 
 ##### Bug Fixes
@@ -118,13 +126,11 @@
 * Fix for page indicator not updating. This was broken in 2.0.2.
 
 
-
 ## 2.0.3 (2016-04-29)
 
 ##### Enhancements
 
 * Adds this sweet change log. This of course, is a non-breaking change. You're welcome.
-
 
 
 ## 2.0.2 (2016-04-29)
@@ -142,13 +148,11 @@
 * Updates example code to use the latest version of SwiftPhotoGallery. Because, why wouldn't we?
 
 
-
 ## 2.0.0 (2015-11-05)
 
 ##### Enhancements
 
 * Updates syntax to Swift 2.0 
-
 
 
 ## 1.0.0 (2015-09-10)
