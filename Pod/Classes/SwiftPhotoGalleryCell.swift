@@ -148,6 +148,7 @@ open class SwiftPhotoGalleryCell: UICollectionViewCell {
         let heightScale = scrollViewSize.height / imageViewSize.height
 
         scrollView.minimumZoomScale = min(widthScale, heightScale)
+        scrollView.maximumZoomScale = UIDevice.current.userInterfaceIdiom == .pad ? 4 : 3
         scrollView.setZoomScale(scrollView.minimumZoomScale, animated: false)
     }
     
