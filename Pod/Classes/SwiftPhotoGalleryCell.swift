@@ -15,7 +15,7 @@ open class SwiftPhotoGalleryCell: UICollectionViewCell {
     }
 
     open var scrollView: UIScrollView
-    open let imageView: UIImageView
+    public let imageView: UIImageView
 
     override init(frame: CGRect) {
 
