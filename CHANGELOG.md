@@ -1,5 +1,13 @@
 ## Master
 
+## 3.4.0 (2019-05-14)
+
+##### Enhancements
+
+* Adds support for Swift 5.0
+* Removes Nimble dependency
+
+
 ## 3.3.1 (2017-12-21)
 
 ##### Enhancements

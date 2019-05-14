@@ -8,5 +8,4 @@ end
 
 target 'SwiftPhotoGallery_Tests' do
   pod "SwiftPhotoGallery", :path => "../"
-  pod 'Nimble', '~> 7.0.0'
 end

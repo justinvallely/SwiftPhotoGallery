@@ -252,7 +252,7 @@ public class SwiftPhotoGallery: UIViewController {
         let alpha = 1 - abs(yFromCenter / self.view.bounds.midY)
         self.view.backgroundColor = backgroundColor.withAlphaComponent(alpha)
 
-        if gesture.state == UIGestureRecognizerState.ended {
+        if gesture.state == UIGestureRecognizer.State.ended {
 
             var swipeDistance: CGFloat = 0
             let swipeBuffer: CGFloat = 50
@@ -299,7 +299,7 @@ public class SwiftPhotoGallery: UIViewController {
 
     private func setupCollectionView() -> UICollectionView {
         // Set up flow layout
-        flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
+        flowLayout.scrollDirection = UICollectionView.ScrollDirection.horizontal
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 0
 
@@ -307,8 +307,8 @@ public class SwiftPhotoGallery: UIViewController {
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(SwiftPhotoGalleryCell.self, forCellWithReuseIdentifier: "SwiftPhotoGalleryCell")
-        collectionView.register(SwiftPhotoGalleryCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "SwiftPhotoGalleryCell")
-        collectionView.register(SwiftPhotoGalleryCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SwiftPhotoGalleryCell")
+        collectionView.register(SwiftPhotoGalleryCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SwiftPhotoGalleryCell")
+        collectionView.register(SwiftPhotoGalleryCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SwiftPhotoGalleryCell")
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = UIColor.clear
@@ -374,18 +374,18 @@ public class SwiftPhotoGallery: UIViewController {
         view.addSubview(pageControl)
 
         pageControlCenterXConstraint = NSLayoutConstraint(item: pageControl,
-                                                          attribute: NSLayoutAttribute.centerX,
-                                                          relatedBy: NSLayoutRelation.equal,
+                                                          attribute: NSLayoutConstraint.Attribute.centerX,
+                                                          relatedBy: NSLayoutConstraint.Relation.equal,
                                                           toItem: view,
-                                                          attribute: NSLayoutAttribute.centerX,
+                                                          attribute: NSLayoutConstraint.Attribute.centerX,
                                                           multiplier: 1.0,
                                                           constant: 0)
 
-        pageControlBottomConstraint = NSLayoutConstraint(item: view,
-                                                         attribute: NSLayoutAttribute.bottom,
-                                                         relatedBy: NSLayoutRelation.equal,
+        pageControlBottomConstraint = NSLayoutConstraint(item: view as Any,
+                                                         attribute: NSLayoutConstraint.Attribute.bottom,
+                                                         relatedBy: NSLayoutConstraint.Relation.equal,
                                                          toItem: pageControl,
-                                                         attribute: NSLayoutAttribute.bottom,
+                                                         attribute: NSLayoutConstraint.Attribute.bottom,
                                                          multiplier: 1.0,
                                                          constant: 15)
 
@@ -422,13 +422,13 @@ extension SwiftPhotoGallery: UICollectionViewDataSource {
     }
 
     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        var cell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "SwiftPhotoGalleryCell", for: indexPath) as! SwiftPhotoGalleryCell
+        var cell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SwiftPhotoGalleryCell", for: indexPath) as! SwiftPhotoGalleryCell
 
         switch kind {
-        case UICollectionElementKindSectionFooter:
+        case UICollectionView.elementKindSectionFooter:
             cell.image = getImage(currentPage: 0)
-        case UICollectionElementKindSectionHeader:
-            cell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SwiftPhotoGalleryCell", for: indexPath) as! SwiftPhotoGalleryCell
+        case UICollectionView.elementKindSectionHeader:
+            cell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SwiftPhotoGalleryCell", for: indexPath) as! SwiftPhotoGalleryCell
             if isViewFirstAppearing {
                 cell.image = getImage(currentPage: 0)
             } else {
@@ -467,7 +467,7 @@ extension SwiftPhotoGallery: UICollectionViewDelegate {
         // If the scroll animation ended, update the page control to reflect the current page we are on
         updatePageControl()
 
-        UIView.animate(withDuration: 1.0, delay: 2.0, options: UIViewAnimationOptions.curveEaseInOut, animations: { () -> Void in
+        UIView.animate(withDuration: 1.0, delay: 2.0, options: UIView.AnimationOptions.curveEaseInOut, animations: { () -> Void in
             self.pageControl.alpha = 0.0
         }, completion: nil)
     }
@@ -486,10 +486,10 @@ extension SwiftPhotoGallery: UICollectionViewDelegate {
     }
 
     public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if !collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionFooter).isEmpty && !deviceInRotation || (currentPage == numberOfImages && !deviceInRotation) {
+        if !collectionView.visibleSupplementaryViews(ofKind: UICollectionView.elementKindSectionFooter).isEmpty && !deviceInRotation || (currentPage == numberOfImages && !deviceInRotation) {
             currentPage = 0
         }
-        if !collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionHeader).isEmpty && !deviceInRotation || (currentPage == -1 && !deviceInRotation) {
+        if !collectionView.visibleSupplementaryViews(ofKind: UICollectionView.elementKindSectionHeader).isEmpty && !deviceInRotation || (currentPage == -1 && !deviceInRotation) {
             currentPage = numberOfImages - 1
         }
         deviceInRotation = false

@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/cocoapods/l/SwiftPhotoGallery.svg?style=flat)](http://cocoapods.org/pods/SwiftPhotoGallery)
 [![CocoaPods](https://img.shields.io/cocoapods/dt/SwiftPhotoGallery.svg?style=flat)](https://cocoapods.org/pods/SwiftPhotoGallery)
 ![tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)
-![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg)
+![Swift](https://img.shields.io/badge/Swift-5.0-orange.svg)
 ![Dependencies](https://img.shields.io/badge/dependencies-none-lightgrey.svg?style=flat)
 
 ## Overview
@@ -35,8 +35,8 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 ## Requirements
 - iOS 9.0+
 - tvOS 10.0+
-- Xcode 9.0+
-- Swift 4.0+
+- Xcode 10.2.1+
+- Swift 5.0+
 
 ## Communication
 
@@ -69,9 +69,9 @@ let gallery = SwiftPhotoGallery(delegate: self, dataSource: self)
 
 * **Customize the look**
 ```swift
-gallery.backgroundColor = UIColor.blackColor()
-gallery.pageIndicatorTintColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
-gallery.currentPageIndicatorTintColor = UIColor.whiteColor()
+gallery.backgroundColor = UIColor.black
+gallery.pageIndicatorTintColor = UIColor.gray.withAlphaComponent(0.5)
+gallery.currentPageIndicatorTintColor = UIColor.white
 gallery.hidePageControl = false
 ```
 
@@ -118,9 +118,9 @@ class ViewController: UIViewController, SwiftPhotoGalleryDataSource, SwiftPhotoG
     @IBAction func didPressShowMeButton(sender: AnyObject) {
         let gallery = SwiftPhotoGallery(delegate: self, dataSource: self)
 
-        gallery.backgroundColor = UIColor.blackColor()
-        gallery.pageIndicatorTintColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
-        gallery.currentPageIndicatorTintColor = UIColor.whiteColor()
+        gallery.backgroundColor = UIColor.black
+        gallery.pageIndicatorTintColor = UIColor.gray.withAlphaComponent(0.5)
+        gallery.currentPageIndicatorTintColor = UIColor.white
         gallery.hidePageControl = false
 
         present(gallery, animated: true, completion: nil)
