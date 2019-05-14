@@ -181,7 +181,7 @@ class HelperCollectionView: UICollectionView {
     var reloadDataCalled = false
     var indexesOfReloadedItems:[Int] = []
 
-    override func scrollToItem(at indexPath: IndexPath, at scrollPosition: UICollectionViewScrollPosition, animated: Bool) {
+    override func scrollToItem(at indexPath: IndexPath, at scrollPosition: UICollectionView.ScrollPosition, animated: Bool) {
         didScroll = true
     }
 
