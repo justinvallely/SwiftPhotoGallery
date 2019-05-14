@@ -157,7 +157,7 @@ class ViewController: UIViewController, SwiftPhotoGalleryDataSource, SwiftPhotoG
 
 ## Author
 
-Justin Vallely, jvallely@inspirato.com
+Justin Vallely, justinvallely@gmail.com
 
 ## License
 
