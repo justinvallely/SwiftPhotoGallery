@@ -31,3 +31,5 @@ Carthage
 # `pod install` in .travis.yml
 #
 # Pods/
+/Example/Pods/Pods.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+/Example/SwiftPhotoGallery.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist

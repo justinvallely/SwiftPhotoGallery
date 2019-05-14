@@ -381,7 +381,7 @@ public class SwiftPhotoGallery: UIViewController {
                                                           multiplier: 1.0,
                                                           constant: 0)
 
-        pageControlBottomConstraint = NSLayoutConstraint(item: view,
+        pageControlBottomConstraint = NSLayoutConstraint(item: view as Any,
                                                          attribute: NSLayoutConstraint.Attribute.bottom,
                                                          relatedBy: NSLayoutConstraint.Relation.equal,
                                                          toItem: pageControl,

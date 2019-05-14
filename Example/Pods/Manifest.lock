@@ -1,5 +1,5 @@
 PODS:
-  - SwiftPhotoGallery (3.3.1)
+  - SwiftPhotoGallery (3.4.0)
 
 DEPENDENCIES:
   - SwiftPhotoGallery (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  SwiftPhotoGallery: 3687bee5e9cfa492be2ba69508b181b0259fa759
+  SwiftPhotoGallery: 28b5410cc3d01c1f695a5ae4a4eb78e47904b577
 
 PODFILE CHECKSUM: a003c64c8bd1f3752de7cf69799dc7ac146ef3c6
 

@@ -42,16 +42,16 @@
 /* Begin PBXFileReference section */
 		027EA0E02B94DFFB67C4C5C0737F63B0 /* Pods-SwiftPhotoGallery_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SwiftPhotoGallery_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		0A1C1B832B8421B9CB91C45CD66B258F /* Pods-SwiftPhotoGallery_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SwiftPhotoGallery_Tests-dummy.m"; sourceTree = "<group>"; };
-		10E4D72A57868F21A7700D336EA70B38 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		10E4D72A57868F21A7700D336EA70B38 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		297EFF544BFD0D117343C64B71D21C26 /* SwiftPhotoGallery-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftPhotoGallery-umbrella.h"; sourceTree = "<group>"; };
-		2F71C26E39CA2C92E975E36CE35002D9 /* SwiftPhotoGallery.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = SwiftPhotoGallery.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		2F71C26E39CA2C92E975E36CE35002D9 /* SwiftPhotoGallery.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = SwiftPhotoGallery.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		308E5A89487ED93FCF113F905D49433D /* Pods-SwiftPhotoGallery_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SwiftPhotoGallery_Example-frameworks.sh"; sourceTree = "<group>"; };
 		320848E11A4EA34B89B91D32E17D5C2E /* SwiftPhotoGallery.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SwiftPhotoGallery.modulemap; sourceTree = "<group>"; };
 		36CFEA4F634EBF39AFA332BCF00FD0F1 /* PanDirectionGestureRecognizer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PanDirectionGestureRecognizer.swift; path = Pod/Classes/PanDirectionGestureRecognizer.swift; sourceTree = "<group>"; };
 		3AF18D80F3CC5CE5B40BC0B3A83E8560 /* SwiftPhotoGallery-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftPhotoGallery-dummy.m"; sourceTree = "<group>"; };
 		3B4748A53B9D582BCEFE83CF178F536B /* SwiftPhotoGallery.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftPhotoGallery.swift; path = Pod/Classes/SwiftPhotoGallery.swift; sourceTree = "<group>"; };
 		40CB39E715FBCDAA142E6513E126200A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		56C376A975586D4A9A0F34516DC90E35 /* SwiftPhotoGallery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftPhotoGallery.framework; path = SwiftPhotoGallery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		56C376A975586D4A9A0F34516DC90E35 /* SwiftPhotoGallery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftPhotoGallery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C76730355167152000E93EF0355F462 /* SwiftPhotoGallery-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SwiftPhotoGallery-Info.plist"; sourceTree = "<group>"; };
 		6F2E6A15567FB0D98E100D4B628CB7D9 /* SwiftPhotoGallery.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftPhotoGallery.xcconfig; sourceTree = "<group>"; };
 		713A8C286510450AC7830915C14745C3 /* Pods-SwiftPhotoGallery_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SwiftPhotoGallery_Tests-umbrella.h"; sourceTree = "<group>"; };
@@ -60,19 +60,19 @@
 		86F723069CBE901DA09FA947F850FCAF /* Pods-SwiftPhotoGallery_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SwiftPhotoGallery_Example-Info.plist"; sourceTree = "<group>"; };
 		875E7C24E818F29A731EA6FE5E840B2B /* Pods-SwiftPhotoGallery_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SwiftPhotoGallery_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		8A513A357F4FC3900DFFD977B9467355 /* SwiftPhotoGallery-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftPhotoGallery-prefix.pch"; sourceTree = "<group>"; };
-		8B457BA1E3779E705987814B4486EBBF /* Pods_SwiftPhotoGallery_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SwiftPhotoGallery_Tests.framework; path = "Pods-SwiftPhotoGallery_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B457BA1E3779E705987814B4486EBBF /* Pods_SwiftPhotoGallery_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftPhotoGallery_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96B21597D87E2A8F65BC224E78CA5FD9 /* Pods-SwiftPhotoGallery_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SwiftPhotoGallery_Tests.modulemap"; sourceTree = "<group>"; };
 		97D3ABE73184D15E535AEC8AF5521654 /* Pods-SwiftPhotoGallery_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SwiftPhotoGallery_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		B2B6C049592272040A003D8B17616ECC /* Pods-SwiftPhotoGallery_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SwiftPhotoGallery_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		B85E82AF9AB6291A74F3F83C1E578F82 /* Pods-SwiftPhotoGallery_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SwiftPhotoGallery_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		C4E41953AE04A6D5A840BA88CA6CC2FE /* Pods-SwiftPhotoGallery_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SwiftPhotoGallery_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		C53B2B858E4117380A3C7DE2A3B86B8D /* Pods-SwiftPhotoGallery_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SwiftPhotoGallery_Example.release.xcconfig"; sourceTree = "<group>"; };
 		C70E23B5E3F0D0048E8F98B84F08DDA3 /* Pods-SwiftPhotoGallery_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SwiftPhotoGallery_Example.modulemap"; sourceTree = "<group>"; };
-		C9A095E7F264643F9808C81B33B245E6 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		C9A095E7F264643F9808C81B33B245E6 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CAD599E3E89B8EFE7C39FCE02CE8C938 /* Pods-SwiftPhotoGallery_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SwiftPhotoGallery_Example-umbrella.h"; sourceTree = "<group>"; };
 		E4CB5C7CBE68E09E8DA1EC12E8F758FF /* Pods-SwiftPhotoGallery_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SwiftPhotoGallery_Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		EBCE3E892746230ED840326449AF1135 /* Pods_SwiftPhotoGallery_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SwiftPhotoGallery_Example.framework; path = "Pods-SwiftPhotoGallery_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBCE3E892746230ED840326449AF1135 /* Pods_SwiftPhotoGallery_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftPhotoGallery_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECF2A2B0720AE923C22BED3192888BE0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		F2787EED063F6D3421CC3F0740AB0D4A /* Pods-SwiftPhotoGallery_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SwiftPhotoGallery_Tests-Info.plist"; sourceTree = "<group>"; };
 		FFBB95D59FAE8E126AAB3A4A659C2877 /* SwiftPhotoGalleryCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftPhotoGalleryCell.swift; path = Pod/Classes/SwiftPhotoGalleryCell.swift; sourceTree = "<group>"; };
@@ -333,6 +333,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
@@ -476,7 +477,7 @@
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Debug;
@@ -665,9 +666,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 4.2;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Release;
