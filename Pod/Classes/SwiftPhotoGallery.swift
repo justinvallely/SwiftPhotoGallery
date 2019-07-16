@@ -443,12 +443,12 @@ extension SwiftPhotoGallery: UICollectionViewDataSource {
 
     @objc public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         guard isRevolvingCarouselEnabled else { return CGSize.zero }
-        return CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        return view.frame.size
     }
 
     @objc public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         guard isRevolvingCarouselEnabled else { return CGSize.zero }
-        return CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        return view.frame.size
     }
 }
 
