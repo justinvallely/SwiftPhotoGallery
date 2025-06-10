@@ -1,6 +1,7 @@
 # SwiftPhotoGallery
 
 [![Platform](https://img.shields.io/badge/platform-iOS%20%7C%20tvOS-blue.svg?style=flat)](http://cocoapods.org/pods/SwiftPhotoGallery)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) 
 [![Version](https://img.shields.io/cocoapods/v/SwiftPhotoGallery.svg?style=flat)](http://cocoapods.org/pods/SwiftPhotoGallery)
 [![License](https://img.shields.io/cocoapods/l/SwiftPhotoGallery.svg?style=flat)](http://cocoapods.org/pods/SwiftPhotoGallery)
 [![CocoaPods](https://img.shields.io/cocoapods/dt/SwiftPhotoGallery.svg?style=flat)](https://cocoapods.org/pods/SwiftPhotoGallery)
